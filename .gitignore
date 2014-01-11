@@ -33,4 +33,4 @@ TestResults/*
 Thumbs.db
 packages/*
 !packages/repositories.config
-!.nuget\NuGet.exe
+!NuGet.exe
