@@ -1,4 +1,5 @@
 ﻿using System;
+using KesselRun.HomeLibrary.Model.Enums;
 
 namespace KesselRun.HomeLibrary.Model
 {
@@ -9,6 +10,6 @@ namespace KesselRun.HomeLibrary.Model
         public string Edition { get; set; }
         public Publisher Publisher { get; set; }
         public Guid PublisherId { get; set; }
-        public bool IsTextBook { get; set; }
+        public BookType TypeOfBook { get; set; }
     }
 }

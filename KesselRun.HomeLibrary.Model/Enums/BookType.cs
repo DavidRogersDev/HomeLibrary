@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KesselRun.HomeLibrary.Model.Enums
+﻿namespace KesselRun.HomeLibrary.Model.Enums
 {
-    class TextBookType
+    public enum BookType : int
     {
-    }
+        TextBook = 0,
+        Novel = 1
+    };
 }
