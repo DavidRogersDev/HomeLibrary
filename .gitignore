@@ -31,3 +31,5 @@ _ReSharper*
 TestResult.xml
 TestResults/*
 Thumbs.db
+packages/*
+!packages/repositories.config
