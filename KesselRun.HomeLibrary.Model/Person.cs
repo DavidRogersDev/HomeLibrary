@@ -13,5 +13,6 @@ namespace KesselRun.HomeLibrary.Model
         public string Sobriquet { get; set; }
 
         public virtual ICollection<Lending> Lendings { get; set; }
+        public virtual ICollection<Book> Books { get; set; }
     }
 }

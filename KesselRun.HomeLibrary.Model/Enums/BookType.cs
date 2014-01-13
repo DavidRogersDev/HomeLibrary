@@ -1,6 +1,6 @@
 ﻿namespace KesselRun.HomeLibrary.Model.Enums
 {
-    public enum BookType : int
+    public enum BookType
     {
         TextBook = 0,
         Novel = 1

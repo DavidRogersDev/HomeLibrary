@@ -58,23 +58,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Book.cs" />
-    <Compile Include="BookAuthor.cs" />
     <Compile Include="BookCover.cs" />
-    <Compile Include="BookLending.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="Db\HomeLibraryContext.cs" />
     <Compile Include="Db\HomeLibraryInitializer.cs" />
     <Compile Include="Enums\BookType.cs" />
+    <Compile Include="Enums\Edition.cs" />
     <Compile Include="Lending.cs" />
+    <Compile Include="Migrations\201401130500560_Initial.cs" />
+    <Compile Include="Migrations\201401130500560_Initial.Designer.cs">
+      <DependentUpon>201401130500560_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publisher.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201401130500560_Initial.resx">
+      <DependentUpon>201401130500560_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
