@@ -14,6 +14,22 @@ namespace KesselRun.HomeLibrary.Model.Db
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //  set up the Publisher's table
+            modelBuilder.Entity<Publisher>().Property(p => p.Name).HasMaxLength(50).IsRequired().IsVariableLength();
+            
+            //  set up the People table
+            modelBuilder.Entity<Person>().Property(p => p.Email).HasMaxLength(50).IsRequired().IsVariableLength();
+            modelBuilder.Entity<Person>().Property(p => p.FirstName).HasMaxLength(30).IsRequired().IsVariableLength();
+            modelBuilder.Entity<Person>().Property(p => p.LastName).HasMaxLength(30).IsRequired().IsVariableLength();
+            modelBuilder.Entity<Person>().Property(p => p.Sobriquet).HasMaxLength(30).IsOptional().IsVariableLength();
+
+            //  set up the Comment table
+            modelBuilder.Entity<Comment>().Property(c => c.CommentText).HasMaxLength(null).IsRequired().IsVariableLength();
+
+            //  set up the Book table
+            modelBuilder.Entity<Book>().Property(c => c.Title).HasMaxLength(300).IsRequired().IsVariableLength();
+
+
             base.OnModelCreating(modelBuilder);
         }
     }

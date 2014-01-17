@@ -69,6 +69,14 @@
     <Compile Include="Migrations\201401130500560_Initial.Designer.cs">
       <DependentUpon>201401130500560_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401170545352_AdjustedColumnSizes.cs" />
+    <Compile Include="Migrations\201401170545352_AdjustedColumnSizes.Designer.cs">
+      <DependentUpon>201401170545352_AdjustedColumnSizes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401170551449_AddedBookNavPropertyToBookCover.cs" />
+    <Compile Include="Migrations\201401170551449_AddedBookNavPropertyToBookCover.Designer.cs">
+      <DependentUpon>201401170551449_AddedBookNavPropertyToBookCover.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,6 +93,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201401130500560_Initial.resx">
       <DependentUpon>201401130500560_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401170545352_AdjustedColumnSizes.resx">
+      <DependentUpon>201401170545352_AdjustedColumnSizes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401170551449_AddedBookNavPropertyToBookCover.resx">
+      <DependentUpon>201401170551449_AddedBookNavPropertyToBookCover.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
