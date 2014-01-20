@@ -31,6 +31,8 @@ _ReSharper*
 TestResult.xml
 TestResults/*
 Thumbs.db
+BuildDatabase/*
+BuildDb.sln
 packages/*
 !packages/repositories.config
 !NuGet.exe

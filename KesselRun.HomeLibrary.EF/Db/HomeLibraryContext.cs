@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
+using KesselRun.HomeLibrary.Model;
 
-namespace KesselRun.HomeLibrary.Model.Db
+namespace KesselRun.HomeLibrary.EF.Db
 {
     public class HomeLibraryContext : DbContext
     {

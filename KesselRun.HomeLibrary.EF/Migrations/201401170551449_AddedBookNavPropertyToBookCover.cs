@@ -1,4 +1,4 @@
-namespace KesselRun.HomeLibrary.Model.Migrations
+namespace KesselRun.HomeLibrary.EF.Migrations
 {
     using System.Data.Entity.Migrations;
     

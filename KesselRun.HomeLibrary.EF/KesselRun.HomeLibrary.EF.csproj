@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{36E2CE6F-F974-4BDF-89FA-60FBF697E7CB}</ProjectGuid>
+    <ProjectGuid>{604EE641-A068-4783-A6A8-79418687EBB7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KesselRun.HomeLibrary.Model</RootNamespace>
-    <AssemblyName>KesselRun.HomeLibrary.Model</AssemblyName>
+    <RootNamespace>KesselRun.HomeLibrary.EF</RootNamespace>
+    <AssemblyName>KesselRun.HomeLibrary.EF</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,16 +40,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServerCompact">
-      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.0.2\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,32 +50,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Book.cs" />
-    <Compile Include="BookCover.cs" />
-    <Compile Include="Comment.cs" />
-    <Compile Include="Enums\BookType.cs" />
-    <Compile Include="Enums\Edition.cs" />
-    <Compile Include="Lending.cs" />
-    <Compile Include="Person.cs" />
+    <Compile Include="Db\HomeLibraryContext.cs" />
+    <Compile Include="Db\HomeLibraryInitializer.cs" />
+    <Compile Include="Migrations\201401130500560_Initial.cs" />
+    <Compile Include="Migrations\201401130500560_Initial.Designer.cs">
+      <DependentUpon>201401130500560_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401170545352_AdjustedColumnSizes.cs" />
+    <Compile Include="Migrations\201401170545352_AdjustedColumnSizes.Designer.cs">
+      <DependentUpon>201401170545352_AdjustedColumnSizes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401170551449_AddedBookNavPropertyToBookCover.cs" />
+    <Compile Include="Migrations\201401170551449_AddedBookNavPropertyToBookCover.Designer.cs">
+      <DependentUpon>201401170551449_AddedBookNavPropertyToBookCover.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Publisher.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.Model\KesselRun.HomeLibrary.Model.csproj">
+      <Project>{36e2ce6f-f974-4bdf-89fa-60fbf697e7cb}</Project>
+      <Name>KesselRun.HomeLibrary.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201401130500560_Initial.resx">
+      <DependentUpon>201401130500560_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401170545352_AdjustedColumnSizes.resx">
+      <DependentUpon>201401170545352_AdjustedColumnSizes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401170551449_AddedBookNavPropertyToBookCover.resx">
+      <DependentUpon>201401170551449_AddedBookNavPropertyToBookCover.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
-    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
-  </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
+using KesselRun.HomeLibrary.EF.Db;
 
-namespace KesselRun.HomeLibrary.Model.Db
+namespace KesselRun.HomeLibrary.EF.Db
 {
     //public class HomeLibraryInitializer : DropCreateDatabaseIfModelChanges<HomeLibraryContext>
     public class HomeLibraryInitializer : DropCreateDatabaseAlways<HomeLibraryContext>

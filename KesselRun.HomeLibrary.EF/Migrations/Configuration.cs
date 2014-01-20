@@ -1,7 +1,7 @@
 using System.Data.Entity.Migrations;
-using KesselRun.HomeLibrary.Model.Db;
+using KesselRun.HomeLibrary.EF.Db;
 
-namespace KesselRun.HomeLibrary.Model.Migrations
+namespace KesselRun.HomeLibrary.EF.Migrations
 {
     internal sealed class Configuration : DbMigrationsConfiguration<HomeLibraryContext>
     {
