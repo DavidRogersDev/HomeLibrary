@@ -7,13 +7,13 @@ namespace KesselRun.HomeLibrary.EF.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.2-21211")]
-    public sealed partial class AddedBookNavPropertyToBookCover : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedBookNavPropertyToBookCover));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201401170551449_AddedBookNavPropertyToBookCover"; }
+            get { return "201401210901385_Initial"; }
         }
         
         string IMigrationMetadata.Source

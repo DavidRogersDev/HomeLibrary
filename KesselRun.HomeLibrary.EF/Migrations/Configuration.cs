@@ -1,16 +1,18 @@
-using System.Data.Entity.Migrations;
-using KesselRun.HomeLibrary.EF.Db;
-
 namespace KesselRun.HomeLibrary.EF.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<HomeLibraryContext>
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<KesselRun.HomeLibrary.EF.Db.HomeLibraryContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(HomeLibraryContext context)
+        protected override void Seed(KesselRun.HomeLibrary.EF.Db.HomeLibraryContext context)
         {
             //  This method will be called after migrating to the latest version.
 

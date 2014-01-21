@@ -6,11 +6,11 @@ namespace KesselRun.HomeLibrary.Model
 {
     public class Book
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public Edition Edition { get; set; }
         public Publisher Publisher { get; set; }
-        public Guid PublisherId { get; set; }
+        public int PublisherId { get; set; }
         public BookType TypeOfBook { get; set; }
 
         public virtual ICollection<Person> Authors { get; set; }

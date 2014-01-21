@@ -5,7 +5,7 @@ namespace KesselRun.HomeLibrary.Model
 {
     public class Person
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Email { get; set; }
         public bool IsAuthor { get; set; }
         public string FirstName { get; set; }
