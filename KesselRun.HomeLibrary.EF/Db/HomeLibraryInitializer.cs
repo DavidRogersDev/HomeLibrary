@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using KesselRun.HomeLibrary.EF.Db;
 
 namespace KesselRun.HomeLibrary.EF.Db
 {

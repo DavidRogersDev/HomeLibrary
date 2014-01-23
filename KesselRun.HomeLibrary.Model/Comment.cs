@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace KesselRun.HomeLibrary.Model
+﻿namespace KesselRun.HomeLibrary.Model
 {
     public class Comment
     {

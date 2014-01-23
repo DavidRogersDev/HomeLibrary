@@ -65,6 +65,10 @@
       <DependentUpon>201401210901385_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repositories\BookRepository.cs" />
+    <Compile Include="Repositories\Contracts\IBookRepository.cs" />
+    <Compile Include="Repositories\Contracts\ILendingRepository.cs" />
+    <Compile Include="Repositories\LendingRepository.cs" />
     <Compile Include="Repositories\PersonRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Contracts\IPersonRepository.cs" />
@@ -78,7 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201401210901385_Initial.resx">

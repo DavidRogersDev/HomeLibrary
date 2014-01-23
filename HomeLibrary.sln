@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KesselRun.HomeLibrary.Model", "KesselRun.HomeLibrary.Model\KesselRun.HomeLibrary.Model.csproj", "{36E2CE6F-F974-4BDF-89FA-60FBF697E7CB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E6774590-A85E-47D2-8603-10EAAE39A240}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KesselRun.HomeLibrary.Model", "KesselRun.HomeLibrary.Model\KesselRun.HomeLibrary.Model.csproj", "{36E2CE6F-F974-4BDF-89FA-60FBF697E7CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KesselRun.HomeLibrary.EF", "KesselRun.HomeLibrary.EF\KesselRun.HomeLibrary.EF.csproj", "{604EE641-A068-4783-A6A8-79418687EBB7}"
 EndProject

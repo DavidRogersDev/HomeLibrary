@@ -14,5 +14,8 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Contracts
         IList<TPerson> GetAll();
     }
 
-    public interface IPersonRepository : IPersonRepository<Person>{ }
+    public interface IPersonRepository : IPersonRepository<Person>
+    {
+        
+    }
 }

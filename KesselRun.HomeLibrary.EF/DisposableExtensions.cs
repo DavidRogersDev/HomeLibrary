@@ -1,6 +1,7 @@
 ﻿/*
  * Copyright (c) Brock Allen.  All rights reserved.
  * Used as per following licence
+ * 
  New BSD License
 ---------------
 Copyright ©2012-2013, Brock Allen. All Rights Reserved.
