@@ -37,6 +37,13 @@ namespace KesselRun.HomeLibrary.EF.Repositories
             Context.SaveChanges();
         }
 
+        public T GetById(int id)
+        {
+            CheckDisposed();
+            var set = Items.Find(id);
+            return set;
+        }
+
         public void Remove(T item)
         {
             CheckDisposed();
@@ -55,14 +62,6 @@ namespace KesselRun.HomeLibrary.EF.Repositories
                 entry.State = EntityState.Modified;
             }
             Context.SaveChanges();            
-        }
-
-
-        public T GetById(int id)
-        {
-            CheckDisposed();
-            var set = Items.Find(id);
-            return set;
         }
         
         public IList<T> GetAll()

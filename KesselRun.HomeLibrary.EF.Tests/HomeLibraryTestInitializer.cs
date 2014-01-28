@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.Model;
 
-namespace KesselRun.HomeLibrary.EF.Db
+namespace KesselRun.HomeLibrary.EF.Tests
 {
-    //public class HomeLibraryInitializer : DropCreateDatabaseIfModelChanges<HomeLibraryContext>
-    public class HomeLibraryInitializer : DropCreateDatabaseAlways<HomeLibraryContext>
+    public class HomeLibraryTestInitializer : DropCreateDatabaseAlways<HomeLibraryContext>
     {
         protected override void Seed(HomeLibraryContext context)
         {
