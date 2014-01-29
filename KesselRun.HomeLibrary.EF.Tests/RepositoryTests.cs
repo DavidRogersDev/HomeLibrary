@@ -1,5 +1,7 @@
-﻿using KesselRun.HomeLibrary.EF.Db;
+﻿using System.Linq;
+using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.EF.Repositories;
+using KesselRun.HomeLibrary.EF.Repositories.Factories;
 using KesselRun.HomeLibrary.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,11 +20,11 @@ namespace KesselRun.HomeLibrary.EF.Tests
         [TestMethod]
         public void GetAllReturnsAllPeople()
         {
-            var personRepository = new PersonRepository(new HomeLibraryContext());
+            var personRepository = new UnitOfWork(new RepositoryProvider(new RepositoryFactories()));
 
-            var persons = personRepository.GetAll();
+            var persons = personRepository.People.GetAll();
             
-            Assert.IsTrue(persons.Count == 2);
+            Assert.IsTrue(persons.Count() == 2);
         }
 
     }

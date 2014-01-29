@@ -62,6 +62,8 @@
     <Compile Include="Comment.cs" />
     <Compile Include="Enums\BookType.cs" />
     <Compile Include="Enums\Edition.cs" />
+    <Compile Include="Access\IRepository.cs" />
+    <Compile Include="Access\IUnitOfWork.cs" />
     <Compile Include="Lending.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
