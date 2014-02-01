@@ -1,11 +1,10 @@
-﻿using KesselRun.HomeLibrary.Model.Enums;
+﻿using KesselRun.HomeLibrary.UiLogic.Enums;
 
-namespace KesselRun.HomeLibrary.Model
+namespace KesselRun.HomeLibrary.UiLogic.Models
 {
     public class BookCover
     {
         public int Id { get; set; }
-        public int BookId { get; set; }
         public Book Book { get; set; }
         public Edition Edition { get; set; }
         public byte[] Cover { get; set; }
