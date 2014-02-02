@@ -48,7 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMapperBootstrapper.cs" />
+    <Compile Include="MapperBootstrapper.cs" />
+    <Compile Include="HomeLibraryProfile.cs" />
     <Compile Include="Profiles\HomeLibraryProfile.cs" />
     <Compile Include="Configuration\Initializers\IMappingInitializer.cs" />
     <Compile Include="Configuration\Initializers\BookCoverInitializer.cs" />
@@ -77,9 +78,9 @@
       <Project>{36e2ce6f-f974-4bdf-89fa-60fbf697e7cb}</Project>
       <Name>KesselRun.HomeLibrary.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KesselRun.HomeLibrary.UiLogic\KesselRun.HomeLibrary.UiLogic.csproj">
-      <Project>{90c2b5c8-7df9-42da-95a7-fe08c5346fbc}</Project>
-      <Name>KesselRun.HomeLibrary.UiLogic</Name>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.UiModel\KesselRun.HomeLibrary.UiModel.csproj">
+      <Project>{de516021-3806-49ed-933b-ba9122ddda79}</Project>
+      <Name>KesselRun.HomeLibrary.UiModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

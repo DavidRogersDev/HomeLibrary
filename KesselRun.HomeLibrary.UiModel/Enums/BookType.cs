@@ -1,4 +1,4 @@
-﻿namespace KesselRun.HomeLibrary.UiLogic.Enums
+﻿namespace KesselRun.HomeLibrary.UiModel.Enums
 {
     public enum BookType
     {

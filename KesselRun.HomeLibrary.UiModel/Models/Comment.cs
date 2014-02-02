@@ -1,4 +1,4 @@
-﻿namespace KesselRun.HomeLibrary.UiLogic.Models
+﻿namespace KesselRun.HomeLibrary.UiModel.Models
 {
     public class Comment
     {

@@ -11,7 +11,7 @@ namespace KesselRun.HomeLibrary.Mapper.Configuration.Initializers
 
         public void Initialize()
         {
-            Profile.CreateMap<Model.Comment, UiLogic.Models.Comment>();
+            Profile.CreateMap<Model.Comment, UiModel.Models.Comment>();
         }
     }
 }

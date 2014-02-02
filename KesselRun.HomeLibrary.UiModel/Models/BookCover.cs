@@ -1,6 +1,6 @@
-﻿using KesselRun.HomeLibrary.UiLogic.Enums;
+﻿using KesselRun.HomeLibrary.UiModel.Enums;
 
-namespace KesselRun.HomeLibrary.UiLogic.Models
+namespace KesselRun.HomeLibrary.UiModel.Models
 {
     public class BookCover
     {

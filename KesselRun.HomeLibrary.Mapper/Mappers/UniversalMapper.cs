@@ -6,11 +6,6 @@ namespace KesselRun.HomeLibrary.Mapper.Mappers
     {
         private readonly IMappingEngine _mappingEngine;
 
-
-        public UniversalMapper()
-        {
-        }
-
         public UniversalMapper(IMappingEngine mappingEngine)
         {
             _mappingEngine = mappingEngine;

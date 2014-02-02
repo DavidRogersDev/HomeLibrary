@@ -10,7 +10,7 @@ namespace KesselRun.HomeLibrary.Mapper.Configuration.Initializers
 
         public void Initialize()
         {
-            Profile.CreateMap<Model.Lending, UiLogic.Models.Lending>();
+            Profile.CreateMap<Model.Lending, UiModel.Models.Lending>();
         }
 
     }

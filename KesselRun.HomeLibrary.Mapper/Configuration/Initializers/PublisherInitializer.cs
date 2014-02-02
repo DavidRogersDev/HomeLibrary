@@ -11,7 +11,7 @@ namespace KesselRun.HomeLibrary.Mapper.Configuration.Initializers
 
         public void Initialize()
         {
-            Profile.CreateMap<Model.Publisher, UiLogic.Models.Publisher>();
+            Profile.CreateMap<Model.Publisher, UiModel.Models.Publisher>();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KesselRun.HomeLibrary.UiLogic.Models
+namespace KesselRun.HomeLibrary.UiModel.Models
 {
     public class Lending
     {

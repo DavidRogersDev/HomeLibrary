@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using KesselRun.HomeLibrary.Mapper.Configuration;
 
-namespace KesselRun.HomeLibrary.Mapper.Profiles
+namespace KesselRun.HomeLibrary.Mapper
 {
     public class HomeLibraryProfile : Profile
     {
-        const string HomeLibraryProfileName = "HomeLibraryProfile";
+        public const string ViewModel = "HomeLibraryProfile";
 
         public override string ProfileName
         {
-            get { return HomeLibraryProfileName; }
+            get { return ViewModel; }
         }
 
         protected override void Configure()
