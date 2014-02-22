@@ -1,8 +1,9 @@
 ﻿using System;
+using KesselRun.HomeLibrary.GenericRepository;
 
 namespace KesselRun.HomeLibrary.Model
 {
-    public class Lending
+    public class Lending : IEntity
     {
         public int Id { get; set; }
         public Book Book { get; set; }

@@ -59,14 +59,25 @@
   <ItemGroup>
     <Compile Include="Db\HomeLibraryContext.cs" />
     <Compile Include="Db\HomeLibraryInitializer.cs" />
+    <Compile Include="DisposableExtensions.cs" />
+    <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\EFRepository.cs" />
+    <Compile Include="Db\EntitiesContext.cs" />
+    <Compile Include="Repositories\EntityRepository%271.cs" />
+    <Compile Include="Repositories\EntityRepository%272.cs" />
     <Compile Include="Repositories\Factories\IRepositoryProvider.cs" />
     <Compile Include="Repositories\Factories\RepositoryFactories.cs" />
     <Compile Include="Repositories\Factories\RepositoryProvider.cs" />
+    <Compile Include="Db\IEntitiesContext.cs" />
+    <Compile Include="Repositories\IEntityRepository%271.cs" />
+    <Compile Include="Repositories\IEntityRepository%272.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.GenericRepository\KesselRun.HomeLibrary.GenericRepository.csproj">
+      <Project>{4448ba77-f0de-48b2-8935-d3844a48d050}</Project>
+      <Name>KesselRun.HomeLibrary.GenericRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KesselRun.HomeLibrary.Model\KesselRun.HomeLibrary.Model.csproj">
       <Project>{36e2ce6f-f974-4bdf-89fa-60fbf697e7cb}</Project>
       <Name>KesselRun.HomeLibrary.Model</Name>

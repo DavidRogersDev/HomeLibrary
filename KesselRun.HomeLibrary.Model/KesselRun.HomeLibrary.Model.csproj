@@ -62,8 +62,6 @@
     <Compile Include="Comment.cs" />
     <Compile Include="Enums\BookType.cs" />
     <Compile Include="Enums\Edition.cs" />
-    <Compile Include="Access\IRepository.cs" />
-    <Compile Include="Access\IUnitOfWork.cs" />
     <Compile Include="Lending.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,6 +74,12 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.GenericRepository\KesselRun.HomeLibrary.GenericRepository.csproj">
+      <Project>{4448BA77-F0DE-48B2-8935-D3844A48D050}</Project>
+      <Name>KesselRun.HomeLibrary.GenericRepository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

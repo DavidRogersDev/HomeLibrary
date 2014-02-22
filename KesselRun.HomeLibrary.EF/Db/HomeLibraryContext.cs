@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using KesselRun.HomeLibrary.EF.Repositories;
 using KesselRun.HomeLibrary.Model;
 
 namespace KesselRun.HomeLibrary.EF.Db
 {
-    public class HomeLibraryContext : DbContext
+    public class HomeLibraryContext : EntitiesContext
     {
         //  DbSets go here
         public DbSet<Book> Books { get; set; }

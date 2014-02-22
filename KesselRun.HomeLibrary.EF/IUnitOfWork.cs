@@ -1,4 +1,7 @@
-﻿namespace KesselRun.HomeLibrary.Model.Access
+﻿using KesselRun.HomeLibrary.EF.Repositories;
+using KesselRun.HomeLibrary.Model;
+
+namespace KesselRun.HomeLibrary.EF
 {
     /// <summary>
     /// Interface for the "Unit of Work"
@@ -9,7 +12,7 @@
         void Commit();
 
         // Repositories
-        IRepository<Person> People { get; }
-        IRepository<Lending> Lendings { get; }
+        IEntityRepository<Person> People { get; }
+        IEntityRepository<Lending> Lendings { get; }
     }
 }

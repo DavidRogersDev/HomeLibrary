@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using KesselRun.HomeLibrary.GenericRepository;
 
 namespace KesselRun.HomeLibrary.Model
 {
-    public class Person
+    public class Person : IEntity
     {
         public int Id { get; set; }
         public string Email { get; set; }

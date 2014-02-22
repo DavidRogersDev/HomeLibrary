@@ -23,7 +23,7 @@ namespace KesselRun.HomeLibrary.EF.Tests
             var personRepository = new UnitOfWork(new RepositoryProvider(new RepositoryFactories()));
 
             var persons = personRepository.People.GetAll();
-            
+
             Assert.IsTrue(persons.Count() == 2);
         }
 

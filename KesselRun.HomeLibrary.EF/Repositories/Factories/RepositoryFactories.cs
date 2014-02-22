@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using KesselRun.HomeLibrary.Model.Access;
+using KesselRun.HomeLibrary.EF.Db;
+using KesselRun.HomeLibrary.GenericRepository;
 
 namespace KesselRun.HomeLibrary.EF.Repositories.Factories
 {
@@ -28,13 +29,13 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// <remarks>
         /// MODIFY THIS METHOD TO ADD CUSTOM FACTORY FUNCTIONS
         /// </remarks>
-        private IDictionary<Type, Func<DbContext, object>> GetFactories()
+        private IDictionary<Type, Func<EntitiesContext, object>> GetFactories()
         {
-            return new Dictionary<Type, Func<DbContext, object>>
-                {
-                   //{typeof(IArticleRepository), dbContext => new ArticleRepository(dbContext)},
-                   //{typeof(IUrlRepository), dbContext => new UrlRepository(dbContext)},
-                };
+            return new Dictionary<Type, Func<EntitiesContext, object>>
+            {
+                //{typeof(IArticleRepository), dbContext => new ArticleRepository(dbContext)},
+                //{typeof(IUrlRepository), dbContext => new UrlRepository(dbContext)},
+            };
         }
 
         /// <summary>
@@ -54,7 +55,7 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// <remarks>
         /// This consructor is primarily useful for testing this class
         /// </remarks>
-        public RepositoryFactories(IDictionary<Type, Func<DbContext, object>> factories)
+        public RepositoryFactories(IDictionary<Type, Func<EntitiesContext, object>> factories)
         {
             _repositoryFactories = factories;
         }
@@ -68,20 +69,20 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// The type parameter, T, is typically the repository type 
         /// but could be any type (e.g., an entity type)
         /// </remarks>
-        public Func<DbContext, object> GetRepositoryFactory<T>()
+        public Func<EntitiesContext, object> GetRepositoryFactory<T>()
         {
 
-            Func<DbContext, object> factory;
+            Func<EntitiesContext, object> factory;
             _repositoryFactories.TryGetValue(typeof(T), out factory);
             return factory;
         }
 
         /// <summary>
-        /// Get the factory for <see cref="IRepository{T}"/> where T is an entity type.
+        /// Get the factory for <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/> where T is an entity type.
         /// </summary>
         /// <typeparam name="T">The root type of the repository, typically an entity type.</typeparam>
         /// <returns>
-        /// A factory that creates the <see cref="IRepository{T}"/>, given an EF <see cref="DbContext"/>.
+        /// A factory that creates the <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/>, given an EF <see cref="DbContext"/>.
         /// </returns>
         /// <remarks>
         /// Looks first for a custom factory in <see cref="_repositoryFactories"/>.
@@ -89,18 +90,18 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// You can substitute an alternative factory for the default one by adding
         /// a repository factory for type "T" to <see cref="_repositoryFactories"/>.
         /// </remarks>
-        public Func<DbContext, object> GetRepositoryFactoryForEntityType<T>() where T : class
+        public Func<EntitiesContext, object> GetRepositoryFactoryForEntityType<T>() where T : class, IEntity<int>
         {
             return GetRepositoryFactory<T>() ?? DefaultEntityRepositoryFactory<T>();
         }
 
         /// <summary>
-        /// Default factory for a <see cref="IRepository{T}"/> where T is an entity.
+        /// Default factory for a <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/> where T is an entity.
         /// </summary>
         /// <typeparam name="T">Type of the repository's root entity</typeparam>
-        protected virtual Func<DbContext, object> DefaultEntityRepositoryFactory<T>() where T : class
+        protected virtual Func<IEntitiesContext, object> DefaultEntityRepositoryFactory<T>() where T : class, IEntity<int>
         {
-            return dbContext => new EFRepository<T>(dbContext);
+            return dbContext => new EntityRepository<T>(dbContext);
         }
 
         /// <summary>
@@ -112,6 +113,6 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// that takes a <see cref="DbContext"/> argument and returns
         /// a repository object. Caller must know how to cast it.
         /// </remarks>
-        private readonly IDictionary<Type, Func<DbContext, object>> _repositoryFactories;
+        private readonly IDictionary<Type, Func<EntitiesContext, object>> _repositoryFactories;
     }
 }

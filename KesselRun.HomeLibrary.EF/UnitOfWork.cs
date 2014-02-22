@@ -1,8 +1,9 @@
 ﻿using System;
 using KesselRun.HomeLibrary.EF.Db;
+using KesselRun.HomeLibrary.EF.Repositories;
 using KesselRun.HomeLibrary.EF.Repositories.Factories;
+using KesselRun.HomeLibrary.GenericRepository;
 using KesselRun.HomeLibrary.Model;
-using KesselRun.HomeLibrary.Model.Access;
 
 namespace KesselRun.HomeLibrary.EF
 {
@@ -31,8 +32,8 @@ namespace KesselRun.HomeLibrary.EF
         }
 
         // repositories
-        public IRepository<Person> People { get { return GetStandardRepo<Person>(); } }
-        public IRepository<Lending> Lendings { get { return GetStandardRepo<Lending>(); } }
+        public IEntityRepository<Person> People { get { return GetStandardRepo<Person>(); } }
+        public IEntityRepository<Lending> Lendings { get { return GetStandardRepo<Lending>(); } }
 
         protected IRepositoryProvider RepositoryProvider { get; set; }
 
@@ -55,14 +56,24 @@ namespace KesselRun.HomeLibrary.EF
             // Load navigation properties explicitly (avoid serialization trouble)
             DbContext.Configuration.LazyLoadingEnabled = false;
 
-            // Because Web API will perform validation, I don't need/want EF to do so
+            // I don't need/want EF to perform validation
             DbContext.Configuration.ValidateOnSaveEnabled = false;
         }
 
-        private IRepository<T> GetStandardRepo<T>() where T : class
+        private IEntityRepository<T> GetStandardRepo<T>() where T : class, IEntity<int>
         {
-            return RepositoryProvider.GetRepositoryForEntityType<T>();
+            try
+            {
+                return RepositoryProvider.GetRepositoryForEntityType<T>();
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return null;
         }
+
         private T GetRepo<T>() where T : class
         {
             return RepositoryProvider.GetRepository<T>();
