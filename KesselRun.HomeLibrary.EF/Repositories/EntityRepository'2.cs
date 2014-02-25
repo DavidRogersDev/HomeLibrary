@@ -189,7 +189,6 @@ namespace KesselRun.HomeLibrary.EF.Repositories
 
         private enum OrderByType
         {
-
             Ascending,
             Descending
         }

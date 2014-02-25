@@ -1,8 +1,9 @@
-﻿using KesselRun.HomeLibrary.Model.Enums;
+﻿using KesselRun.HomeLibrary.GenericRepository;
+using KesselRun.HomeLibrary.Model.Enums;
 
 namespace KesselRun.HomeLibrary.Model
 {
-    public class BookCover
+    public class BookCover : IEntity
     {
         public int Id { get; set; }
         public int BookId { get; set; }

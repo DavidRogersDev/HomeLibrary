@@ -1,6 +1,8 @@
-﻿namespace KesselRun.HomeLibrary.Model
+﻿using KesselRun.HomeLibrary.GenericRepository;
+
+namespace KesselRun.HomeLibrary.Model
 {
-    public class Comment
+    public class Comment : IEntity
     {
         public int Id { get; set; }
         public Book Book { get; set; }
