@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HomeLibraryService.cs" />
+    <Compile Include="IHomeLibraryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,28 @@
       <Link>AutoMapper.Net4.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.EF\KesselRun.HomeLibrary.EF.csproj">
+      <Project>{604ee641-a068-4783-a6a8-79418687ebb7}</Project>
+      <Name>KesselRun.HomeLibrary.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.GenericRepository\KesselRun.HomeLibrary.GenericRepository.csproj">
+      <Project>{4448ba77-f0de-48b2-8935-d3844a48d050}</Project>
+      <Name>KesselRun.HomeLibrary.GenericRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.Mapper\KesselRun.HomeLibrary.Mapper.csproj">
+      <Project>{608cb184-245d-48cd-b405-2d3e4ccf8c28}</Project>
+      <Name>KesselRun.HomeLibrary.Mapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.Model\KesselRun.HomeLibrary.Model.csproj">
+      <Project>{36e2ce6f-f974-4bdf-89fa-60fbf697e7cb}</Project>
+      <Name>KesselRun.HomeLibrary.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.UiModel\KesselRun.HomeLibrary.UiModel.csproj">
+      <Project>{de516021-3806-49ed-933b-ba9122ddda79}</Project>
+      <Name>KesselRun.HomeLibrary.UiModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
