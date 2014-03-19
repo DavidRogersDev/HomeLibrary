@@ -11,7 +11,7 @@ using KesselRun.HomeLibrary.Model;
 
 namespace KesselRun.HomeLibrary.Service
 {
-    public class HomeLibraryService : IHomeLibraryService
+    public class HomeLibraryService : IHomeLibraryService, IDisposable
     {
         readonly UnitOfWork _unitOfWork = new UnitOfWork(new RepositoryProvider(new RepositoryFactories()));
         private readonly UniversalMapper mapper;
@@ -88,6 +88,11 @@ namespace KesselRun.HomeLibrary.Service
             }
 
             return null;
+        }
+
+        public void Dispose()
+        {
+            //  This will be properly done in final code.
         }
     }
 }

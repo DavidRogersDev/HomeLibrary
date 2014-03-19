@@ -49,18 +49,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\FilterType.cs" />
+    <Compile Include="Events\PagingAndSortingEventArgs.cs" />
+    <Compile Include="Events\PagingEventArgs.cs" />
+    <Compile Include="Views\IPersonView.cs" />
+    <Compile Include="Presenters\PeoplePresenter.cs" />
+    <Compile Include="Views\ViewModels\PersonViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.Service\KesselRun.HomeLibrary.Service.csproj">
+      <Project>{76A53439-FED0-404B-A3E2-E104595C0035}</Project>
+      <Name>KesselRun.HomeLibrary.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KesselRun.HomeLibrary.UiModel\KesselRun.HomeLibrary.UiModel.csproj">
       <Project>{de516021-3806-49ed-933b-ba9122ddda79}</Project>
       <Name>KesselRun.HomeLibrary.UiModel</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Presenters\" />
-    <Folder Include="Views\ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

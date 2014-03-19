@@ -14,7 +14,7 @@ namespace KesselRun.HomeLibrary.EF.Repositories
     /// </summary>
     /// <typeparam name="TEntity">Type of entity</typeparam>
     /// <typeparam name="TId">Type of entity Id</typeparam>
-    public class EntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>, IDisposable
+    public class EntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>
         where TEntity : class, IEntity<TId>
         where TId : IComparable
     {
@@ -191,21 +191,6 @@ namespace KesselRun.HomeLibrary.EF.Repositories
         {
             Ascending,
             Descending
-        }
-
-        //public void CheckDisposed()
-        //{
-        //    if (_dbContext == null)
-        //    {
-        //        throw new ObjectDisposedException("PersonRepository");
-        //    }
-        //}
-
-        public void Dispose()
-        {
-            if (!_dbContext.TryDispose()) return;
-            _dbContext = null;
-
         }
     }
 }
