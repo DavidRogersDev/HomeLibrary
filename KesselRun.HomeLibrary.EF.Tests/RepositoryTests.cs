@@ -10,11 +10,19 @@ namespace KesselRun.HomeLibrary.EF.Tests
     [TestClass]
     public class RepositoryTests
     {
+        private HomeLibraryContext context;
+
         [TestInitialize]
         public void TestInitialize()
         {
-            var context = new HomeLibraryContext();
+            context = new HomeLibraryContext();
             context.Database.Initialize(true);
+        }
+
+        [TestCleanup]
+        public void TestTearDown()
+        {
+            context.Database.Delete();
         }
 
         [TestMethod]
@@ -22,9 +30,9 @@ namespace KesselRun.HomeLibrary.EF.Tests
         {
             var personRepository = new UnitOfWork(new RepositoryProvider(new RepositoryFactories()));
 
-            var persons = personRepository.People.GetAll();
+            var persons = personRepository.People.GetAll().ToList();
 
-            Assert.IsTrue(persons.Count() == 2);
+            Assert.IsTrue(persons.Count() == 3);
         }
 
     }

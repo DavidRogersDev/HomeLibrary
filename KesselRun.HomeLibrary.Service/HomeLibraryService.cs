@@ -93,6 +93,7 @@ namespace KesselRun.HomeLibrary.Service
         public void Dispose()
         {
             //  This will be properly done in final code.
+            var bla = string.Empty;
         }
     }
 }

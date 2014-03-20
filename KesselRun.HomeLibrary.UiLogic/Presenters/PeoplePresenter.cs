@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KesselRun.HomeLibrary.Service;
 using KesselRun.HomeLibrary.UiLogic.Enums;
 using KesselRun.HomeLibrary.UiLogic.Views;
@@ -14,7 +10,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
     public class PeoplePresenter : Presenter<IPersonView>, IDisposable
     {
         private readonly IHomeLibraryService _homeLibraryService;
-        private bool disposed = false;
+        private bool _disposed;
 
         public PeoplePresenter(IPersonView view, IHomeLibraryService homeLibraryService)
             : base(view)
@@ -53,14 +49,14 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         private void CleanUp(bool disposing)
         {
-            if (!disposed)
+            if (!_disposed)
             {
                 if (disposing)
                 {
                     ((IDisposable)_homeLibraryService).Dispose();
                 }
             }
-            disposed = true;
+            _disposed = true;
         }
 
     }

@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KesselRun.HomeLibrary.Gener
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KesselRun.HomeLibrary.Service", "KesselRun.HomeLibrary.Service\KesselRun.HomeLibrary.Service.csproj", "{76A53439-FED0-404B-A3E2-E104595C0035}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KesselRun.HomeLibrary.Ui", "KesselRun.HomeLibrary.Ui\KesselRun.HomeLibrary.Ui.csproj", "{C8ECE388-46ED-4F0A-9FA4-450A53C34FB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{76A53439-FED0-404B-A3E2-E104595C0035}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76A53439-FED0-404B-A3E2-E104595C0035}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76A53439-FED0-404B-A3E2-E104595C0035}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8ECE388-46ED-4F0A-9FA4-450A53C34FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8ECE388-46ED-4F0A-9FA4-450A53C34FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8ECE388-46ED-4F0A-9FA4-450A53C34FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8ECE388-46ED-4F0A-9FA4-450A53C34FB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +97,7 @@ Global
 		{608CB184-245D-48CD-B405-2D3E4CCF8C28} = {C1C7FB82-4D67-4E39-AEEC-20AF390298DD}
 		{90C2B5C8-7DF9-42DA-95A7-FE08C5346FBC} = {3C353CDF-4AFC-4F30-AD59-204ACDB706AD}
 		{DE516021-3806-49ED-933B-BA9122DDDA79} = {3C353CDF-4AFC-4F30-AD59-204ACDB706AD}
+		{C8ECE388-46ED-4F0A-9FA4-450A53C34FB1} = {3C353CDF-4AFC-4F30-AD59-204ACDB706AD}
 		{76A53439-FED0-404B-A3E2-E104595C0035} = {B9D1C7F5-68E5-4E94-8916-F15B3DEDD3C5}
 	EndGlobalSection
 EndGlobal
