@@ -2,7 +2,8 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace KesselRun.HomeLibrary.GenericRepository {
+namespace KesselRun.HomeLibrary.GenericRepository 
+{
     
     /// <summary>
     /// 
@@ -11,8 +12,8 @@ namespace KesselRun.HomeLibrary.GenericRepository {
     /// <typeparam name="TId"></typeparam>
     public interface IRepository<TEntity, TId>
         where TEntity : class, IEntity<TId>
-        where TId : IComparable {
-
+        where TId : IComparable 
+    {
         IQueryable<TEntity> GetAll();
         IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
         PaginatedList<TEntity> Paginate(int pageIndex, int pageSize);

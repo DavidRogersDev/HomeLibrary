@@ -2,11 +2,12 @@
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
-using KesselRun.HomeLibrary.EF.Repositories;
 
-namespace KesselRun.HomeLibrary.EF.Db {
+namespace KesselRun.HomeLibrary.EF.Db 
+{
 
-    public abstract class EntitiesContext : DbContext, IEntitiesContext {
+    public abstract class EntitiesContext : DbContext, IEntitiesContext 
+    {
 
         /// <summary>
         /// Constructs a new context instance using conventions to create the name of

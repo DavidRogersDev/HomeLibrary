@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Linq;
 
-namespace KesselRun.HomeLibrary.GenericRepository {
-    
+namespace KesselRun.HomeLibrary.GenericRepository 
+{
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static class QueryableExtensions {
-
+    public static class QueryableExtensions 
+    {
         /// <summary>
         /// 
         /// </summary>
@@ -15,7 +15,8 @@ namespace KesselRun.HomeLibrary.GenericRepository {
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public static PaginatedList<T> ToPaginatedList<T>(
-            this IQueryable<T> query, int pageIndex, int pageSize) {
+            this IQueryable<T> query, int pageIndex, int pageSize) 
+        {
 
             int totalCount = query.Count();
 

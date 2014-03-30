@@ -1,10 +1,12 @@
 ﻿
-namespace KesselRun.HomeLibrary.GenericRepository {
+namespace KesselRun.HomeLibrary.GenericRepository 
+{
     
     /// <summary>
     /// 
     /// </summary>
-    public interface IEntity : IEntity<int> {
+    public interface IEntity : IEntity<int> 
+    {
 
     }
 }

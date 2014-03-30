@@ -1,36 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace KesselRun.HomeLibrary.GenericRepository {
+namespace KesselRun.HomeLibrary.GenericRepository 
+{
     
     /// <summary>
     /// List object to represent the paginated collection.
     /// </summary>
     /// <typeparam name="T">Type of the Entity</typeparam>
-    public class PaginatedList<T> : List<T> {
+    public class PaginatedList<T> : List<T> 
+    {
 
         public int PageIndex { get; private set; }
         public int PageSize { get; private set; }
         public int TotalCount { get; private set; }
         public int TotalPageCount { get; private set; }
 
-        public bool HasPreviousPage {
+        public bool HasPreviousPage 
+        {
 
-            get {
+            get 
+            {
                 return (PageIndex > 1);
             }
         }
 
-        public bool HasNextPage {
+        public bool HasNextPage 
+        {
 
-            get {
+            get 
+            {
                 return (PageIndex < TotalPageCount);
             }
         }
 
-        public PaginatedList(IEnumerable<T> source, int pageIndex, int pageSize, int totalCount) {
+        public PaginatedList(IEnumerable<T> source, int pageIndex, int pageSize, int totalCount) 
+        {
 
-            if (source == null) {
+            if (ReferenceEquals(source, null)) 
+            {
                 throw new ArgumentNullException("source");
             }
 

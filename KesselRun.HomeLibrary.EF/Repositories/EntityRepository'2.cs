@@ -14,29 +14,29 @@ namespace KesselRun.HomeLibrary.EF.Repositories
     /// </summary>
     /// <typeparam name="TEntity">Type of entity</typeparam>
     /// <typeparam name="TId">Type of entity Id</typeparam>
-    public class EntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>, IDisposable
+    public class EntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>
         where TEntity : class, IEntity<TId>
         where TId : IComparable
     {
 
-        protected IEntitiesContext _dbContext;
+        protected IEntitiesContext DbContext;
 
         public EntityRepository(IEntitiesContext dbContext)
         {
 
-            if (dbContext == null)
+            if (ReferenceEquals(dbContext, null))
             {
 
                 throw new ArgumentNullException("dbContext");
             }
 
-            _dbContext = dbContext;
+            DbContext = dbContext;
         }
 
         public IQueryable<TEntity> GetAll()
         {
 
-            return _dbContext.Set<TEntity>();
+            return DbContext.Set<TEntity>();
         }
 
         public IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
@@ -121,31 +121,31 @@ namespace KesselRun.HomeLibrary.EF.Repositories
         public void Add(TEntity entity)
         {
 
-            _dbContext.SetAsAdded(entity);
+            DbContext.SetAsAdded(entity);
         }
 
         public void AddGraph(TEntity entity)
         {
 
-            _dbContext.Set<TEntity>().Add(entity);
+            DbContext.Set<TEntity>().Add(entity);
         }
 
         public void Edit(TEntity entity)
         {
 
-            _dbContext.SetAsModified(entity);
+            DbContext.SetAsModified(entity);
         }
 
         public void Delete(TEntity entity)
         {
 
-            _dbContext.SetAsDeleted(entity);
+            DbContext.SetAsDeleted(entity);
         }
 
         public int Save()
         {
 
-            return _dbContext.SaveChanges();
+            return DbContext.SaveChanges();
         }
 
         // Privates
@@ -193,18 +193,18 @@ namespace KesselRun.HomeLibrary.EF.Repositories
             Descending
         }
 
-        //public void CheckDisposed()
-        //{
-        //    if (_dbContext == null)
-        //    {
-        //        throw new ObjectDisposedException("PersonRepository");
-        //    }
-        //}
+        public void CheckDisposed()
+        {
+            if (ReferenceEquals(DbContext, null))
+            {
+                throw new ObjectDisposedException("Repository");
+            }
+        }
 
         public void Dispose()
         {
-            if (!_dbContext.TryDispose()) return;
-            _dbContext = null;
+            if (!DbContext.TryDispose()) return;
+            DbContext = null;
 
         }
     }

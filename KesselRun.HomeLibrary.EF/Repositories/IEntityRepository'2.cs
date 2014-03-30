@@ -3,7 +3,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using KesselRun.HomeLibrary.GenericRepository;
 
-namespace KesselRun.HomeLibrary.EF.Repositories {
+namespace KesselRun.HomeLibrary.EF.Repositories 
+{
     
     /// <summary>
     /// Entity Framework interface implementation for IRepository.
@@ -12,7 +13,8 @@ namespace KesselRun.HomeLibrary.EF.Repositories {
     /// <typeparam name="TId">Type of entity Id</typeparam>
     public interface IEntityRepository<TEntity, TId> : IRepository<TEntity, TId> 
         where TEntity : class, IEntity<TId>
-        where TId : IComparable {
+        where TId : IComparable 
+    {
 
         IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] includeProperties);
         TEntity GetSingleIncluding(TId id, params Expression<Func<TEntity, object>>[] includeProperties);

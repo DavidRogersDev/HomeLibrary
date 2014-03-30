@@ -21,6 +21,8 @@ namespace KesselRun.HomeLibrary.EF
     /// </remarks>
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
+        private bool _disposed;
+
         private HomeLibraryContext DbContext { get; set; }
 
         public UnitOfWork(IRepositoryProvider repositoryProvider)
@@ -84,19 +86,12 @@ namespace KesselRun.HomeLibrary.EF
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+            if (_disposed) return;
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (DbContext != null)
-                {
-                    DbContext.Dispose();
-                }
-            }
+            if (!DbContext.TryDispose()) return;
+
+            _disposed = true;
+            GC.SuppressFinalize(this);
         }
 
         #endregion
