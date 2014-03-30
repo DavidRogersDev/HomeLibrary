@@ -11,7 +11,7 @@ namespace KesselRun.HomeLibrary.EF.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Db.HomeLibraryContext context)

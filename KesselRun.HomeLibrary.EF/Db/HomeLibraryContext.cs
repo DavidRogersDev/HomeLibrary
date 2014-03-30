@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using KesselRun.HomeLibrary.EF.Repositories;
 using KesselRun.HomeLibrary.Model;
 
 namespace KesselRun.HomeLibrary.EF.Db

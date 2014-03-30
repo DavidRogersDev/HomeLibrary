@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Data.Entity;
 using System.Windows.Forms;
+using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.Mapper;
 using KesselRun.HomeLibrary.Service;
 using Microsoft.Practices.Unity;
@@ -21,6 +20,8 @@ namespace KesselRun.HomeLibrary.Ui
         [STAThread]
         static void Main()
         {
+            Database.SetInitializer(new HomeLibraryInitializer());
+            new HomeLibraryContext().Database.Initialize(true);
 
             var autoMapperBootstrapper = new MapperBootstrapper();
             autoMapperBootstrapper.Initialize();

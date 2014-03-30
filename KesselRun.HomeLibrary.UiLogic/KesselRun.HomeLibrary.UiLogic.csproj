@@ -49,8 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\FilterType.cs" />
-    <Compile Include="Events\PagingAndSortingEventArgs.cs" />
-    <Compile Include="Events\PagingEventArgs.cs" />
     <Compile Include="Views\IPersonView.cs" />
     <Compile Include="Presenters\PeoplePresenter.cs" />
     <Compile Include="Views\ViewModels\PersonViewModel.cs" />

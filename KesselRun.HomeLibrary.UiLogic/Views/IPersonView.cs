@@ -1,5 +1,4 @@
 ﻿using System;
-using KesselRun.HomeLibrary.UiLogic.Events;
 using KesselRun.HomeLibrary.UiLogic.Views.ViewModels;
 using WinFormsMvp;
 
@@ -9,8 +8,6 @@ namespace KesselRun.HomeLibrary.UiLogic.Views
     {
         event EventHandler ViewClosing;
         event EventHandler EditPersonClicked;
-        event EventHandler<PagingEventArgs> NextPageSubmitted;
-        event EventHandler<PagingAndSortingEventArgs> SortColumn;
 
         PersonViewModel ViewModel { get; set; }
         void ReleasePresenter(IPresenter presenter);

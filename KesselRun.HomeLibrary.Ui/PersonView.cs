@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using KesselRun.HomeLibrary.UiLogic.Events;
+using KesselRun.HomeLibrary.Ui.Assets.Resources;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiLogic.Views.ViewModels;
@@ -25,11 +19,37 @@ namespace KesselRun.HomeLibrary.Ui
             InitializeComponent();
         }
 
+        private void PersonView_Load(object sender, EventArgs e)
+        {
+            dgvPersons.AllowUserToAddRows = false;
+
+
+
+            dgvcDelete.Image = ImageResources.delete;
+            dgvcEdit.Image = ImageResources.edit;
+
+            dgvPersons.DataSource = ViewModel.People;
+        }
+
         public event EventHandler ViewClosing;
         public event EventHandler EditPersonClicked;
-        public event EventHandler<PagingEventArgs> NextPageSubmitted;
-        public event EventHandler<PagingAndSortingEventArgs> SortColumn;
         public PersonViewModel ViewModel { get; set; }
+
+        private void dgvPersons_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            switch (dgvPersons.Columns[e.ColumnIndex].Name)
+            {
+                case "dgvcIsAuthor":
+                    bool isAuthor;
+
+                    if (bool.TryParse(dgvPersons.Rows[e.RowIndex].Cells["dgvcIsAuthor"].Value.ToString(),
+                        out isAuthor))
+                    {
+                        e.Value = isAuthor ? ImageResources.tick : ImageResources.cross;
+                    }
+                    break;
+            }
+        }
         
         public void ReleasePresenter(IPresenter presenter)
         {
