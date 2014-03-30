@@ -1,8 +1,11 @@
-﻿namespace KesselRun.HomeLibrary.Mapper
+﻿using KesselRun.HomeLibrary.Common;
+using KesselRun.HomeLibrary.Common.Contracts;
+
+namespace KesselRun.HomeLibrary.Mapper
 {
-    public class MapperBootstrapper
+    public class MapperBootstrapper : IBootstrapper
     {
-        public void Initialize()
+        public void Configure()
         {
             var profile = new HomeLibraryProfile();
             AutoMapper.Mapper.Initialize(p => p.AddProfile(profile));

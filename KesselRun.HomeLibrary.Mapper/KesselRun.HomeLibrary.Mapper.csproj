@@ -74,6 +74,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.Common\KesselRun.HomeLibrary.Common.csproj">
+      <Project>{9FA0B46D-433F-412C-9245-F5E07D3D9C4D}</Project>
+      <Name>KesselRun.HomeLibrary.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KesselRun.HomeLibrary.GenericRepository\KesselRun.HomeLibrary.GenericRepository.csproj">
       <Project>{4448BA77-F0DE-48B2-8935-D3844A48D050}</Project>
       <Name>KesselRun.HomeLibrary.GenericRepository</Name>

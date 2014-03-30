@@ -4,16 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{90C2B5C8-7DF9-42DA-95A7-FE08C5346FBC}</ProjectGuid>
+    <ProjectGuid>{9FA0B46D-433F-412C-9245-F5E07D3D9C4D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KesselRun.HomeLibrary.UiLogic</RootNamespace>
-    <AssemblyName>KesselRun.HomeLibrary.UiLogic</AssemblyName>
+    <RootNamespace>KesselRun.HomeLibrary.Common</RootNamespace>
+    <AssemblyName>KesselRun.HomeLibrary.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,36 +38,15 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WinFormsMvp">
-      <HintPath>..\ThirdPartyAssemblies\WinFormsMvp.dll</HintPath>
-    </Reference>
-    <Reference Include="WinFormsMvp.StructureMap">
-      <HintPath>..\ThirdPartyAssemblies\WinFormsMvp.StructureMap.dll</HintPath>
+      <HintPath>..\..\..\HomeLibrary\ThirdPartyAssemblies\WinFormsMvp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\FilterType.cs" />
-    <Compile Include="Presenters\MainPresenter.cs" />
-    <Compile Include="Services\IWindow.cs" />
-    <Compile Include="Services\NavigationService.cs" />
-    <Compile Include="Views\IClosableView.cs" />
-    <Compile Include="Views\ILendingsView.cs" />
-    <Compile Include="Views\IMainView.cs" />
+    <Compile Include="Contracts\IBootstrapper.cs" />
+    <Compile Include="Contracts\INavigationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\ViewModels\MainViewModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\KesselRun.HomeLibrary.Common\KesselRun.HomeLibrary.Common.csproj">
-      <Project>{9FA0B46D-433F-412C-9245-F5E07D3D9C4D}</Project>
-      <Name>KesselRun.HomeLibrary.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KesselRun.HomeLibrary.UiModel\KesselRun.HomeLibrary.UiModel.csproj">
-      <Project>{de516021-3806-49ed-933b-ba9122ddda79}</Project>
-      <Name>KesselRun.HomeLibrary.UiModel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
