@@ -1,11 +1,30 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using KesselRun.HomeLibrary.Model;
+using KesselRun.HomeLibrary.Model.Contracts;
+using KesselRun.HomeLibrary.Model.Enums;
 
 namespace KesselRun.HomeLibrary.EF.Db
 {
     public class HomeLibraryContext : EntitiesContext
     {
+        public HomeLibraryContext()
+        {
+            ((IObjectContextAdapter)this).ObjectContext.ObjectMaterialized += ObjectContextObjectMaterialized;
+        }
+
+        private void ObjectContextObjectMaterialized(object sender, ObjectMaterializedEventArgs objectMaterializedEventArgs )
+        {
+            var entity = objectMaterializedEventArgs.Entity as IObjectWithState;
+
+            if (ReferenceEquals(entity, null)) return;
+            entity.State = State.Unchanged;
+            entity.OriginalValues = BuildOriginalValues(Entry(entity).OriginalValues);
+        }
+
         //  DbSets go here
         public DbSet<Book> Books { get; set; }
         public DbSet<BookCover> BookCovers { get; set; }
@@ -47,6 +66,26 @@ namespace KesselRun.HomeLibrary.EF.Db
 
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        private Dictionary<string, object> BuildOriginalValues(DbPropertyValues originalValues)
+        {
+            var result = new Dictionary<string, object>();
+
+            foreach (var propertyName in originalValues.PropertyNames)
+            {
+                var value = originalValues[propertyName];
+
+                if (value is DbPropertyValues)
+                {
+                    result[propertyName] = BuildOriginalValues((DbPropertyValues)value);
+                }
+                else
+                {
+                    result[propertyName] = value;
+                }
+            }
+            return result;
         }
     }
 }

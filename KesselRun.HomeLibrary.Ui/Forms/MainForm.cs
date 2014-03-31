@@ -8,15 +8,16 @@ using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Services;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using WinFormsMvp;
+using WinFormsMvp.Binder;
 using WinFormsMvp.Forms;
+using NavigationService = KesselRun.HomeLibrary.Ui.Core.NavigationService;
 
 namespace KesselRun.HomeLibrary.Ui.Forms
 {
     [PresenterBinding(typeof(MainPresenter))]
     public partial class MainForm : MvpForm, IMainView, IWindow
     {
-        private Utilities _utilities = new Utilities(new Dictionary<Type, Type>());
-        private ViewMapper _viewMapper = new ViewMapper();
+        private readonly NavigationService _navigationService = NavigationService.SingleNavigationService;
 
         public MainForm()
         {
@@ -25,6 +26,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
 
         protected override void OnLoad(EventArgs e)
         {
+            _navigationService.NavigationRootControl = this;
             base.OnLoad(e);
         }
 
@@ -36,17 +38,14 @@ namespace KesselRun.HomeLibrary.Ui.Forms
 
         public void ReleasePresenter(IPresenter presenter)
         {
-            throw new NotImplementedException();
+            PresenterBinder.Factory.Release(presenter);
         }
 
         public void ShowChildView(Type view)
         {
             try
             {
-                var typeOfControl = _viewMapper.Bla(view);
-                var ctors = typeOfControl.GetConstructors();
-                var obj = ctors[0].Invoke(new object[] {});
-                this.MainContentPanel.Controls.Add((MvpUserControl) obj);
+                _navigationService.NavigateTo(view, MainContentPanel);
             }
             catch (Exception exception)
             {
@@ -54,25 +53,5 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             }
         }
         
-    }
-
-    public class ViewMapper
-    {
-        private const string Lendingscontrol = "KesselRun.HomeLibrary.Ui.UserControls.LendingsControl";
-
-        public Type Bla(Type type) 
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-
-            foreach (var t in assembly.GetExportedTypes())
-            {
-                if (type.IsAssignableFrom(t))
-                    return t;
-            }
-
-            var lendingsControl = assembly.CreateInstance(Lendingscontrol, false, BindingFlags.ExactBinding, null, null, null, null) as LendingsControl;
-
-            return null;
-        }
     }
 }

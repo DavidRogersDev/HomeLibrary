@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\FilterType.cs" />
+    <Compile Include="Presenters\LendingsPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Services\IWindow.cs" />
     <Compile Include="Services\NavigationService.cs" />

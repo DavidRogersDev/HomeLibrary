@@ -85,7 +85,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ImageResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Core\Utilities.cs" />
+    <Compile Include="Core\NavigationService.cs" />
     <Compile Include="DiContainerConfigurer.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
