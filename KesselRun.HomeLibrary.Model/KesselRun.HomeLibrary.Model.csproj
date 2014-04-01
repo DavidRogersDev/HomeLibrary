@@ -60,8 +60,10 @@
     <Compile Include="Book.cs" />
     <Compile Include="BookCover.cs" />
     <Compile Include="Comment.cs" />
+    <Compile Include="Contracts\IObjectWithState.cs" />
     <Compile Include="Enums\BookType.cs" />
     <Compile Include="Enums\Edition.cs" />
+    <Compile Include="Enums\State.cs" />
     <Compile Include="Lending.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

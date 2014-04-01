@@ -1,5 +1,5 @@
 ﻿
-namespace KesselRun.HomeLibrary.EF.Enums
+namespace KesselRun.HomeLibrary.Model.Enums
 {
     public enum State
     {

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using KesselRun.HomeLibrary.GenericRepository;
+using KesselRun.HomeLibrary.Model.Contracts;
 using KesselRun.HomeLibrary.Model.Enums;
 
 namespace KesselRun.HomeLibrary.Model
 {
-    public class Book : IEntity
+    public class Book : IEntity, IObjectWithState
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -17,5 +18,8 @@ namespace KesselRun.HomeLibrary.Model
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<BookCover> Covers { get; set; }
         public virtual ICollection<Lending> Lendings { get; set; }
+        
+        public State State { get; set; }
+        public Dictionary<string, object> OriginalValues { get; set; }
     }
 }

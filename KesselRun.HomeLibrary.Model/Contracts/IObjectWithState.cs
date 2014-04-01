@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using KesselRun.HomeLibrary.EF.Enums;
+using KesselRun.HomeLibrary.Model.Enums;
 
-namespace KesselRun.HomeLibrary.EF.Contracts
+namespace KesselRun.HomeLibrary.Model.Contracts
 {
     public interface IObjectWithState
     {
