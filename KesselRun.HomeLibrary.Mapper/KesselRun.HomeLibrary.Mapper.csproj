@@ -48,8 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapperBootstrapper.cs" />
-    <Compile Include="HomeLibraryProfile.cs" />
     <Compile Include="Profiles\HomeLibraryProfile.cs" />
     <Compile Include="Configuration\Initializers\IMappingInitializer.cs" />
     <Compile Include="Configuration\Initializers\BookCoverInitializer.cs" />

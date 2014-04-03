@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Windows.Forms;
-using KesselRun.HomeLibrary.Ui.Core;
-using KesselRun.HomeLibrary.Ui.UserControls;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
-using KesselRun.HomeLibrary.UiLogic.Services;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
@@ -15,7 +9,7 @@ using NavigationService = KesselRun.HomeLibrary.Ui.Core.NavigationService;
 namespace KesselRun.HomeLibrary.Ui.Forms
 {
     [PresenterBinding(typeof(MainPresenter))]
-    public partial class MainForm : MvpForm, IMainView, IWindow
+    public partial class MainForm : MvpForm, IMainView
     {
         private readonly NavigationService _navigationService = NavigationService.SingleNavigationService;
 

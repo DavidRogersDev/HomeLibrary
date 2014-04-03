@@ -85,8 +85,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ImageResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Core\MapperBootstrapper.cs" />
     <Compile Include="Core\NavigationService.cs" />
-    <Compile Include="DiContainerConfigurer.cs" />
+    <Compile Include="CustomControls\DataGridViewPager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\DataGridViewPager.Designer.cs">
+      <DependentUpon>DataGridViewPager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\DiContainerConfigurer.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +147,10 @@
     <ProjectReference Include="..\KesselRun.HomeLibrary.Common\KesselRun.HomeLibrary.Common.csproj">
       <Project>{9fa0b46d-433f-412c-9245-f5e07d3d9c4d}</Project>
       <Name>KesselRun.HomeLibrary.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.Mapper\KesselRun.HomeLibrary.Mapper.csproj">
+      <Project>{608CB184-245D-48CD-B405-2D3E4CCF8C28}</Project>
+      <Name>KesselRun.HomeLibrary.Mapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\KesselRun.HomeLibrary.UiLogic\KesselRun.HomeLibrary.UiLogic.csproj">
       <Project>{90c2b5c8-7df9-42da-95a7-fe08c5346fbc}</Project>

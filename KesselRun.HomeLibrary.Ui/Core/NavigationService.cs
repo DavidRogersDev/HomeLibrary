@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using KesselRun.HomeLibrary.Common.Contracts;
 using WinFormsMvp.Forms;
 
 namespace KesselRun.HomeLibrary.Ui.Core
 {
-    public class NavigationService
+    public class NavigationService : INavigationService
     {
         private readonly Dictionary<Type, Type> _viewTypesCache;
-        private Stack<MvpUserControl> _controlStatck = new Stack<MvpUserControl>();
+        private readonly Dictionary<string,Stack<Control>> _controlStack = new Dictionary<string, Stack<Control>>();
         public Control NavigationRootControl { get; set; }
 
-        public NavigationService()
+        private NavigationService()
         {
             _viewTypesCache = new Dictionary<Type, Type>();
         }
 
+        // ReSharper disable once ClassNeverInstantiated.Local
         private class NavigationServiceSingletonCreator
         {
             static NavigationServiceSingletonCreator()
@@ -43,7 +45,18 @@ namespace KesselRun.HomeLibrary.Ui.Core
             var typeOfControl = GetViewTypeFromInterface(view);
             var constructors = typeOfControl.GetConstructors();
             var destinationView = constructors[0].Invoke(new object[] { });
-            containerControl.Controls.Add((MvpUserControl)destinationView);
+            containerControl.Controls.Add((Control)destinationView);
+
+            ManageStack((Control)destinationView, containerControl);
+        }
+
+        public void ManageStack(Control control, Control containerControl)
+        {
+            if (!_controlStack.ContainsKey(containerControl.Name))
+            {
+                _controlStack.Add(containerControl.Name, new Stack<Control>());
+            }
+            _controlStack[containerControl.Name].Push(control);
         }
 
         public Type GetViewTypeFromInterface(Type type)

@@ -51,8 +51,6 @@
     <Compile Include="Enums\FilterType.cs" />
     <Compile Include="Presenters\LendingsPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
-    <Compile Include="Services\IWindow.cs" />
-    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Views\IClosableView.cs" />
     <Compile Include="Views\ILendingsView.cs" />
     <Compile Include="Views\IMainView.cs" />
