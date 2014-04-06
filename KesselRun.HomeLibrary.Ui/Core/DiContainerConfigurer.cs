@@ -14,7 +14,7 @@ namespace KesselRun.HomeLibrary.Ui.Core
 
         public void Configure()
         {
-            _container.RegisterType<INavigationService, NavigationService>(new TransientLifetimeManager());
+            _container.RegisterType<INavigator, Navigator>(new TransientLifetimeManager());
         }
     }
 }

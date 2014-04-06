@@ -1,17 +1,17 @@
 ﻿using System;
+using KesselRun.HomeLibrary.Ui.Core;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
 using WinFormsMvp.Forms;
-using NavigationService = KesselRun.HomeLibrary.Ui.Core.NavigationService;
 
 namespace KesselRun.HomeLibrary.Ui.Forms
 {
     [PresenterBinding(typeof(MainPresenter))]
     public partial class MainForm : MvpForm, IMainView
     {
-        private readonly NavigationService _navigationService = NavigationService.SingleNavigationService;
+        private readonly Navigator _navigator = Navigator.SingleNavigator;
 
         public MainForm()
         {
@@ -20,7 +20,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
 
         protected override void OnLoad(EventArgs e)
         {
-            _navigationService.NavigationRootControl = this;
+            _navigator.NavigationRootControl = this;
             base.OnLoad(e);
         }
 
@@ -39,7 +39,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
         {
             try
             {
-                _navigationService.NavigateTo(view, MainContentPanel);
+                _navigator.NavigateTo(view, MainContentPanel);
             }
             catch (Exception exception)
             {

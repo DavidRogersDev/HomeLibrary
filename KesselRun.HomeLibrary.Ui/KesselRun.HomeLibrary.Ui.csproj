@@ -86,7 +86,7 @@
       <DependentUpon>ImageResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Core\MapperBootstrapper.cs" />
-    <Compile Include="Core\NavigationService.cs" />
+    <Compile Include="Core\Navigator.cs" />
     <Compile Include="CustomControls\DataGridViewPager.cs">
       <SubType>UserControl</SubType>
     </Compile>

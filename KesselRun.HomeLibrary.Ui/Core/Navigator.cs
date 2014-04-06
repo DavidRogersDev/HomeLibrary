@@ -4,18 +4,19 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using KesselRun.HomeLibrary.Common.Contracts;
-using WinFormsMvp.Forms;
 
 namespace KesselRun.HomeLibrary.Ui.Core
 {
-    public class NavigationService : INavigationService
+    public class Navigator : INavigator
     {
         private readonly Dictionary<Type, Type> _viewTypesCache;
         private readonly Dictionary<string,Stack<Control>> _controlStack = new Dictionary<string, Stack<Control>>();
         public Control NavigationRootControl { get; set; }
+        public IList<Navigator> DescendantNavigators { get; set; }
 
-        private NavigationService()
+        private Navigator()
         {
+            DescendantNavigators = new List<Navigator>();
             _viewTypesCache = new Dictionary<Type, Type>();
         }
 
@@ -29,10 +30,10 @@ namespace KesselRun.HomeLibrary.Ui.Core
             }
 
             // Private object instantiated with private constructor
-            internal static readonly NavigationService UniqueInstance = new NavigationService();
+            internal static readonly Navigator UniqueInstance = new Navigator();
         }
 
-        public static NavigationService SingleNavigationService
+        public static Navigator SingleNavigator
         {
             get
             {

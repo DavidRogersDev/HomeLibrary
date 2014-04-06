@@ -28,31 +28,108 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.dgvLendings = new System.Windows.Forms.DataGridView();
+            this.dgvlcTitle = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.dgvlcAuthor = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.dgvlcBorrower = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.dgvlcEmail = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.dgvicReturn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dgvtcDateLent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvtcDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvtcDateDue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLendings)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // dgvLendings
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(42, 44);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.dgvLendings.AllowUserToAddRows = false;
+            this.dgvLendings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLendings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvlcTitle,
+            this.dgvlcAuthor,
+            this.dgvlcBorrower,
+            this.dgvlcEmail,
+            this.dgvicReturn,
+            this.dgvtcDateLent,
+            this.dgvtcDuration,
+            this.dgvtcDateDue});
+            this.dgvLendings.Location = new System.Drawing.Point(2, 30);
+            this.dgvLendings.Name = "dgvLendings";
+            this.dgvLendings.Size = new System.Drawing.Size(853, 150);
+            this.dgvLendings.TabIndex = 1;
+            // 
+            // dgvlcTitle
+            // 
+            this.dgvlcTitle.DataPropertyName = "Title";
+            this.dgvlcTitle.HeaderText = "Title";
+            this.dgvlcTitle.Name = "dgvlcTitle";
+            // 
+            // dgvlcAuthor
+            // 
+            this.dgvlcAuthor.DataPropertyName = "Author";
+            this.dgvlcAuthor.HeaderText = "Author";
+            this.dgvlcAuthor.Name = "dgvlcAuthor";
+            // 
+            // dgvlcBorrower
+            // 
+            this.dgvlcBorrower.DataPropertyName = "Borrower";
+            this.dgvlcBorrower.HeaderText = "Borrower";
+            this.dgvlcBorrower.Name = "dgvlcBorrower";
+            // 
+            // dgvlcEmail
+            // 
+            this.dgvlcEmail.DataPropertyName = "Email";
+            this.dgvlcEmail.HeaderText = "Email";
+            this.dgvlcEmail.Name = "dgvlcEmail";
+            // 
+            // dgvicReturn
+            // 
+            this.dgvicReturn.HeaderText = "Return";
+            this.dgvicReturn.Name = "dgvicReturn";
+            // 
+            // dgvtcDateLent
+            // 
+            this.dgvtcDateLent.DataPropertyName = "DateLent";
+            this.dgvtcDateLent.HeaderText = "Date Lent";
+            this.dgvtcDateLent.Name = "dgvtcDateLent";
+            // 
+            // dgvtcDuration
+            // 
+            this.dgvtcDuration.DataPropertyName = "Duration";
+            this.dgvtcDuration.FillWeight = 50F;
+            this.dgvtcDuration.HeaderText = "Duration";
+            this.dgvtcDuration.Name = "dgvtcDuration";
+            // 
+            // dgvtcDateDue
+            // 
+            this.dgvtcDateDue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvtcDateDue.DataPropertyName = "DateDue";
+            this.dgvtcDateDue.HeaderText = "Date Due";
+            this.dgvtcDateDue.Name = "dgvtcDateDue";
             // 
             // LendingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.dgvLendings);
             this.Name = "LendingsControl";
+            this.Size = new System.Drawing.Size(857, 202);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLendings)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView dgvLendings;
+        private System.Windows.Forms.DataGridViewLinkColumn dgvlcTitle;
+        private System.Windows.Forms.DataGridViewLinkColumn dgvlcAuthor;
+        private System.Windows.Forms.DataGridViewLinkColumn dgvlcBorrower;
+        private System.Windows.Forms.DataGridViewLinkColumn dgvlcEmail;
+        private System.Windows.Forms.DataGridViewImageColumn dgvicReturn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDateLent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDuration;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDateDue;
+
     }
 }
