@@ -1,4 +1,5 @@
 ﻿using System;
+using KesselRun.HomeLibrary.Common.Contracts;
 using KesselRun.HomeLibrary.Ui.Core;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
@@ -25,6 +26,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
         }
 
         public event EventHandler ViewClosing;
+
         public void CloseView()
         {
             throw new NotImplementedException();
@@ -39,7 +41,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
         {
             try
             {
-                _navigator.NavigateTo(view, MainContentPanel);
+                _navigator.NavigateTo(view,  MainContentPanel);
             }
             catch (Exception exception)
             {

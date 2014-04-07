@@ -72,11 +72,13 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WinFormsMvp">
-      <HintPath>..\..\..\HomeLibrary\ThirdPartyAssemblies\WinFormsMvp.dll</HintPath>
+    <Reference Include="WinFormsMvp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4af6a00a847e9db8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdPartyAssemblies\WinFormsMvp.dll</HintPath>
     </Reference>
-    <Reference Include="WinFormsMvp.Unity">
-      <HintPath>..\..\..\HomeLibrary\ThirdPartyAssemblies\WinFormsMvp.Unity.dll</HintPath>
+    <Reference Include="WinFormsMvp.Unity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=636cb6cfc2d5d0c9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdPartyAssemblies\WinFormsMvp.Unity.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -85,7 +87,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ImageResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Core\MapperBootstrapper.cs" />
+    <Compile Include="Core\Config\DatabaseConfigurer.cs" />
+    <Compile Include="Core\Config\MapperBootstrapper.cs" />
     <Compile Include="Core\Navigator.cs" />
     <Compile Include="CustomControls\DataGridViewPager.cs">
       <SubType>UserControl</SubType>
@@ -93,7 +96,7 @@
     <Compile Include="CustomControls\DataGridViewPager.Designer.cs">
       <DependentUpon>DataGridViewPager.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\DiContainerConfigurer.cs" />
+    <Compile Include="Core\Config\DiContainerConfigurer.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,9 +151,21 @@
       <Project>{9fa0b46d-433f-412c-9245-f5e07d3d9c4d}</Project>
       <Name>KesselRun.HomeLibrary.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.EF\KesselRun.HomeLibrary.EF.csproj">
+      <Project>{604EE641-A068-4783-A6A8-79418687EBB7}</Project>
+      <Name>KesselRun.HomeLibrary.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.GenericRepository\KesselRun.HomeLibrary.GenericRepository.csproj">
+      <Project>{4448ba77-f0de-48b2-8935-d3844a48d050}</Project>
+      <Name>KesselRun.HomeLibrary.GenericRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KesselRun.HomeLibrary.Mapper\KesselRun.HomeLibrary.Mapper.csproj">
       <Project>{608CB184-245D-48CD-B405-2D3E4CCF8C28}</Project>
       <Name>KesselRun.HomeLibrary.Mapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.Service\KesselRun.HomeLibrary.Service.csproj">
+      <Project>{A769807E-FCB2-4CF9-8F64-C83D18110382}</Project>
+      <Name>KesselRun.HomeLibrary.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\KesselRun.HomeLibrary.UiLogic\KesselRun.HomeLibrary.UiLogic.csproj">
       <Project>{90c2b5c8-7df9-42da-95a7-fe08c5346fbc}</Project>

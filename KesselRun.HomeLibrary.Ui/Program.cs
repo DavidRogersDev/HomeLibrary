@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using KesselRun.HomeLibrary.Common.Contracts;
-using KesselRun.HomeLibrary.Ui.Core;
 using KesselRun.HomeLibrary.Ui.Forms;
 
 namespace KesselRun.HomeLibrary.Ui
@@ -24,8 +20,6 @@ namespace KesselRun.HomeLibrary.Ui
             BoostrapStartupServices();
 
             var mainForm = new MainForm();
-            
-     
 
             Application.Run(mainForm);
         }

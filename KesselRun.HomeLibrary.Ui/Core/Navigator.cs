@@ -41,14 +41,32 @@ namespace KesselRun.HomeLibrary.Ui.Core
             }
         }
 
+        public void Navigate(Type fromView, Type toView, Control containerControl)
+        {
+            //var typeOfControl = GetViewTypeFromInterface(toView);
+            //var constructors = typeOfControl.GetConstructors();
+            //var destinationView = constructors[0].Invoke(new object[] { });
+
+            //containerControl.Controls.Add((Control)destinationView);
+
+            //if (destinationView is IStackableView)
+            //{
+            //    ManageStack((Control) destinationView, containerControl);
+            //}
+        }
+
         public void NavigateTo(Type view, Control containerControl)
         {
             var typeOfControl = GetViewTypeFromInterface(view);
             var constructors = typeOfControl.GetConstructors();
             var destinationView = constructors[0].Invoke(new object[] { });
+
             containerControl.Controls.Add((Control)destinationView);
 
-            ManageStack((Control)destinationView, containerControl);
+            if (destinationView is IStackableView)
+            {
+                ManageStack((Control)destinationView, containerControl);
+            }
         }
 
         public void ManageStack(Control control, Control containerControl)
@@ -84,5 +102,7 @@ namespace KesselRun.HomeLibrary.Ui.Core
 
             return viewType;
         }
+
+        
     }
 }

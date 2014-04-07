@@ -1,7 +1,7 @@
 ﻿using KesselRun.HomeLibrary.Common.Contracts;
 using KesselRun.HomeLibrary.Mapper.Profiles;
 
-namespace KesselRun.HomeLibrary.Ui.Core
+namespace KesselRun.HomeLibrary.Ui.Core.Config
 {
     public class MapperBootstrapper : IBootstrapper
     {

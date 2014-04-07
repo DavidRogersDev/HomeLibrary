@@ -40,11 +40,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WinFormsMvp">
+    <Reference Include="WinFormsMvp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4af6a00a847e9db8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdPartyAssemblies\WinFormsMvp.dll</HintPath>
     </Reference>
-    <Reference Include="WinFormsMvp.StructureMap">
-      <HintPath>..\ThirdPartyAssemblies\WinFormsMvp.StructureMap.dll</HintPath>
+    <Reference Include="WinFormsMvp.Unity">
+      <HintPath>..\ThirdPartyAssemblies\WinFormsMvp.Unity.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +62,10 @@
     <ProjectReference Include="..\KesselRun.HomeLibrary.Common\KesselRun.HomeLibrary.Common.csproj">
       <Project>{9FA0B46D-433F-412C-9245-F5E07D3D9C4D}</Project>
       <Name>KesselRun.HomeLibrary.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.Service\KesselRun.HomeLibrary.Service.csproj">
+      <Project>{A769807E-FCB2-4CF9-8F64-C83D18110382}</Project>
+      <Name>KesselRun.HomeLibrary.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\KesselRun.HomeLibrary.UiModel\KesselRun.HomeLibrary.UiModel.csproj">
       <Project>{de516021-3806-49ed-933b-ba9122ddda79}</Project>

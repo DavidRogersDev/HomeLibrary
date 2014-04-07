@@ -1,4 +1,5 @@
 ﻿using System;
+using KesselRun.HomeLibrary.Common.Contracts;
 using KesselRun.HomeLibrary.Ui.Core;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
@@ -8,7 +9,7 @@ using WinFormsMvp.Forms;
 namespace KesselRun.HomeLibrary.Ui.UserControls
 {
     [PresenterBinding(typeof(LendingsPresenter))]
-    public partial class LendingsControl : MvpUserControl, ILendingsView
+    public partial class LendingsControl : MvpUserControl, ILendingsView, IStackableView
     {
         public LendingsControl()
         {
@@ -30,5 +31,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         {
             throw new NotImplementedException();
         }
+
+        public Type NavigationSource { get; set; }
     }
 }
