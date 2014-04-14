@@ -18,13 +18,13 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         void View_Load(object sender, EventArgs e)
         {
-            try
-            {
-                var lendings = _lendingsService.GetLendings();
-            }
-            catch (Exception ex)
-            {
-            }
+            //try
+            //{
+            //    var lendings = _lendingsService.GetLendings();
+            //}
+            //catch (Exception ex)
+            //{
+            //}
 
             View.ShowChildView(typeof(ILendingsView));
         }

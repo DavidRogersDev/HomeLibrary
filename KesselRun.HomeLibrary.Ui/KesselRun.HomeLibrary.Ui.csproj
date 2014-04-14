@@ -171,6 +171,10 @@
       <Project>{90c2b5c8-7df9-42da-95a7-fe08c5346fbc}</Project>
       <Name>KesselRun.HomeLibrary.UiLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.UiModel\KesselRun.HomeLibrary.UiModel.csproj">
+      <Project>{DE516021-3806-49ED-933B-BA9122DDDA79}</Project>
+      <Name>KesselRun.HomeLibrary.UiModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll">

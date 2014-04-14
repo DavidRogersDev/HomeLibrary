@@ -6,8 +6,8 @@ using KesselRun.HomeLibrary.Model.Enums;
 
 namespace KesselRun.HomeLibrary.EF.Db
 {
-    public class HomeLibraryInitializer : DropCreateDatabaseIfModelChanges<HomeLibraryContext>
-    //public class HomeLibraryInitializer : DropCreateDatabaseAlways<HomeLibraryContext>
+//    public class HomeLibraryInitializer : DropCreateDatabaseIfModelChanges<HomeLibraryContext>
+    public class HomeLibraryInitializer : DropCreateDatabaseAlways<HomeLibraryContext>
     {
         protected override void Seed(HomeLibraryContext context)
         {
@@ -21,8 +21,17 @@ namespace KesselRun.HomeLibrary.EF.Db
                     IsAuthor = true,
                     Sobriquet = "Troubled Genius"
                 };
+            
+            var hunterS = new Person
+                {
+                    FirstName = "Hunter",
+                    LastName = "S. Tompson",
+                    Email = string.Empty,
+                    IsAuthor = true,
+                    Sobriquet = "Gonzo journo"
+                };
 
-            context.People.Add(johnKennedyToole);
+            context.People.AddRange(new List<Person> { johnKennedyToole, hunterS });
             context.SaveChanges();
 
             var penguin = new Publisher {Name = "Penguin"};
@@ -36,14 +45,24 @@ namespace KesselRun.HomeLibrary.EF.Db
                     Publisher = penguin,
                     Title = "A Confederacy ofDunces",
                     TypeOfBook = BookType.Novel,
-                    Authors = new List<Person> {johnKennedyToole}
+                    Authors = new List<Person> { johnKennedyToole }
                 };
 
-            context.Books.Add(aConfederacyOfDunces);
+            var hellsAngels = new Book
+            {
+                Edition = Edition.First,
+                Publisher = penguin,
+                Title = "Hells Angels",
+                TypeOfBook = BookType.Novel,
+                Authors = new List<Person> { hunterS }
+            };
 
-            var lending = new Lending {Book = aConfederacyOfDunces, DateLent = DateTime.Now};
+            context.Books.AddRange(new List<Book> {aConfederacyOfDunces, hellsAngels});
 
-            context.Lendings.Add(lending);
+            var lending = new Lending { Book = aConfederacyOfDunces, DateLent = DateTime.Now };
+            var lending2 = new Lending { Book = hellsAngels, DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(90)) };
+
+            context.Lendings.AddRange(new List<Lending>{ lending, lending2 });
 
             var listOfPeople = new List<Person>
                 {
@@ -53,7 +72,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                             LastName = "Halpin",
                             Email = "terry@halpin.com",
                             IsAuthor = true,
-                            Lendings = new List<Lending> {lending},
+                            Lendings = new List<Lending> { lending },
                             Sobriquet = "ORM Guy"
                         },
                     new Person
@@ -62,6 +81,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                             LastName = "Turing",
                             Email = "alan@turing.com",
                             IsAuthor = false,
+                            Lendings = new List<Lending> { lending2 },
                             Sobriquet = "Father of Awesome"
                         }
                     ,

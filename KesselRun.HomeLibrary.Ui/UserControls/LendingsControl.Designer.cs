@@ -30,32 +30,33 @@
         {
             this.dgvLendings = new System.Windows.Forms.DataGridView();
             this.dgvlcTitle = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.dgvlcAuthor = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dgvlcBorrower = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dgvlcEmail = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dgvicReturn = new System.Windows.Forms.DataGridViewImageColumn();
             this.dgvtcDateLent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvtcDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvtcDateDue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvlcAuthor = new System.Windows.Forms.DataGridViewLinkColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLendings)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvLendings
             // 
             this.dgvLendings.AllowUserToAddRows = false;
+            this.dgvLendings.AllowUserToOrderColumns = true;
             this.dgvLendings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLendings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvlcTitle,
-            this.dgvlcAuthor,
             this.dgvlcBorrower,
             this.dgvlcEmail,
             this.dgvicReturn,
             this.dgvtcDateLent,
             this.dgvtcDuration,
-            this.dgvtcDateDue});
-            this.dgvLendings.Location = new System.Drawing.Point(2, 30);
+            this.dgvtcDateDue,
+            this.dgvlcAuthor});
+            this.dgvLendings.Location = new System.Drawing.Point(0, 0);
             this.dgvLendings.Name = "dgvLendings";
-            this.dgvLendings.Size = new System.Drawing.Size(853, 150);
+            this.dgvLendings.Size = new System.Drawing.Size(1040, 150);
             this.dgvLendings.TabIndex = 1;
             // 
             // dgvlcTitle
@@ -63,35 +64,35 @@
             this.dgvlcTitle.DataPropertyName = "Title";
             this.dgvlcTitle.HeaderText = "Title";
             this.dgvlcTitle.Name = "dgvlcTitle";
-            // 
-            // dgvlcAuthor
-            // 
-            this.dgvlcAuthor.DataPropertyName = "Author";
-            this.dgvlcAuthor.HeaderText = "Author";
-            this.dgvlcAuthor.Name = "dgvlcAuthor";
+            this.dgvlcTitle.ToolTipText = "Title";
             // 
             // dgvlcBorrower
             // 
             this.dgvlcBorrower.DataPropertyName = "Borrower";
             this.dgvlcBorrower.HeaderText = "Borrower";
             this.dgvlcBorrower.Name = "dgvlcBorrower";
+            this.dgvlcBorrower.ToolTipText = "Borrower";
             // 
             // dgvlcEmail
             // 
             this.dgvlcEmail.DataPropertyName = "Email";
             this.dgvlcEmail.HeaderText = "Email";
             this.dgvlcEmail.Name = "dgvlcEmail";
+            this.dgvlcEmail.ToolTipText = "Email";
             // 
             // dgvicReturn
             // 
+            this.dgvicReturn.DataPropertyName = "ReturnDate";
             this.dgvicReturn.HeaderText = "Return";
             this.dgvicReturn.Name = "dgvicReturn";
+            this.dgvicReturn.ToolTipText = "Return Book";
             // 
             // dgvtcDateLent
             // 
             this.dgvtcDateLent.DataPropertyName = "DateLent";
             this.dgvtcDateLent.HeaderText = "Date Lent";
             this.dgvtcDateLent.Name = "dgvtcDateLent";
+            this.dgvtcDateLent.ToolTipText = "Book Lent On";
             // 
             // dgvtcDuration
             // 
@@ -99,13 +100,22 @@
             this.dgvtcDuration.FillWeight = 50F;
             this.dgvtcDuration.HeaderText = "Duration";
             this.dgvtcDuration.Name = "dgvtcDuration";
+            this.dgvtcDuration.ToolTipText = "Loan Duration";
             // 
             // dgvtcDateDue
             // 
-            this.dgvtcDateDue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dgvtcDateDue.DataPropertyName = "DateDue";
+            this.dgvtcDateDue.DataPropertyName = "DueDate";
             this.dgvtcDateDue.HeaderText = "Date Due";
             this.dgvtcDateDue.Name = "dgvtcDateDue";
+            this.dgvtcDateDue.ToolTipText = "Due Date for the Book";
+            // 
+            // dgvlcAuthor
+            // 
+            this.dgvlcAuthor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvlcAuthor.DataPropertyName = "Authors";
+            this.dgvlcAuthor.HeaderText = "Author/s";
+            this.dgvlcAuthor.Name = "dgvlcAuthor";
+            this.dgvlcAuthor.ToolTipText = "Authors";
             // 
             // LendingsControl
             // 
@@ -113,7 +123,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dgvLendings);
             this.Name = "LendingsControl";
-            this.Size = new System.Drawing.Size(857, 202);
+            this.Size = new System.Drawing.Size(1050, 202);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLendings)).EndInit();
             this.ResumeLayout(false);
 
@@ -123,13 +133,13 @@
 
         private System.Windows.Forms.DataGridView dgvLendings;
         private System.Windows.Forms.DataGridViewLinkColumn dgvlcTitle;
-        private System.Windows.Forms.DataGridViewLinkColumn dgvlcAuthor;
         private System.Windows.Forms.DataGridViewLinkColumn dgvlcBorrower;
         private System.Windows.Forms.DataGridViewLinkColumn dgvlcEmail;
         private System.Windows.Forms.DataGridViewImageColumn dgvicReturn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDateLent;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDuration;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDateDue;
+        private System.Windows.Forms.DataGridViewLinkColumn dgvlcAuthor;
 
     }
 }

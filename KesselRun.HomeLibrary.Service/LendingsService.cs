@@ -16,7 +16,7 @@ namespace KesselRun.HomeLibrary.Service
 
         public LendingsService(IUnitOfWork unitOfWork, IUniversalMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork; 
             _mapper = mapper;
         }
 
@@ -25,7 +25,7 @@ namespace KesselRun.HomeLibrary.Service
         {
             IList<Lending> lendings = new List<Lending>();
 
-            foreach (var lending in _unitOfWork.Lendings.GetAllIncluding(l => l.Book, l => l.Borrower))
+            foreach (var lending in _unitOfWork.Lendings.GetAllIncluding(l => l.Book.Authors, l => l.Borrower))
             {
                 var newLending = new Lending();
                  lendings.Add(_mapper.Map(lending, newLending));
