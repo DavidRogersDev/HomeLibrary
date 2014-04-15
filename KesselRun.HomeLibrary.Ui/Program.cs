@@ -30,6 +30,15 @@ namespace KesselRun.HomeLibrary.Ui
             var autoMapperBootstrapper = new MapperBootstrapper();
             autoMapperBootstrapper.Initialize();
 
+            ConfigureIoc();
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new PersonView());
+        }
+
+        private static void ConfigureIoc()
+        {
             _container = new UnityContainer();
 
             _container.RegisterInstance<IMappingEngine>(AutoMapper.Mapper.Engine)
@@ -37,17 +46,13 @@ namespace KesselRun.HomeLibrary.Ui
 
             _container.RegisterType<IRepositoryProvider, RepositoryProvider>(
                 new TransientLifetimeManager(),
-                new InjectionMember[] { new InjectionConstructor(new RepositoryFactories()) }
+                new InjectionMember[] {new InjectionConstructor(new RepositoryFactories())}
                 );
 
             _container.RegisterType<IUnitOfWork, UnitOfWork>(new TransientLifetimeManager());
             _container.RegisterType<IHomeLibraryService, HomeLibraryService>(new TransientLifetimeManager());
 
             PresenterBinder.Factory = new UnityPresenterFactory(_container);
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PersonView());
         }
     }
 }
