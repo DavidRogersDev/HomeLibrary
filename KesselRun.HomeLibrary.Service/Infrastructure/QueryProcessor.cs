@@ -4,7 +4,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
 {
     public sealed class QueryProcessor : IQueryProcessor
     {
-        private readonly IUnityContainer _container = new UnityContainer();
+        private readonly IUnityContainer _container;
 
         public QueryProcessor(IUnityContainer container)
         {
@@ -16,7 +16,8 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
         {
             var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
 
-            dynamic handler = _container.Resolve(handlerType, string.Concat(handlerType.Name, "Registration"));
+            dynamic handler = _container.Resolve(handlerType, "Hi Dave");
+            //dynamic handler = _container.Resolve(handlerType, string.Concat(handlerType.Name, "Registration"));
 
             return handler.Handle((dynamic)query);
         }
