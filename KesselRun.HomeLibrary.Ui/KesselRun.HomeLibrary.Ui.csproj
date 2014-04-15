@@ -34,6 +34,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
@@ -122,6 +130,10 @@
       <Project>{604EE641-A068-4783-A6A8-79418687EBB7}</Project>
       <Name>KesselRun.HomeLibrary.EF</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.GenericRepository\KesselRun.HomeLibrary.GenericRepository.csproj">
+      <Project>{4448ba77-f0de-48b2-8935-d3844a48d050}</Project>
+      <Name>KesselRun.HomeLibrary.GenericRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KesselRun.HomeLibrary.Mapper\KesselRun.HomeLibrary.Mapper.csproj">
       <Project>{608CB184-245D-48CD-B405-2D3E4CCF8C28}</Project>
       <Name>KesselRun.HomeLibrary.Mapper</Name>
@@ -140,6 +152,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll">
+      <Link>AutoMapper.Net4.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Images\cross.png" />
     <Content Include="Assets\Images\delete.gif" />
     <Content Include="Assets\Images\edit.png" />

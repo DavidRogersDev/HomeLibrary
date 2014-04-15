@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using KesselRun.HomeLibrary.EF;
-using KesselRun.HomeLibrary.EF.Repositories.Factories;
 using KesselRun.HomeLibrary.GenericRepository;
 using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Model;
@@ -11,12 +10,14 @@ namespace KesselRun.HomeLibrary.Service
 {
     public class HomeLibraryService : IHomeLibraryService, IDisposable
     {
-        readonly UnitOfWork _unitOfWork = new UnitOfWork(new RepositoryProvider(new RepositoryFactories()));
-        private readonly UniversalMapper mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUniversalMapper _mapper;
 
-        public HomeLibraryService()
+
+        public HomeLibraryService(IUnitOfWork unitOfWork, IUniversalMapper mapper)
         {
-            mapper = new UniversalMapper(AutoMapper.Mapper.Engine);
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public BindingList<UiModel.Models.Person> GetAllPeople()
@@ -36,7 +37,7 @@ namespace KesselRun.HomeLibrary.Service
 
             var uiList = new BindingList<UiModel.Models.Person>();
 
-            mapper.Map(peoplePaginated.AsQueryable(), uiList);
+            _mapper.Map(peoplePaginated.AsQueryable(), uiList);
 
             return uiList;
         }
