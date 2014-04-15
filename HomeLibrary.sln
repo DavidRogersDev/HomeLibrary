@@ -22,6 +22,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KesselRun.HomeLibrary.Mapper", "KesselRun.HomeLibrary.Mapper\KesselRun.HomeLibrary.Mapper.csproj", "{608CB184-245D-48CD-B405-2D3E4CCF8C28}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KesselRun.HomeLibrary.UiLogic", "KesselRun.HomeLibrary.UiLogic\KesselRun.HomeLibrary.UiLogic.csproj", "{90C2B5C8-7DF9-42DA-95A7-FE08C5346FBC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{76A53439-FED0-404B-A3E2-E104595C0035} = {76A53439-FED0-404B-A3E2-E104595C0035}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 Domain", "02 Domain", "{CDC7E6F7-C05B-4B3C-BD1B-BA21CD4A294C}"
 EndProject

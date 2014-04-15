@@ -23,17 +23,9 @@ namespace KesselRun.HomeLibrary.Service
         public BindingList<UiModel.Models.Person> GetAllPeople()
         {
             var peopleRepository = _unitOfWork.People;
-            var people = peopleRepository.GetAll();
             PaginatedList<Person> peoplePaginated = null;
 
-            try
-            {
-                peoplePaginated = peopleRepository.Paginate(0, 3);
-            }
-            catch (Exception exception)
-            {
-
-            }
+            peoplePaginated = peopleRepository.Paginate(0, 3);
 
             var uiList = new BindingList<UiModel.Models.Person>();
 
