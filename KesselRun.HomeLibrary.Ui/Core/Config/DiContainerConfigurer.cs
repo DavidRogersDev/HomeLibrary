@@ -4,6 +4,7 @@ using System.Reflection;
 using AutoMapper;
 using KesselRun.HomeLibrary.Common.Contracts;
 using KesselRun.HomeLibrary.EF;
+using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.EF.Repositories.Factories;
 using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service;
@@ -44,6 +45,8 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                 new InjectionMember[] {new InjectionConstructor(new RepositoryFactories())}
                 );
 
+            _container.RegisterType<IEntitiesContext, HomeLibraryContext>(new TransientLifetimeManager());
+            _container.RegisterType<IFontOfAllData, FontOfAllData>(new TransientLifetimeManager());
             _container.RegisterType<IUnitOfWork, UnitOfWork>(new TransientLifetimeManager());
             _container.RegisterType<ILendingsService, LendingsService>(new TransientLifetimeManager());
             _container.RegisterType<IQueryProcessor, QueryProcessor>(new ContainerControlledLifetimeManager());

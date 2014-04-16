@@ -7,12 +7,12 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure.Queries
 {
     public class GetLendingsPagedSortedQueryHandler : IQueryHandler<GetLendingsPagedSortedQuery, IList<Lending>>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IFontOfAllData _fontOfAllData;
         private readonly IUniversalMapper _mapper;
 
-        public GetLendingsPagedSortedQueryHandler(IUnitOfWork unitOfWork, IUniversalMapper mapper)
+        public GetLendingsPagedSortedQueryHandler(IFontOfAllData fontOfAllData, IUniversalMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _fontOfAllData = fontOfAllData;
             _mapper = mapper;
         }
 
@@ -20,7 +20,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure.Queries
         {
              IList<Lending> lendings = new List<Lending>();
 
-             foreach (var lending in _unitOfWork.Lendings.Paginate(query.PageNr, query.PageSize, l => l.Id, l => true, l => l.Book.Authors, l => l.Borrower))
+             foreach (var lending in _fontOfAllData.GetAllLendingsPagedAndSorted(query.PageNr, query.PageSize))
              {
                  var uiLending = new Lending();
                  lendings.Add(_mapper.Map(lending, uiLending));

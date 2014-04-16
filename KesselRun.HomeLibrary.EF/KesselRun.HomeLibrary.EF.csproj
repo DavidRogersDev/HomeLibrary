@@ -60,6 +60,8 @@
     <Compile Include="Db\HomeLibraryContext.cs" />
     <Compile Include="Db\HomeLibraryInitializer.cs" />
     <Compile Include="DisposableExtensions.cs" />
+    <Compile Include="FontOfAllData.cs" />
+    <Compile Include="IFontOfAllData.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Db\EntitiesContext.cs" />
