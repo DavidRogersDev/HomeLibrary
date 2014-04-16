@@ -29,7 +29,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         void View_Load(object sender, EventArgs e)
         {
-            var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery{ PageNr = 0, PageSize = 10 };
+            var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery{ PageNr = 0, PageSize = 10, O = "hi there" };
             var getPeoplePagedSortedQuery = new GetPeoplePagedSortedQuery { PageNr = 0, PageSize = 10 };
 
             View.Lendings = new BindingList<Lending>(_queryProcessor.Process(getLendingsPagedSortedQuery));

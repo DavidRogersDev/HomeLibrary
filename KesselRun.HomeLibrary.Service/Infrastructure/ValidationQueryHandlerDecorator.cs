@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
@@ -9,7 +10,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
     {
         private readonly IQueryHandler<TQuery, TResult> _decorated;
 
-        //[DebuggerStepThrough]
+        [DebuggerStepThrough]
         public ValidationQueryHandlerDecorator(IQueryHandler<TQuery, TResult> decorated)
         {
             _decorated = decorated;
@@ -19,8 +20,14 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
         public TResult Handle(TQuery query)
         {
             var validationContext = new ValidationContext(query);
-
-            Validator.ValidateObject(query, validationContext);
+            try
+            {
+                Validator.ValidateObject(query, validationContext, true);
+            }
+            catch (Exception exception)
+            {
+                
+            }
 
             return _decorated.Handle(query);
         }
