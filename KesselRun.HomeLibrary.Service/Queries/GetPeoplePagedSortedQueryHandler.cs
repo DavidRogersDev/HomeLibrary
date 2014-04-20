@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using KesselRun.HomeLibrary.EF;
 using KesselRun.HomeLibrary.Mapper.Mappers;
+using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.UiModel.Models;
 
-namespace KesselRun.HomeLibrary.Service.Infrastructure.Queries
+namespace KesselRun.HomeLibrary.Service.Queries
 {
     public class GetPeoplePagedSortedQueryHandler : IQueryHandler<GetPeoplePagedSortedQuery, IList<Person>>
     {

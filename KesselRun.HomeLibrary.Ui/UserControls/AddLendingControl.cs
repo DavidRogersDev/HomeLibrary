@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using KesselRun.HomeLibrary.Common.Contracts;
 using KesselRun.HomeLibrary.Ui.Core;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
@@ -8,31 +14,27 @@ using WinFormsMvp;
 using WinFormsMvp.Binder;
 using WinFormsMvp.Forms;
 
-namespace KesselRun.HomeLibrary.Ui.Forms
+namespace KesselRun.HomeLibrary.Ui.UserControls
 {
-    [PresenterBinding(typeof(MainPresenter))]
-    public partial class MainForm : MvpForm, IMainView
+    [PresenterBinding(typeof(AddLendingsPresenter))]
+    public partial class AddLendingControl : MvpUserControl, IAddLendingsView
     {
         private readonly Navigator _navigator = Navigator.SingleNavigator;
 
-        public MainForm()
+        public AddLendingControl()
         {
             InitializeComponent();
         }
 
-        protected override void OnLoad(EventArgs e)
-        {
-            _navigator.NavigationRootControl = this;
-            base.OnLoad(e);
-        }
-
+        public bool ThrowExceptionIfNoPresenterBound { get; private set; }
         public event EventHandler ViewClosing;
         public event EventHandler Close;
         public string ControlStack { get; set; }
 
         public void CloseView()
         {
-            throw new NotImplementedException();
+            _navigator.Return(Parent);
+            ViewClosing(this, EventArgs.Empty);
         }
 
         public void ReleasePresenter(IPresenter presenter)
@@ -40,17 +42,9 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             PresenterBinder.Factory.Release(presenter);
         }
 
-        public void ShowChildView(Type view)
+        private void btnClose_Click(object sender, EventArgs e)
         {
-            try
-            {
-                _navigator.NavigateTo(view,  MainContentPanel);
-            }
-            catch (Exception exception)
-            {
-                
-            }
+            Close(this, EventArgs.Empty);
         }
-        
     }
 }

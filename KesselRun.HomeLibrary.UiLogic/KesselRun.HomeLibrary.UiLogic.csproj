@@ -50,12 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\FilterType.cs" />
+    <Compile Include="Presenters\AddLendingsPresenter.cs" />
     <Compile Include="Presenters\LendingsPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Views\IClosableView.cs" />
     <Compile Include="Views\ILendingsView.cs" />
     <Compile Include="Views\IMainView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\IAddLendingsView.cs" />
     <Compile Include="Views\ViewModels\LendingsViewModel.cs" />
     <Compile Include="Views\ViewModels\MainViewModel.cs" />
   </ItemGroup>

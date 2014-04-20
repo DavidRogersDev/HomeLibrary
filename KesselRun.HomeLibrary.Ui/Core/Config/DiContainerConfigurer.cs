@@ -46,9 +46,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                 );
 
             _container.RegisterType<IEntitiesContext, HomeLibraryContext>(new TransientLifetimeManager());
-            _container.RegisterType<IFontOfAllData, FontOfAllData>(new TransientLifetimeManager());
             _container.RegisterType<IUnitOfWork, UnitOfWork>(new TransientLifetimeManager());
-            _container.RegisterType<ILendingsService, LendingsService>(new TransientLifetimeManager());
             _container.RegisterType<IQueryProcessor, QueryProcessor>(new ContainerControlledLifetimeManager());
 
         }

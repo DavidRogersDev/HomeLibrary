@@ -58,14 +58,13 @@
     <Compile Include="Infrastructure\IQueryHandler.cs" />
     <Compile Include="Infrastructure\IQuery.cs" />
     <Compile Include="Infrastructure\IQueryProcessor.cs" />
-    <Compile Include="Infrastructure\Queries\GetLendingsPagedSortedQuery.cs" />
-    <Compile Include="Infrastructure\Queries\GetLendingsPagedSortedQueryHandler.cs" />
-    <Compile Include="Infrastructure\Queries\GetPeoplePagedSortedQuery.cs" />
-    <Compile Include="Infrastructure\Queries\GetPeoplePagedSortedQueryHandler.cs" />
+    <Compile Include="Queries\GetLendingByPkQuery.cs" />
+    <Compile Include="Queries\GetLendingsPagedSortedQuery.cs" />
+    <Compile Include="QueryHandlers\LendingsHandlers.cs" />
+    <Compile Include="Queries\GetPeoplePagedSortedQuery.cs" />
+    <Compile Include="Queries\GetPeoplePagedSortedQueryHandler.cs" />
     <Compile Include="Infrastructure\QueryProcessor.cs" />
     <Compile Include="Infrastructure\ValidationQueryHandlerDecorator.cs" />
-    <Compile Include="LendingsService.cs" />
-    <Compile Include="ILendingsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

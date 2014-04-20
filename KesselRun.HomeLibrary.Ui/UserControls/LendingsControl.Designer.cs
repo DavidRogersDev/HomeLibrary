@@ -37,6 +37,7 @@
             this.dgvtcDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvtcDateDue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvlcAuthor = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.btnAddLending = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLendings)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,10 +118,21 @@
             this.dgvlcAuthor.Name = "dgvlcAuthor";
             this.dgvlcAuthor.ToolTipText = "Authors";
             // 
+            // btnAddLending
+            // 
+            this.btnAddLending.Location = new System.Drawing.Point(20, 165);
+            this.btnAddLending.Name = "btnAddLending";
+            this.btnAddLending.Size = new System.Drawing.Size(75, 23);
+            this.btnAddLending.TabIndex = 2;
+            this.btnAddLending.Text = "Add Lending";
+            this.btnAddLending.UseVisualStyleBackColor = true;
+            this.btnAddLending.Click += new System.EventHandler(this.btnAddLending_Click);
+            // 
             // LendingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnAddLending);
             this.Controls.Add(this.dgvLendings);
             this.Name = "LendingsControl";
             this.Size = new System.Drawing.Size(1050, 202);
@@ -140,6 +152,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDuration;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDateDue;
         private System.Windows.Forms.DataGridViewLinkColumn dgvlcAuthor;
+        private System.Windows.Forms.Button btnAddLending;
 
     }
 }

@@ -14,6 +14,8 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
     [PresenterBinding(typeof(LendingsPresenter))]
     public partial class LendingsControl : MvpUserControl, ILendingsView, IStackableView
     {
+        private readonly Navigator _navigator = Navigator.SingleNavigator;
+
         public LendingsControl()
         {
             InitializeComponent();
@@ -27,6 +29,8 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         }
 
         public event EventHandler ViewClosing;
+        public event EventHandler Close;
+
         public void CloseView()
         {
             throw new NotImplementedException();
@@ -39,5 +43,23 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
         public Type NavigationSource { get; set; }
         public BindingList<Lending> Lendings { get; set; }
+        public event EventHandler AddLending;
+        
+        public void LoadAddLendingView(Type view)
+        {
+            _navigator.Navigate(typeof(ILendingsView), view, Parent);            
+            
+        }
+
+        private void btnAddLending_Click(object sender, EventArgs e)
+        {
+            AddLending(this, EventArgs.Empty);
+        }
+
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+             var a = Parent;
+        }
     }
 }

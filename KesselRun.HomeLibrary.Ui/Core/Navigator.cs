@@ -4,13 +4,14 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using KesselRun.HomeLibrary.Common.Contracts;
+using KesselRun.HomeLibrary.UiLogic.Views;
 
 namespace KesselRun.HomeLibrary.Ui.Core
 {
     public class Navigator : INavigator
     {
         private readonly Dictionary<Type, Type> _viewTypesCache;
-        private readonly Dictionary<string,Stack<Control>> _controlStack = new Dictionary<string, Stack<Control>>();
+        private readonly Dictionary<string, Stack<Control>> _controlStacks = new Dictionary<string, Stack<Control>>();
         public Control NavigationRootControl { get; set; }
         public IList<Navigator> DescendantNavigators { get; set; }
 
@@ -43,16 +44,16 @@ namespace KesselRun.HomeLibrary.Ui.Core
 
         public void Navigate(Type fromView, Type toView, Control containerControl)
         {
-            //var typeOfControl = GetViewTypeFromInterface(toView);
-            //var constructors = typeOfControl.GetConstructors();
-            //var destinationView = constructors[0].Invoke(new object[] { });
+            containerControl.Controls.Clear();
 
-            //containerControl.Controls.Add((Control)destinationView);
+            var typeOfControl = GetViewTypeFromInterface(toView);
+            var constructors = typeOfControl.GetConstructors();
+            var destinationView = constructors[0].Invoke(new object[] { });
+            var destinationViewControl = (Control)destinationView;
 
-            //if (destinationView is IStackableView)
-            //{
-            //    ManageStack((Control) destinationView, containerControl);
-            //}
+            containerControl.Controls.Add(destinationViewControl);
+            _controlStacks[containerControl.Name].Push(destinationViewControl);
+            
         }
 
         public void NavigateTo(Type view, Control containerControl)
@@ -61,21 +62,23 @@ namespace KesselRun.HomeLibrary.Ui.Core
             var constructors = typeOfControl.GetConstructors();
             var destinationView = constructors[0].Invoke(new object[] { });
 
-            containerControl.Controls.Add((Control)destinationView);
+            var destinationViewControl = (Control)destinationView;
+
+            containerControl.Controls.Add(destinationViewControl);
 
             if (destinationView is IStackableView)
             {
-                ManageStack((Control)destinationView, containerControl);
+                ManageStack(destinationViewControl, containerControl);
             }
         }
 
         public void ManageStack(Control control, Control containerControl)
         {
-            if (!_controlStack.ContainsKey(containerControl.Name))
+            if (!_controlStacks.ContainsKey(containerControl.Name))
             {
-                _controlStack.Add(containerControl.Name, new Stack<Control>());
+                _controlStacks.Add(containerControl.Name, new Stack<Control>());
             }
-            _controlStack[containerControl.Name].Push(control);
+            _controlStacks[containerControl.Name].Push(control);
         }
 
         public Type GetViewTypeFromInterface(Type type)
@@ -103,6 +106,15 @@ namespace KesselRun.HomeLibrary.Ui.Core
             return viewType;
         }
 
-        
+
+        public void Return(Control containerControl)
+        {
+            _controlStacks[containerControl.Name].Pop();
+
+            var control = _controlStacks[containerControl.Name].Peek() as UserControl;
+            containerControl.Controls.Add(_controlStacks[containerControl.Name].Peek());
+
+            control.Refresh();
+        }
     }
 }

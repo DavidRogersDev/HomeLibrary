@@ -7,12 +7,9 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 {
     public class MainPresenter : Presenter<IMainView>
     {
-        private readonly ILendingsService _lendingsService;
-
-        public MainPresenter(IMainView view, ILendingsService lendingsService)
+        public MainPresenter(IMainView view)
             : base(view)
         {
-            _lendingsService = lendingsService;
             View.Load += View_Load;
         }
 
