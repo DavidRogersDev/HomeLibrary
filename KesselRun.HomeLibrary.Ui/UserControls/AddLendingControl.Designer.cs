@@ -28,22 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblBook = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
+            this.lblDateDue = new System.Windows.Forms.Label();
+            this.lblDateLent = new System.Windows.Forms.Label();
+            this.lblBorrower = new System.Windows.Forms.Label();
+            this.cboBorrower = new System.Windows.Forms.ComboBox();
+            this.cboBook = new System.Windows.Forms.ComboBox();
+            this.dtpDateLent = new System.Windows.Forms.DateTimePicker();
+            this.dtpDateDue = new System.Windows.Forms.DateTimePicker();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // lblBook
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(197, 84);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.lblBook.AutoSize = true;
+            this.lblBook.Location = new System.Drawing.Point(43, 12);
+            this.lblBook.Name = "lblBook";
+            this.lblBook.Size = new System.Drawing.Size(35, 13);
+            this.lblBook.TabIndex = 0;
+            this.lblBook.Text = "Book:";
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(123, 130);
+            this.btnClose.Location = new System.Drawing.Point(209, 156);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 1;
@@ -51,14 +59,88 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // lblDateDue
+            // 
+            this.lblDateDue.AutoSize = true;
+            this.lblDateDue.Location = new System.Drawing.Point(22, 93);
+            this.lblDateDue.Name = "lblDateDue";
+            this.lblDateDue.Size = new System.Drawing.Size(56, 13);
+            this.lblDateDue.TabIndex = 3;
+            this.lblDateDue.Text = "Due Date:";
+            // 
+            // lblDateLent
+            // 
+            this.lblDateLent.AutoSize = true;
+            this.lblDateLent.Location = new System.Drawing.Point(21, 66);
+            this.lblDateLent.Name = "lblDateLent";
+            this.lblDateLent.Size = new System.Drawing.Size(57, 13);
+            this.lblDateLent.TabIndex = 4;
+            this.lblDateLent.Text = "Date Lent:";
+            // 
+            // lblBorrower
+            // 
+            this.lblBorrower.AutoSize = true;
+            this.lblBorrower.Location = new System.Drawing.Point(26, 39);
+            this.lblBorrower.Name = "lblBorrower";
+            this.lblBorrower.Size = new System.Drawing.Size(52, 13);
+            this.lblBorrower.TabIndex = 5;
+            this.lblBorrower.Text = "Borrower:";
+            // 
+            // cboBorrower
+            // 
+            this.cboBorrower.FormattingEnabled = true;
+            this.cboBorrower.Location = new System.Drawing.Point(84, 35);
+            this.cboBorrower.Name = "cboBorrower";
+            this.cboBorrower.Size = new System.Drawing.Size(121, 21);
+            this.cboBorrower.TabIndex = 6;
+            // 
+            // cboBook
+            // 
+            this.cboBook.FormattingEnabled = true;
+            this.cboBook.Location = new System.Drawing.Point(84, 8);
+            this.cboBook.Name = "cboBook";
+            this.cboBook.Size = new System.Drawing.Size(121, 21);
+            this.cboBook.TabIndex = 7;
+            // 
+            // dtpDateLent
+            // 
+            this.dtpDateLent.Location = new System.Drawing.Point(84, 62);
+            this.dtpDateLent.Name = "dtpDateLent";
+            this.dtpDateLent.Size = new System.Drawing.Size(200, 20);
+            this.dtpDateLent.TabIndex = 8;
+            // 
+            // dtpDateDue
+            // 
+            this.dtpDateDue.Location = new System.Drawing.Point(84, 89);
+            this.dtpDateDue.Name = "dtpDateDue";
+            this.dtpDateDue.Size = new System.Drawing.Size(200, 20);
+            this.dtpDateDue.TabIndex = 9;
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(209, 127);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.TabIndex = 10;
+            this.btnAdd.Text = "Add Lending";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            // 
             // AddLendingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.dtpDateDue);
+            this.Controls.Add(this.dtpDateLent);
+            this.Controls.Add(this.cboBook);
+            this.Controls.Add(this.cboBorrower);
+            this.Controls.Add(this.lblBorrower);
+            this.Controls.Add(this.lblDateLent);
+            this.Controls.Add(this.lblDateDue);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblBook);
             this.Name = "AddLendingControl";
-            this.Size = new System.Drawing.Size(595, 203);
+            this.Size = new System.Drawing.Size(311, 203);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -66,7 +148,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblBook;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Label lblDateDue;
+        private System.Windows.Forms.Label lblDateLent;
+        private System.Windows.Forms.Label lblBorrower;
+        private System.Windows.Forms.ComboBox cboBorrower;
+        private System.Windows.Forms.ComboBox cboBook;
+        private System.Windows.Forms.DateTimePicker dtpDateLent;
+        private System.Windows.Forms.DateTimePicker dtpDateDue;
+        private System.Windows.Forms.Button btnAdd;
     }
 }
