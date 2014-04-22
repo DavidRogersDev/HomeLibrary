@@ -12,12 +12,12 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 {
     public class AddLendingsPresenter : Presenter<IAddLendingsView>, IDisposable
     {
-        private readonly ICommandHandler<AddLendingCommand> _addlendingHandler;
+        private readonly ICommandProcessor _commandProcessor;
         private readonly IQueryProcessor _queryProcessor;
 
-        public AddLendingsPresenter(IAddLendingsView view, ICommandHandler<AddLendingCommand> addlendingHandler, IQueryProcessor queryProcessor) : base(view)
+        public AddLendingsPresenter(IAddLendingsView view, ICommandProcessor commandProcessor, IQueryProcessor queryProcessor) : base(view)
         {
-            _addlendingHandler = addlendingHandler;
+            _commandProcessor = commandProcessor;
             _queryProcessor = queryProcessor;
             View.ViewClosing += View_ViewClosing;
             View.Close += view_Close;
@@ -49,7 +49,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
                 DateDue = e.dateDue
             };
 
-            _addlendingHandler.Handle(addLendingCommand);
+            _commandProcessor.Execute(addLendingCommand);
         }
 
         void View_ViewClosing(object sender, System.EventArgs e)

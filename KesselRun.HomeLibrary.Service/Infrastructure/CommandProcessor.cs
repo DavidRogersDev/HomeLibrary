@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using Microsoft.Practices.Unity;
 
 namespace KesselRun.HomeLibrary.Service.Infrastructure
 {
@@ -11,12 +12,11 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
             _container = container;
         }
 
-        public void ProcessCommand<TCommand>(ICommandHandler<TCommand> command)
+        public void Execute(dynamic command)
         {
-            var handlerType = typeof (ICommandHandler<TCommand>).MakeGenericType(command.GetType(), typeof (TCommand));
-            dynamic handler = _container.Resolve(handlerType);
-
-            handler.ProcessCommand((dynamic) command);
+            Type commandHandlerType = typeof (ICommandHandler<>).MakeGenericType(command.GetType());
+            dynamic commandHandler = _container.Resolve(commandHandlerType);
+            commandHandler.Handle(command);
         }
     }
 }
