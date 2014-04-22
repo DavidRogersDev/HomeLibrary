@@ -24,15 +24,14 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             _queryProcessor = queryProcessor;
         }
 
-        void View_AddLending(object sender, EventArgs e)
+        void View_AddLending(object sender, System.EventArgs e)
         {
             View.LoadAddLendingView(typeof(IAddLendingsView));
         }
 
-        void View_Load(object sender, EventArgs e)
+        void View_Load(object sender, System.EventArgs e)
         {
             var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery{ PageNr = 0, PageSize = 10 };
-            var getPeoplePagedSortedQuery = new GetPeoplePagedSortedQuery { PageNr = 0, PageSize = 10 };
             var getLendingByPkQuery = new GetLendingByPkQuery{ Id = 1 };
 
 

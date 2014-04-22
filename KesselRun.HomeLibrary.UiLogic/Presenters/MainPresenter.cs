@@ -13,7 +13,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             View.Load += View_Load;
         }
 
-        void View_Load(object sender, EventArgs e)
+        void View_Load(object sender, System.EventArgs e)
         {
             //try
             //{

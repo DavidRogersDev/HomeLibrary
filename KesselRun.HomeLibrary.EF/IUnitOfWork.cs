@@ -12,6 +12,7 @@ namespace KesselRun.HomeLibrary.EF
         void Commit();
 
         // Repositories
+        IEntityRepository<Book> Books { get; }
         IEntityRepository<Person> People { get; }
         IEntityRepository<Lending> Lendings { get; }
     }

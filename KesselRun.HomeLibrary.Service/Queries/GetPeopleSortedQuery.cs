@@ -4,9 +4,8 @@ using KesselRun.HomeLibrary.UiModel.Models;
 
 namespace KesselRun.HomeLibrary.Service.Queries
 {
-    public class GetPeoplePagedSortedQuery : IQuery<IList<Person>>
+    public class GetPeopleSortedQuery : IQuery<IList<Person>>
     {
-        public int PageNr { get; set; }
-        public int PageSize { get; set; }
+        public string SortBy { get; set; }
     }
 }

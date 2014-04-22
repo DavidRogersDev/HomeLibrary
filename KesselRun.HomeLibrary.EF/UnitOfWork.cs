@@ -34,6 +34,7 @@ namespace KesselRun.HomeLibrary.EF
         }
 
         // repositories
+        public IEntityRepository<Book> Books { get { return GetStandardRepo<Book>(); } }
         public IEntityRepository<Person> People { get { return GetStandardRepo<Person>(); } }
         public IEntityRepository<Lending> Lendings { get { return GetStandardRepo<Lending>(); } }
 

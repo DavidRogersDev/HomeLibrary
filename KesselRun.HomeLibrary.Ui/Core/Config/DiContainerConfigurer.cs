@@ -7,7 +7,8 @@ using KesselRun.HomeLibrary.EF;
 using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.EF.Repositories.Factories;
 using KesselRun.HomeLibrary.Mapper.Mappers;
-using KesselRun.HomeLibrary.Service;
+using KesselRun.HomeLibrary.Service.CommandHandlers;
+using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using Microsoft.Practices.Unity;
 using WinFormsMvp.Binder;
@@ -48,7 +49,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             _container.RegisterType<IEntitiesContext, HomeLibraryContext>(new TransientLifetimeManager());
             _container.RegisterType<IUnitOfWork, UnitOfWork>(new TransientLifetimeManager());
             _container.RegisterType<IQueryProcessor, QueryProcessor>(new ContainerControlledLifetimeManager());
-
+            _container.RegisterType<ICommandHandler<AddLendingCommand>, LendingsCommandHandlers>(new TransientLifetimeManager());
         }
 
 
@@ -80,7 +81,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                     type.Name + "Registration");
             }
 
-            // Decorate each returned ICommandHandler<T> object with an
+            // Decorate each returned IQueryHandler<T> object with an
             // ValidationQueryHandlerDecorator<T>.
             _container.RegisterType(
                 type, 

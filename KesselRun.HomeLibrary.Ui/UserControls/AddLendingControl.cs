@@ -8,8 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using KesselRun.HomeLibrary.Ui.Core;
+using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
+using KesselRun.HomeLibrary.UiLogic.Views.ViewModels;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
 using WinFormsMvp.Forms;
@@ -26,6 +28,14 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             InitializeComponent();
         }
 
+        protected override void OnLoad(System.EventArgs e)
+        {
+            base.OnLoad(e);
+
+            cboBook.DataSource = AddLendingViewModel.Books;
+            cboBorrower.DataSource = AddLendingViewModel.People;
+        }
+
         public bool ThrowExceptionIfNoPresenterBound { get; private set; }
         public event EventHandler ViewClosing;
         public event EventHandler Close;
@@ -34,7 +44,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public void CloseView()
         {
             _navigator.Return(Parent);
-            ViewClosing(this, EventArgs.Empty);
+            ViewClosing(this, System.EventArgs.Empty);
         }
 
         public void ReleasePresenter(IPresenter presenter)
@@ -42,9 +52,22 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             PresenterBinder.Factory.Release(presenter);
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, System.EventArgs e)
         {
-            Close(this, EventArgs.Empty);
+            Close(this, System.EventArgs.Empty);
+        }
+
+        public event EventHandler<AddLendingEventArgs> AddNewLending;
+        public AddLendingViewModel AddLendingViewModel { get; set; }
+
+        public void AddLending(int bookId, int borrowerId, DateTime dateLent, DateTime? dateDue)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void btnAdd_Click(object sender, System.EventArgs e)
+        {
+            AddNewLending(this, new AddLendingEventArgs((int)cboBook.SelectedValue, (int)cboBorrower.SelectedValue, dtpDateLent.Value, dtpDateDue.Value));
         }
     }
 }

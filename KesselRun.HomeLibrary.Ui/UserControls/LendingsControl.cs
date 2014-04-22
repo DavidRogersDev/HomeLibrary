@@ -21,7 +21,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             InitializeComponent();
         }
 
-        protected override void OnLoad(EventArgs e)
+        protected override void OnLoad(System.EventArgs e)
         {
             base.OnLoad(e);
 
@@ -51,12 +51,12 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             
         }
 
-        private void btnAddLending_Click(object sender, EventArgs e)
+        private void btnAddLending_Click(object sender, System.EventArgs e)
         {
-            AddLending(this, EventArgs.Empty);
+            AddLending(this, System.EventArgs.Empty);
         }
 
-        protected override void OnParentChanged(EventArgs e)
+        protected override void OnParentChanged(System.EventArgs e)
         {
             base.OnParentChanged(e);
              var a = Parent;

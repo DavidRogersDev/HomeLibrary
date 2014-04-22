@@ -20,7 +20,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             InitializeComponent();
         }
 
-        protected override void OnLoad(EventArgs e)
+        protected override void OnLoad(System.EventArgs e)
         {
             _navigator.NavigationRootControl = this;
             base.OnLoad(e);

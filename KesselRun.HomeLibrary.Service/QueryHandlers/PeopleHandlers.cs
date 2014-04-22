@@ -1,32 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using KesselRun.HomeLibrary.EF;
 using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.Infrastructure;
+using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiModel.Models;
 
-namespace KesselRun.HomeLibrary.Service.Queries
+namespace KesselRun.HomeLibrary.Service.QueryHandlers
 {
-    public class GetPeoplePagedSortedQueryHandler : IQueryHandler<GetPeoplePagedSortedQuery, IList<Person>>
+    public class PeopleHandlers : IQueryHandler<GetPeopleSortedQuery, IList<Person>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUniversalMapper _mapper;
 
-        public GetPeoplePagedSortedQueryHandler(IUnitOfWork unitOfWork, IUniversalMapper mapper)
+        public PeopleHandlers(IUnitOfWork unitOfWork, IUniversalMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public IList<Person> Handle(GetPeoplePagedSortedQuery query)
+        public IList<Person> Handle(GetPeopleSortedQuery query)
         {
             IList<Person> people = new List<Person>();
 
-            foreach (var person in _unitOfWork.People.Paginate(query.PageNr, query.PageSize, p => p.Id, p => true, p => p.Books))
+            foreach (var person in _unitOfWork.People.GetAll())
             {
                 var uiPerson = new Person();
                 people.Add(_mapper.Map(person, uiPerson));
             }
-            return people;
+
+            return people.OrderBy(o => o.Id).ToList();
         }
     }
 }

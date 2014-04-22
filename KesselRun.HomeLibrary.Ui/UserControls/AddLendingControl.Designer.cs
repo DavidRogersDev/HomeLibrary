@@ -88,19 +88,23 @@
             // 
             // cboBorrower
             // 
+            this.cboBorrower.DisplayMember = "Id";
             this.cboBorrower.FormattingEnabled = true;
             this.cboBorrower.Location = new System.Drawing.Point(84, 35);
             this.cboBorrower.Name = "cboBorrower";
             this.cboBorrower.Size = new System.Drawing.Size(121, 21);
             this.cboBorrower.TabIndex = 6;
+            this.cboBorrower.ValueMember = "Id";
             // 
             // cboBook
             // 
+            this.cboBook.DisplayMember = "Title";
             this.cboBook.FormattingEnabled = true;
             this.cboBook.Location = new System.Drawing.Point(84, 8);
             this.cboBook.Name = "cboBook";
             this.cboBook.Size = new System.Drawing.Size(121, 21);
             this.cboBook.TabIndex = 7;
+            this.cboBook.ValueMember = "Id";
             // 
             // dtpDateLent
             // 
@@ -124,6 +128,7 @@
             this.btnAdd.TabIndex = 10;
             this.btnAdd.Text = "Add Lending";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // AddLendingControl
             // 
@@ -139,6 +144,7 @@
             this.Controls.Add(this.lblDateDue);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblBook);
+            this.Location = new System.Drawing.Point(200, 0);
             this.Name = "AddLendingControl";
             this.Size = new System.Drawing.Size(311, 203);
             this.ResumeLayout(false);

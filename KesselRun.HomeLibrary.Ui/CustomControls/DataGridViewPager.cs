@@ -31,7 +31,7 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         protected virtual void OnNextPageSubmitted()
         {
             EventHandler handler = NextPageSubmitted;
-            if (handler != null) handler(this, EventArgs.Empty);
+            if (handler != null) handler(this, System.EventArgs.Empty);
         }
 
         //private void btnNextPage_Click(object sender, EventArgs e)
