@@ -16,7 +16,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
             _decorated = decorated;
         }
 
-        //[DebuggerStepThrough]
+        [DebuggerStepThrough]
         public TResult Handle(TQuery query)
         {
             var validationContext = new ValidationContext(query);

@@ -61,6 +61,7 @@
     <Compile Include="Views\IAddLendingsView.cs" />
     <Compile Include="Views\ViewModels\AddLendingViewModel.cs" />
     <Compile Include="Views\ViewModels\LendingsViewModel.cs" />
+    <Compile Include="LogEvent.cs" />
     <Compile Include="Views\ViewModels\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

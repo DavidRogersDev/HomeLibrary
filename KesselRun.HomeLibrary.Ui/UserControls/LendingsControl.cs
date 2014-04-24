@@ -1,12 +1,15 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading;
 using KesselRun.HomeLibrary.Common.Contracts;
 using KesselRun.HomeLibrary.Ui.Core;
+using KesselRun.HomeLibrary.Ui.Forms;
+using KesselRun.HomeLibrary.UiLogic;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel.Models;
 using WinFormsMvp;
+using WinFormsMvp.Binder;
 using WinFormsMvp.Forms;
 
 namespace KesselRun.HomeLibrary.Ui.UserControls
@@ -15,9 +18,12 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
     public partial class LendingsControl : MvpUserControl, ILendingsView, IStackableView
     {
         private readonly Navigator _navigator = Navigator.SingleNavigator;
+        private readonly Lazy<MainForm> _mainWindow;
 
         public LendingsControl()
         {
+            _mainWindow = new Lazy<MainForm>(() => (MainForm)ParentForm, LazyThreadSafetyMode.None);
+            
             InitializeComponent();
         }
 
@@ -30,20 +36,24 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
         public event EventHandler ViewClosing;
         public event EventHandler Close;
+        public Type NavigationSource { get; set; }
+        public BindingList<Lending> Lendings { get; set; }
+        public event EventHandler AddLending;
 
         public void CloseView()
         {
             throw new NotImplementedException();
         }
 
-        public void ReleasePresenter(IPresenter presenter)
+        public void LogEventToView(LogEvent logEvent)
         {
-            throw new NotImplementedException();
+            _mainWindow.Value.MainViewModel.MainViewLogItems.Add(logEvent);
         }
 
-        public Type NavigationSource { get; set; }
-        public BindingList<Lending> Lendings { get; set; }
-        public event EventHandler AddLending;
+        public void ReleasePresenter(IPresenter presenter)
+        {
+            PresenterBinder.Factory.Release(presenter);
+        }
         
         public void LoadAddLendingView(Type view)
         {

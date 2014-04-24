@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Windows.Forms;
-using KesselRun.HomeLibrary.Common.Contracts;
 using KesselRun.HomeLibrary.Ui.Core;
+using KesselRun.HomeLibrary.UiLogic;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
+using KesselRun.HomeLibrary.UiLogic.Views.ViewModels;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
 using WinFormsMvp.Forms;
@@ -24,21 +24,32 @@ namespace KesselRun.HomeLibrary.Ui.Forms
         {
             _navigator.NavigationRootControl = this;
             base.OnLoad(e);
+
+            logDisplayBindingSource.DataSource = MainViewModel;
+            logDisplayBindingSource.DataMember = "MainViewLogItems";
+            lstMainViewLog.DataSource = logDisplayBindingSource;
         }
 
         public event EventHandler ViewClosing;
         public event EventHandler Close;
         public string ControlStack { get; set; }
+        public MainViewModel MainViewModel { get; set; }
 
         public void CloseView()
         {
             throw new NotImplementedException();
         }
 
+        public void LogEventToView(LogEvent logEvent)
+        {
+            throw new NotImplementedException();
+        }   
+
         public void ReleasePresenter(IPresenter presenter)
         {
             PresenterBinder.Factory.Release(presenter);
         }
+
 
         public void ShowChildView(Type view)
         {

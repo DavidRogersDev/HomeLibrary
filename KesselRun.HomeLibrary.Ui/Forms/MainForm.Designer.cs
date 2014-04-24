@@ -28,12 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.MainContentPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnPeople = new System.Windows.Forms.Button();
             this.btnBooks = new System.Windows.Forms.Button();
             this.btnLendings = new System.Windows.Forms.Button();
+            this.lstMainViewLog = new System.Windows.Forms.ListBox();
+            this.logDisplayBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logDisplayBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // MainContentPanel
@@ -81,17 +86,40 @@
             this.btnLendings.Text = "Lendings";
             this.btnLendings.UseVisualStyleBackColor = true;
             // 
+            // lstMainViewLog
+            // 
+            this.lstMainViewLog.FormattingEnabled = true;
+            this.lstMainViewLog.Location = new System.Drawing.Point(6, 392);
+            this.lstMainViewLog.Name = "lstMainViewLog";
+            this.lstMainViewLog.Size = new System.Drawing.Size(1066, 95);
+            this.lstMainViewLog.TabIndex = 2;
+            // 
+            // logDisplayBindingSource
+            // 
+            this.logDisplayBindingSource.DataSource = typeof(KesselRun.HomeLibrary.UiLogic.Views.ViewModels.MainViewModel);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(618, 49);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 3;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 499);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.lstMainViewLog);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.MainContentPanel);
             this.Name = "MainForm";
             this.Text = "Home Library";
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.logDisplayBindingSource)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -102,6 +130,9 @@
         private System.Windows.Forms.Button btnPeople;
         private System.Windows.Forms.Button btnBooks;
         private System.Windows.Forms.Button btnLendings;
+        private System.Windows.Forms.ListBox lstMainViewLog;
+        private System.Windows.Forms.BindingSource logDisplayBindingSource;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

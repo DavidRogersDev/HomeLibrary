@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Threading;
 using KesselRun.HomeLibrary.Ui.Core;
+using KesselRun.HomeLibrary.Ui.Forms;
+using KesselRun.HomeLibrary.UiLogic;
 using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
@@ -22,9 +17,11 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
     public partial class AddLendingControl : MvpUserControl, IAddLendingsView
     {
         private readonly Navigator _navigator = Navigator.SingleNavigator;
+        private readonly Lazy<MainForm> _mainWindow;
 
         public AddLendingControl()
         {
+            _mainWindow = new Lazy<MainForm>(() => ((MainForm)ParentForm), LazyThreadSafetyMode.None);
             InitializeComponent();
         }
 
@@ -32,6 +29,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         {
             base.OnLoad(e);
 
+            ThrowExceptionIfNoPresenterBound = true;
             cboBook.DataSource = AddLendingViewModel.Books;
             cboBorrower.DataSource = AddLendingViewModel.People;
         }
@@ -40,11 +38,18 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public event EventHandler ViewClosing;
         public event EventHandler Close;
         public string ControlStack { get; set; }
+        public event EventHandler<AddLendingEventArgs> AddNewLending;
+        public AddLendingViewModel AddLendingViewModel { get; set; }
 
         public void CloseView()
         {
             _navigator.Return(Parent);
             ViewClosing(this, System.EventArgs.Empty);
+        }
+
+        public void LogEventToView(LogEvent logEvent)
+        {
+            _mainWindow.Value.MainViewModel.MainViewLogItems.Add(logEvent);
         }
 
         public void ReleasePresenter(IPresenter presenter)
@@ -55,14 +60,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         private void btnClose_Click(object sender, System.EventArgs e)
         {
             Close(this, System.EventArgs.Empty);
-        }
-
-        public event EventHandler<AddLendingEventArgs> AddNewLending;
-        public AddLendingViewModel AddLendingViewModel { get; set; }
-
-        public void AddLending(int bookId, int borrowerId, DateTime dateLent, DateTime? dateDue)
-        {
-            throw new NotImplementedException();
         }
 
         private void btnAdd_Click(object sender, System.EventArgs e)

@@ -41,6 +41,8 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         void View_AddNewLending(object sender, EventArgs.AddLendingEventArgs e)
         {
+            View.LogEventToView(new LogEvent{ Event = "Adding new Lending"});
+
             var addLendingCommand = new AddLendingCommand
             {
                 BookId = e.bookId,
@@ -50,6 +52,8 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             };
 
             _commandProcessor.Execute(addLendingCommand);
+
+            View.LogEventToView(new LogEvent { Event = "Lending added successfully" });
         }
 
         void View_ViewClosing(object sender, System.EventArgs e)

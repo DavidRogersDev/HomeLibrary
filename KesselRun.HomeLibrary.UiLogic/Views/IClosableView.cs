@@ -9,6 +9,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Views
         event EventHandler Close;
 
         void CloseView();
+        void LogEventToView(LogEvent logEvent);
         void ReleasePresenter(IPresenter presenter);
     }
 }

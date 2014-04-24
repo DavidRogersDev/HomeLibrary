@@ -9,7 +9,5 @@ namespace KesselRun.HomeLibrary.UiLogic.Views
         event EventHandler<AddLendingEventArgs> AddNewLending;
 
         AddLendingViewModel AddLendingViewModel { get; set; }
-
-        void AddLending(int bookId, int borrowerId, DateTime dateLent, DateTime? dateDue);
     }
 }
