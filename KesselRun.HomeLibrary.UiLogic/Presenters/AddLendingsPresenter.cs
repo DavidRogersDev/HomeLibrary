@@ -59,12 +59,13 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         void View_ViewClosing(object sender, System.EventArgs e)
         {
-            PresenterBinder.Factory.Release(this);
+            //PresenterBinder.Factory.Release(this);
         }
 
         void ViewCloseControl(object sender, System.EventArgs e)
         {
             View.CloseView();
+            PresenterBinder.Factory.Release(this);
         }
 
         public void Dispose()

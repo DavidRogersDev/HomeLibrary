@@ -71,7 +71,6 @@
     <Compile Include="Db\IEntitiesContext.cs" />
     <Compile Include="Repositories\IEntityRepository%271.cs" />
     <Compile Include="Repositories\IEntityRepository%272.cs" />
-    <Compile Include="PropertyChangeHelper.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

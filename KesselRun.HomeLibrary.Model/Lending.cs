@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using KesselRun.HomeLibrary.GenericRepository;
-using KesselRun.HomeLibrary.Model.Contracts;
 using KesselRun.HomeLibrary.Model.Enums;
 
 namespace KesselRun.HomeLibrary.Model
 {
-    public class Lending : IEntity, IObjectWithState
+    public class Lending : IEntity
     {
         public int Id { get; set; }
         public Book Book { get; set; }

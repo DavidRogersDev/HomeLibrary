@@ -60,7 +60,6 @@
     <Compile Include="Book.cs" />
     <Compile Include="BookCover.cs" />
     <Compile Include="Comment.cs" />
-    <Compile Include="Contracts\IObjectWithState.cs" />
     <Compile Include="Enums\BookType.cs" />
     <Compile Include="Enums\Edition.cs" />
     <Compile Include="Enums\State.cs" />

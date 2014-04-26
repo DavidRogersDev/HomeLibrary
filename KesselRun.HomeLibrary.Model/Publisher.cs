@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using KesselRun.HomeLibrary.GenericRepository;
-using KesselRun.HomeLibrary.Model.Contracts;
 using KesselRun.HomeLibrary.Model.Enums;
 
 namespace KesselRun.HomeLibrary.Model
 {
-    public class Publisher : IEntity, IObjectWithState
+    public class Publisher : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

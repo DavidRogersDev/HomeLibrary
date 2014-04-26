@@ -44,7 +44,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public void CloseView()
         {
             _navigator.Return(Parent);
-            ViewClosing(this, System.EventArgs.Empty);
+            //ViewClosing(this, System.EventArgs.Empty);
         }
 
         public void LogEventToView(LogEvent logEvent)

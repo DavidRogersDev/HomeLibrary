@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using KesselRun.HomeLibrary.Model;
-using KesselRun.HomeLibrary.Model.Contracts;
-using KesselRun.HomeLibrary.Model.Enums;
 
 namespace KesselRun.HomeLibrary.EF.Db
 {
@@ -13,16 +10,6 @@ namespace KesselRun.HomeLibrary.EF.Db
     {
         public HomeLibraryContext()
         {
-            ((IObjectContextAdapter)this).ObjectContext.ObjectMaterialized += ObjectContextObjectMaterialized;
-        }
-
-        private void ObjectContextObjectMaterialized(object sender, ObjectMaterializedEventArgs objectMaterializedEventArgs )
-        {
-            var entity = objectMaterializedEventArgs.Entity as IObjectWithState;
-
-            if (ReferenceEquals(entity, null)) return;
-            entity.State = State.Unchanged;
-            entity.OriginalValues = BuildOriginalValues(Entry(entity).OriginalValues);
         }
 
         //  DbSets go here
