@@ -7,6 +7,7 @@ using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiLogic.Views.ViewModels;
 using KesselRun.HomeLibrary.UiModel.Models;
 using WinFormsMvp;
+using WinFormsMvp.Binder;
 
 namespace KesselRun.HomeLibrary.UiLogic.Presenters
 {
@@ -20,7 +21,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             _commandProcessor = commandProcessor;
             _queryProcessor = queryProcessor;
             View.ViewClosing += View_ViewClosing;
-            View.Close += view_Close;
+            View.CloseControl += ViewCloseControl;
             View.Load += View_Load;
             View.AddNewLending += View_AddNewLending;
         }
@@ -58,10 +59,10 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         void View_ViewClosing(object sender, System.EventArgs e)
         {
-            View.ReleasePresenter(this);
+            PresenterBinder.Factory.Release(this);
         }
 
-        void view_Close(object sender, System.EventArgs e)
+        void ViewCloseControl(object sender, System.EventArgs e)
         {
             View.CloseView();
         }

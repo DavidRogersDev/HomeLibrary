@@ -6,10 +6,11 @@ using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel.Models;
 using WinFormsMvp;
+using WinFormsMvp.Binder;
 
 namespace KesselRun.HomeLibrary.UiLogic.Presenters
 {
-    public class LendingsPresenter: Presenter<ILendingsView>
+    public class LendingsPresenter: Presenter<ILendingsView>, IDisposable
     {
         private readonly IQueryProcessor _queryProcessor;
         private readonly IQueryHandler<GetLendingsPagedSortedQuery, IList<Lending>> _handler;
@@ -20,8 +21,14 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             _queryProcessor = queryProcessor;
             //_handler = handler;
             View.Load += View_Load;
+            View.ViewClosing += View_ViewClosing;
             View.AddLending += View_AddLending;
             _queryProcessor = queryProcessor;
+        }
+
+        void View_ViewClosing(object sender, System.EventArgs e)
+        {
+            PresenterBinder.Factory.Release(this);
         }
 
         void View_AddLending(object sender, System.EventArgs e)
@@ -38,6 +45,11 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             View.Lendings = new BindingList<Lending>(_queryProcessor.Process(getLendingsPagedSortedQuery));
             //var lending = _queryProcessor.Process(getLendingByPkQuery);
             //var peeps = new List<Person>(_queryProcessor.Process(getPeoplePagedSortedQuery));
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

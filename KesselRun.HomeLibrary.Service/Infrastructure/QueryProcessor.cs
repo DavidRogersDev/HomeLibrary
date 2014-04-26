@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System.Diagnostics;
+using Microsoft.Practices.Unity;
 
 namespace KesselRun.HomeLibrary.Service.Infrastructure
 {
@@ -11,7 +12,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
             _container = container;
         }
 
-        //[DebuggerStepThrough]
+        [DebuggerStepThrough]
         public TResult Process<TResult>(IQuery<TResult> query)
         {
             var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));

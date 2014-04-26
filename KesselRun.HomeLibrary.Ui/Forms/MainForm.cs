@@ -31,25 +31,20 @@ namespace KesselRun.HomeLibrary.Ui.Forms
         }
 
         public event EventHandler ViewClosing;
-        public event EventHandler Close;
+        public event EventHandler CloseControl;
         public string ControlStack { get; set; }
         public MainViewModel MainViewModel { get; set; }
 
         public void CloseView()
         {
-            throw new NotImplementedException();
+            ViewClosing(this, System.EventArgs.Empty);
+            Close();
         }
 
         public void LogEventToView(LogEvent logEvent)
         {
             throw new NotImplementedException();
         }   
-
-        public void ReleasePresenter(IPresenter presenter)
-        {
-            PresenterBinder.Factory.Release(presenter);
-        }
-
 
         public void ShowChildView(Type view)
         {
@@ -61,6 +56,11 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             {
                 
             }
+        }
+
+        private void btnClose_Click(object sender, System.EventArgs e)
+        {
+            CloseControl(this, System.EventArgs.Empty);
         }
         
     }

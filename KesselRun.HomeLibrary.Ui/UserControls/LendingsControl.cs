@@ -35,24 +35,19 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         }
 
         public event EventHandler ViewClosing;
-        public event EventHandler Close;
+        public event EventHandler CloseControl;
         public Type NavigationSource { get; set; }
         public BindingList<Lending> Lendings { get; set; }
         public event EventHandler AddLending;
 
         public void CloseView()
         {
-            throw new NotImplementedException();
+            ViewClosing(this, System.EventArgs.Empty);
         }
 
         public void LogEventToView(LogEvent logEvent)
         {
             _mainWindow.Value.MainViewModel.MainViewLogItems.Add(logEvent);
-        }
-
-        public void ReleasePresenter(IPresenter presenter)
-        {
-            PresenterBinder.Factory.Release(presenter);
         }
         
         public void LoadAddLendingView(Type view)

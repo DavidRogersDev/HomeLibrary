@@ -36,7 +36,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
         public bool ThrowExceptionIfNoPresenterBound { get; private set; }
         public event EventHandler ViewClosing;
-        public event EventHandler Close;
+        public event EventHandler CloseControl;
         public string ControlStack { get; set; }
         public event EventHandler<AddLendingEventArgs> AddNewLending;
         public AddLendingViewModel AddLendingViewModel { get; set; }
@@ -52,14 +52,9 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             _mainWindow.Value.MainViewModel.MainViewLogItems.Add(logEvent);
         }
 
-        public void ReleasePresenter(IPresenter presenter)
-        {
-            PresenterBinder.Factory.Release(presenter);
-        }
-
         private void btnClose_Click(object sender, System.EventArgs e)
         {
-            Close(this, System.EventArgs.Empty);
+            CloseControl(this, System.EventArgs.Empty);
         }
 
         private void btnAdd_Click(object sender, System.EventArgs e)
