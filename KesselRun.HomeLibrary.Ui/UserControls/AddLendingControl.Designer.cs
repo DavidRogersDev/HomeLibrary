@@ -88,11 +88,11 @@
             // 
             // cboBorrower
             // 
-            this.cboBorrower.DisplayMember = "Id";
+            this.cboBorrower.DisplayMember = "FullName";
             this.cboBorrower.FormattingEnabled = true;
             this.cboBorrower.Location = new System.Drawing.Point(84, 35);
             this.cboBorrower.Name = "cboBorrower";
-            this.cboBorrower.Size = new System.Drawing.Size(121, 21);
+            this.cboBorrower.Size = new System.Drawing.Size(199, 21);
             this.cboBorrower.TabIndex = 6;
             this.cboBorrower.ValueMember = "Id";
             // 
@@ -102,7 +102,7 @@
             this.cboBook.FormattingEnabled = true;
             this.cboBook.Location = new System.Drawing.Point(84, 8);
             this.cboBook.Name = "cboBook";
-            this.cboBook.Size = new System.Drawing.Size(121, 21);
+            this.cboBook.Size = new System.Drawing.Size(199, 21);
             this.cboBook.TabIndex = 7;
             this.cboBook.ValueMember = "Id";
             // 

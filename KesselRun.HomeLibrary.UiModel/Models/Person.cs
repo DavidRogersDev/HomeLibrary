@@ -11,6 +11,8 @@ namespace KesselRun.HomeLibrary.UiModel.Models
         public string LastName { get; set; }
         public string Sobriquet { get; set; }
 
+        public string FullName { get; set; }
+
         public virtual BindingList<Lending> Lendings { get; set; }
         public virtual BindingList<Book> Books { get; set; }
     }

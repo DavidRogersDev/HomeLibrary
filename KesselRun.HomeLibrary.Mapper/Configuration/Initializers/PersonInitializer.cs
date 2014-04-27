@@ -10,7 +10,8 @@ namespace KesselRun.HomeLibrary.Mapper.Configuration.Initializers
 
         public void Initialize()
         {
-            Profile.CreateMap<Model.Person, UiModel.Models.Person>();
+            Profile.CreateMap<Model.Person, UiModel.Models.Person>()
+                .ForMember(viewType => viewType.FullName, domainType => domainType.MapFrom(p => p.FirstName + " " + p.LastName));
         }
     }
 }
