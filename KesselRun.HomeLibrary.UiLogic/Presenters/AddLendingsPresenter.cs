@@ -46,10 +46,10 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
             var addLendingCommand = new AddLendingCommand
             {
-                BookId = e.bookId,
-                BorrowerId = e.borrowerId,
-                DateLent = e.dateLent,
-                DateDue = e.dateDue
+                BookId = e.BookId,
+                BorrowerId = e.BorrowerId,
+                DateLent = e.DateLent,
+                DateDue = e.DateDue
             };
 
             _commandProcessor.Execute(addLendingCommand);

@@ -2,13 +2,13 @@
 using System.Linq;
 using System.Reflection;
 using AutoMapper;
+using FluentValidation;
 using KesselRun.HomeLibrary.Common.Contracts;
 using KesselRun.HomeLibrary.EF;
 using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.EF.Repositories.Factories;
 using KesselRun.HomeLibrary.Mapper.Mappers;
-using KesselRun.HomeLibrary.Service.CommandHandlers;
-using KesselRun.HomeLibrary.Service.Commands;
+using KesselRun.HomeLibrary.Service.CommandHandlers.Decorators;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using Microsoft.Practices.Unity;
 using WinFormsMvp.Binder;
@@ -22,16 +22,20 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
         public DiContainerConfigurer()
         {
-
         }
 
         public void Configure()
         {
             PresenterBinder.Factory = new UnityPresenterFactory(_container);
 
+            AssemblyScanner.FindValidatorsInAssembly(Assembly.Load("KesselRun.HomeLibrary.Service")).ForEach(
+                    result => _container.RegisterType(result.InterfaceType, result.ValidatorType, new TransientLifetimeManager())
+                );
+
             ManualRegistrations();
 
             AutoRegisterType(typeof(IQueryHandler<,>)); // Register IQueryHandlers
+            AutoRegisterType(typeof(ICommandHandler<>)); // Register ICommandHandler
         }
 
         private void ManualRegistrations()
@@ -50,7 +54,6 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             _container.RegisterType<IUnitOfWork, UnitOfWork>(new TransientLifetimeManager());
             _container.RegisterType<IQueryProcessor, QueryProcessor>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandProcessor, CommandProcessor>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<ICommandHandler<AddLendingCommand>, LendingsCommandHandlers>(new TransientLifetimeManager());
         }
 
 
@@ -82,14 +85,32 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                     type.Name + "Registration");
             }
 
-            // Decorate each returned IQueryHandler<T> object with an
-            // ValidationQueryHandlerDecorator<T>.
-            _container.RegisterType(
-                type, 
-                typeof(ValidationQueryHandlerDecorator<,>),
-                "Hi Dave",
-                new InjectionMember[] { new InjectionConstructor(new ResolvedParameter(type, type.Name + "Registration")) }
-                );
+            if (type == typeof (IQueryHandler<,>))
+            {
+                // Decorate each returned IQueryHandler<T> object with an
+                // ValidationQueryHandlerDecorator<T>.
+                _container.RegisterType(
+                    type,
+                    typeof (ValidationQueryHandlerDecorator<,>),
+                    "Hi Dave",
+                    new InjectionMember[]
+                    {new InjectionConstructor(new ResolvedParameter(type, type.Name + "Registration"))}
+                    );
+            }
+            else if(type == typeof (ICommandHandler<>))
+            {
+                // Decorate each returned IQueryHandler<T> object with an
+                // ValidationQueryHandlerDecorator<T>.
+                _container.RegisterType(
+                    type,
+                    typeof (AddLendingHandlerDecorator<>),
+                    "Commander",
+                    new InjectionMember[]
+                    {
+                        new InjectionConstructor(new ResolvedParameter(type, type.Name + "Registration"), _container)
+                    });
+
+            }
         }
     }
 }

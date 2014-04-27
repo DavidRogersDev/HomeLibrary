@@ -4,17 +4,17 @@ namespace KesselRun.HomeLibrary.UiLogic.EventArgs
 {
     public class AddLendingEventArgs
     {
-        public readonly int bookId;
-        public readonly int borrowerId;
-        public readonly DateTime dateLent;
-        public readonly DateTime? dateDue;
+        public readonly int BookId;
+        public readonly int BorrowerId;
+        public readonly DateTime DateLent;
+        public readonly DateTime? DateDue;
 
         public AddLendingEventArgs(int bookId, int borrowerId, DateTime dateLent, DateTime? dueDate)
         {
-            this.bookId = bookId;
-            this.borrowerId = borrowerId;
-            this.dateLent = dateLent;
-            this.dateDue = dateDue;
+            BookId = bookId;
+            BorrowerId = borrowerId;
+            DateLent = dateLent;
+            DateDue = dueDate;
         }
     }
 }
