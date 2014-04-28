@@ -17,7 +17,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
         {
             var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
 
-            dynamic handler = _container.Resolve(handlerType, "Hi Dave");
+            dynamic handler = _container.Resolve(handlerType, "Queryor");
             //dynamic handler = _container.Resolve(handlerType, string.Concat(handlerType.Name, "Registration"));
 
             return handler.Handle((dynamic)query);

@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandHandlers\Decorators\AddLendingHandlerDecorator.cs" />
+    <Compile Include="CommandHandlers\Decorators\CommandHandlerValidatorDecorator.cs" />
     <Compile Include="CommandHandlers\LendingsCommandHandlers.cs" />
     <Compile Include="Commands\AddLendingCommand.cs" />
     <Compile Include="Infrastructure\CommandProcessor.cs" />
@@ -74,7 +74,7 @@
     <Compile Include="QueryHandlers\LendingsHandlers.cs" />
     <Compile Include="Queries\GetPeopleSortedQuery.cs" />
     <Compile Include="Infrastructure\QueryProcessor.cs" />
-    <Compile Include="Infrastructure\ValidationQueryHandlerDecorator.cs" />
+    <Compile Include="QueryHandlers\Decorators\QueryHandlerValidatorDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryHandlers\PeopleHandlers.cs" />
     <Compile Include="Validation\AddLendingValidator.cs" />

@@ -10,6 +10,7 @@ using KesselRun.HomeLibrary.EF.Repositories.Factories;
 using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.CommandHandlers.Decorators;
 using KesselRun.HomeLibrary.Service.Infrastructure;
+using KesselRun.HomeLibrary.Service.QueryHandlers.Decorators;
 using Microsoft.Practices.Unity;
 using WinFormsMvp.Binder;
 using WinFormsMvp.Unity;
@@ -19,6 +20,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
     public class DiContainerConfigurer : IBootstrapper
     {
         private readonly IUnityContainer _container = new UnityContainer();
+        private readonly Assembly _serviceAssembly = Assembly.Load("KesselRun.HomeLibrary.Service");
 
         public DiContainerConfigurer()
         {
@@ -28,7 +30,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
         {
             PresenterBinder.Factory = new UnityPresenterFactory(_container);
 
-            AssemblyScanner.FindValidatorsInAssembly(Assembly.Load("KesselRun.HomeLibrary.Service")).ForEach(
+            AssemblyScanner.FindValidatorsInAssembly(_serviceAssembly).ForEach(
                     result => _container.RegisterType(result.InterfaceType, result.ValidatorType, new TransientLifetimeManager())
                 );
 
@@ -63,10 +65,10 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
         /// <param name="type"></param>
         private void AutoRegisterType(Type type)
         {
-            var assembly = Assembly.Load("KesselRun.HomeLibrary.Service");
+            const string Registration = "Registration";
 
             var handlerRegistrations =
-                from implementation in assembly.GetExportedTypes()
+                from implementation in _serviceAssembly.GetExportedTypes()
                 where !implementation.IsAbstract
                 where !implementation.ContainsGenericParameters
                 let services =
@@ -82,7 +84,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                 _container.RegisterType(
                     registration.service,
                     registration.implementation,
-                    type.Name + "Registration");
+                    type.Name + Registration);
             }
 
             if (type == typeof (IQueryHandler<,>))
@@ -91,10 +93,9 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                 // ValidationQueryHandlerDecorator<T>.
                 _container.RegisterType(
                     type,
-                    typeof (ValidationQueryHandlerDecorator<,>),
-                    "Hi Dave",
-                    new InjectionMember[]
-                    {new InjectionConstructor(new ResolvedParameter(type, type.Name + "Registration"))}
+                    typeof (QueryHandlerValidatorDecorator<,>),
+                    "Queryor",
+                    new InjectionMember[] { new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration)) }
                     );
             }
             else if(type == typeof (ICommandHandler<>))
@@ -103,11 +104,11 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                 // ValidationQueryHandlerDecorator<T>.
                 _container.RegisterType(
                     type,
-                    typeof (AddLendingHandlerDecorator<>),
+                    typeof (CommandHandlerValidatorDecorator<>),
                     "Commander",
                     new InjectionMember[]
                     {
-                        new InjectionConstructor(new ResolvedParameter(type, type.Name + "Registration"), _container)
+                        new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), _container)
                     });
 
             }
