@@ -1,10 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Windows.Forms;
 using KesselRun.HomeLibrary.Common.Contracts;
+using KesselRun.HomeLibrary.Ui.Assets.Resources;
 using KesselRun.HomeLibrary.Ui.Core;
 using KesselRun.HomeLibrary.Ui.Forms;
 using KesselRun.HomeLibrary.UiLogic;
+using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel.Models;
@@ -30,8 +33,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         protected override void OnLoad(System.EventArgs e)
         {
             base.OnLoad(e);
-
-            dgvLendings.DataSource = Lendings;
         }
 
         public event EventHandler ViewClosing;
@@ -39,6 +40,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public Type NavigationSource { get; set; }
         public BindingList<Lending> Lendings { get; set; }
         public event EventHandler AddLending;
+        public event EventHandler<LendingsViewEventArgs> ReloadView;
 
         public void CloseView()
         {
@@ -56,6 +58,31 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             
         }
 
+        private void DgvLendingsCellFormatting(object sender, DataGridViewCellFormattingEventArgs dataGridViewCellFormattingEventArgs)
+        {
+            int rowIndex = dataGridViewCellFormattingEventArgs.RowIndex;
+            int columnIndex = dataGridViewCellFormattingEventArgs.ColumnIndex;
+
+            dgvLendings.Rows[rowIndex].Cells[columnIndex].ToolTipText = "Return Book";
+
+            switch (dgvLendings.Columns[columnIndex].Name)
+            {
+                case "dgvicReturn":
+                    bool isAuthor;
+
+                    //if (bool.TryParse(dgvLendings.Rows[dataGridViewCellFormattingEventArgs.RowIndex].Cells["dgvicReturn"].Value.ToString(),
+                    //    out isAuthor))
+                    {
+                        dataGridViewCellFormattingEventArgs.Value = ImageResources.Return;
+                    }
+                    //else
+                    {
+                        //todo: bad
+                    }
+                    break;
+            }            
+        }
+
         private void btnAddLending_Click(object sender, System.EventArgs e)
         {
             AddLending(this, System.EventArgs.Empty);
@@ -64,7 +91,12 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         protected override void OnParentChanged(System.EventArgs e)
         {
             base.OnParentChanged(e);
-             var a = Parent;
+
+            if (Parent != null)
+            {
+                ReloadView(this, new LendingsViewEventArgs(10, 0));
+                dgvLendings.DataSource = Lendings;
+            }
         }
     }
 }

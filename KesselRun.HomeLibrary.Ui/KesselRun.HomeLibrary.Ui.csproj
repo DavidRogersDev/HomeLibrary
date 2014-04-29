@@ -199,6 +199,8 @@
     <Content Include="Assets\Images\cross.png" />
     <Content Include="Assets\Images\delete.png" />
     <Content Include="Assets\Images\edit.png" />
+    <None Include="Assets\Images\return.gif" />
+    <None Include="Assets\Images\lend.gif" />
     <Content Include="Assets\Images\tick.png" />
   </ItemGroup>
   <ItemGroup />

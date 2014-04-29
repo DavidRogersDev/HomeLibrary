@@ -44,7 +44,7 @@
             // 
             // MainContentPanel
             // 
-            this.MainContentPanel.BackColor = System.Drawing.Color.SteelBlue;
+            this.MainContentPanel.BackColor = System.Drawing.SystemColors.Menu;
             this.MainContentPanel.Location = new System.Drawing.Point(6, 121);
             this.MainContentPanel.Name = "MainContentPanel";
             this.MainContentPanel.Size = new System.Drawing.Size(1070, 264);

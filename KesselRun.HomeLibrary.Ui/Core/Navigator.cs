@@ -113,8 +113,6 @@ namespace KesselRun.HomeLibrary.Ui.Core
 
             var control = _controlStacks[containerControl.Name].Peek() as UserControl;
             containerControl.Controls.Add(_controlStacks[containerControl.Name].Peek());
-
-            control.Refresh();
         }
     }
 }

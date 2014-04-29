@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
+using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel.Models;
 using WinFormsMvp;
@@ -23,7 +24,14 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             View.Load += View_Load;
             View.ViewClosing += View_ViewClosing;
             View.AddLending += View_AddLending;
+            View.ReloadView += View_ReloadView;
             _queryProcessor = queryProcessor;
+        }
+
+        void View_ReloadView(object sender, LendingsViewEventArgs lendingsViewEventArgs)
+        {
+            var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery { PageNr = lendingsViewEventArgs.PageIndex, PageSize = lendingsViewEventArgs.PageSize };
+            LoadLendings(getLendingsPagedSortedQuery);
         }
 
         void View_ViewClosing(object sender, System.EventArgs e)
@@ -38,13 +46,13 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         void View_Load(object sender, System.EventArgs e)
         {
-            var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery{ PageNr = 0, PageSize = 10 };
-            var getLendingByPkQuery = new GetLendingByPkQuery{ Id = 1 };
+            //var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery { PageNr = 0, PageSize = 10 };
+            //LoadLendings(getLendingsPagedSortedQuery);
+        }
 
-
+        private void LoadLendings(GetLendingsPagedSortedQuery getLendingsPagedSortedQuery)
+        {
             View.Lendings = new BindingList<Lending>(_queryProcessor.Process(getLendingsPagedSortedQuery));
-            //var lending = _queryProcessor.Process(getLendingByPkQuery);
-            //var peeps = new List<Person>(_queryProcessor.Process(getPeoplePagedSortedQuery));
         }
 
         public void Dispose()

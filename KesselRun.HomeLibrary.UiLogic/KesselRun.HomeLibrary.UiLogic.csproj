@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Enums\FilterType.cs" />
     <Compile Include="EventArgs\AddLendingEventArgs.cs" />
+    <Compile Include="EventArgs\LendingsViewEventArgs.cs" />
     <Compile Include="Presenters\AddLendingsPresenter.cs" />
     <Compile Include="Presenters\LendingsPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />

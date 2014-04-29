@@ -59,6 +59,7 @@
             this.dgvLendings.Name = "dgvLendings";
             this.dgvLendings.Size = new System.Drawing.Size(1040, 150);
             this.dgvLendings.TabIndex = 1;
+            this.dgvLendings.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvLendingsCellFormatting);
             // 
             // dgvlcTitle
             // 

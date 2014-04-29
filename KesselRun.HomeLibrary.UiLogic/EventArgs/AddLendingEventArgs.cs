@@ -2,7 +2,7 @@
 
 namespace KesselRun.HomeLibrary.UiLogic.EventArgs
 {
-    public class AddLendingEventArgs
+    public class AddLendingEventArgs : System.EventArgs
     {
         public readonly int BookId;
         public readonly int BorrowerId;
