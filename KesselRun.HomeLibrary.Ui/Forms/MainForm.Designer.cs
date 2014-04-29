@@ -35,9 +35,8 @@
             this.btnBooks = new System.Windows.Forms.Button();
             this.btnLendings = new System.Windows.Forms.Button();
             this.lstMainViewLog = new System.Windows.Forms.ListBox();
-            this.logDisplayBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnClose = new System.Windows.Forms.Button();
+            this.logDisplayBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logDisplayBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -95,17 +94,6 @@
             this.lstMainViewLog.Size = new System.Drawing.Size(1066, 95);
             this.lstMainViewLog.TabIndex = 2;
             // 
-            // logDisplayBindingSource
-            // 
-            this.logDisplayBindingSource.DataSource = typeof(KesselRun.HomeLibrary.UiLogic.Views.ViewModels.MainViewModel);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(618, 49);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 3;
-            // 
             // btnClose
             // 
             this.btnClose.Location = new System.Drawing.Point(997, 78);
@@ -116,13 +104,16 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // logDisplayBindingSource
+            // 
+            this.logDisplayBindingSource.DataSource = typeof(KesselRun.HomeLibrary.UiLogic.Views.ViewModels.MainViewModel);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 499);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lstMainViewLog);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.MainContentPanel);
@@ -131,7 +122,6 @@
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.logDisplayBindingSource)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -144,7 +134,6 @@
         private System.Windows.Forms.Button btnLendings;
         private System.Windows.Forms.ListBox lstMainViewLog;
         private System.Windows.Forms.BindingSource logDisplayBindingSource;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnClose;
     }
 }

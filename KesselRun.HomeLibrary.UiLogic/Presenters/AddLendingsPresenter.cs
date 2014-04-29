@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using FluentValidation;
 using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
@@ -52,9 +53,16 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
                 DateDue = e.DateDue
             };
 
-            _commandProcessor.Execute(addLendingCommand);
+            try
+            {
+                _commandProcessor.Execute(addLendingCommand);
+                View.LogEventToView(new LogEvent { Event = "Lending added successfully" });
+            }
+            catch (ValidationException validationException)
+            {
+                View.LogEventToView(new LogEvent { Event = validationException.Message }); //TODO: log informative message. MessageBox or lable show as well.
+            }
 
-            View.LogEventToView(new LogEvent { Event = "Lending added successfully" });
         }
 
         void View_ViewClosing(object sender, System.EventArgs e)
@@ -71,6 +79,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
         public void Dispose()
         {
             //  to implement
+            //  TODO: Dispose of all UOW in various entities
         }
     }
 }

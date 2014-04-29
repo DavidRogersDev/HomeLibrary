@@ -10,13 +10,11 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers.Decorators
     {
         private readonly ICommandHandler<TCommand> _commandHandler;
         private readonly IUnityContainer _container;
-        private readonly IValidator _validator;
 
         public CommandHandlerValidatorDecorator(ICommandHandler<TCommand> commandHandler, IUnityContainer container)
         {
             _commandHandler = commandHandler;
             _container = container;
-            //_validator = validator;
         }
 
 
@@ -33,9 +31,8 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers.Decorators
             }
             else
             {
-                //  TODO: log validation error message
+                throw new ValidationException(validateResult.Errors);
             }
-
         }
     }
 }

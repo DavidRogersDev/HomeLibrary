@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using SCMDA = System.ComponentModel.DataAnnotations;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiLogic.EventArgs;
@@ -52,7 +53,15 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         private void LoadLendings(GetLendingsPagedSortedQuery getLendingsPagedSortedQuery)
         {
-            View.Lendings = new BindingList<Lending>(_queryProcessor.Process(getLendingsPagedSortedQuery));
+            try
+            {
+                var lendings = _queryProcessor.Process(getLendingsPagedSortedQuery);
+                View.Lendings = new BindingList<Lending>(lendings);
+            }
+            catch (SCMDA.ValidationException validationException)
+            {
+                View.LogEventToView(new LogEvent{ Event = validationException.Message});   //TODO: log informative message
+            }
         }
 
         public void Dispose()

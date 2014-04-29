@@ -29,7 +29,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
                  var uiLending = new Lending();
                  lendings.Add(_mapper.Map(lending, uiLending));
              }
-
+            
             return lendings;
         }
 

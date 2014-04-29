@@ -20,16 +20,20 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers.Decorators
         public TResult Handle(TQuery query)
         {
             var validationContext = new ValidationContext(query);
+
             try
             {
                 Validator.ValidateObject(query, validationContext, true);
+                return _decorated.Handle(query);
+            }
+            catch (ValidationException validationException)
+            {
+                throw;
             }
             catch (Exception exception)
             {
-                
+                throw;
             }
-
-            return _decorated.Handle(query);
         }
     }
 }
