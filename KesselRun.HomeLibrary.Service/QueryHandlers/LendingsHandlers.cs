@@ -8,7 +8,8 @@ using KesselRun.HomeLibrary.UiModel.Models;
 
 namespace KesselRun.HomeLibrary.Service.QueryHandlers
 {
-    public class LendingsHandlers : IQueryHandler<GetLendingsPagedSortedQuery, IList<Lending>>,
+    public class LendingsHandlers : 
+        IQueryHandler<GetLendingsPagedSortedQuery, IList<Lending>>,
         IQueryHandler<GetLendingByPkQuery, Lending>
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -37,6 +38,11 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         {
             var uiLending = new Lending();
             return _mapper.Map(_unitOfWork.Lendings.FindBy(l => l.Id == queryObject.Id).Single(), uiLending);
+        }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
         }
     }
 }

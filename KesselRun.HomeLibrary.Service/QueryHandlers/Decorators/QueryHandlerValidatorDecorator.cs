@@ -8,15 +8,15 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers.Decorators
     public class QueryHandlerValidatorDecorator <TQuery, TResult> : IQueryHandler<TQuery, TResult>
         where TQuery : IQuery<TResult>
     {
-        private readonly IQueryHandler<TQuery, TResult> _decorated;
+        private readonly IQueryHandler<TQuery, TResult> _queryHandler;
 
-        [DebuggerStepThrough]
-        public QueryHandlerValidatorDecorator(IQueryHandler<TQuery, TResult> decorated)
+        //[DebuggerStepThrough]
+        public QueryHandlerValidatorDecorator(IQueryHandler<TQuery, TResult> queryHandler)
         {
-            _decorated = decorated;
+            _queryHandler = queryHandler;
         }
 
-        [DebuggerStepThrough]
+        //[DebuggerStepThrough]
         public TResult Handle(TQuery query)
         {
             var validationContext = new ValidationContext(query);
@@ -24,7 +24,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers.Decorators
             try
             {
                 Validator.ValidateObject(query, validationContext, true);
-                return _decorated.Handle(query);
+                return _queryHandler.Handle(query);
             }
             catch (ValidationException validationException)
             {
@@ -34,6 +34,11 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers.Decorators
             {
                 throw;
             }
+        }
+
+        public void Dispose()
+        {
+            _queryHandler.Dispose();
         }
     }
 }

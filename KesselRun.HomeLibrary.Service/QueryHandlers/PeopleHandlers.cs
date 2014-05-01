@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KesselRun.HomeLibrary.EF;
 using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.Infrastructure;
@@ -33,6 +30,11 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             }
 
             return people.OrderBy(o => o.Id).ToList();
+        }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
         }
     }
 }

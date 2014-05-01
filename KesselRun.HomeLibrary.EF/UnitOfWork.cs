@@ -19,7 +19,7 @@ namespace KesselRun.HomeLibrary.EF
     /// as a <see cref="Person"/>. A repository typically exposes "Get" methods for querying and will offer add, update, and delete methods 
     /// if those features are supported. The repositories rely on their parent UoW to provide the interface to the data layer.
     /// </remarks>
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         private bool _disposed;
 

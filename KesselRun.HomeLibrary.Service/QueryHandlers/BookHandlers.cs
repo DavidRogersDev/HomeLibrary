@@ -31,5 +31,10 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
 
             return books;
         }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
+        }
     }
 }

@@ -26,5 +26,10 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
 
             _unitOfWork.Lendings.Save();
         }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
+        }
     }
 }

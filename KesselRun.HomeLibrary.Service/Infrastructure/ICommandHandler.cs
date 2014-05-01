@@ -1,6 +1,8 @@
-﻿namespace KesselRun.HomeLibrary.Service.Infrastructure
+﻿using System;
+
+namespace KesselRun.HomeLibrary.Service.Infrastructure
 {
-    public interface ICommandHandler<in TCommand>
+    public interface ICommandHandler<in TCommand> : IDisposable
     {
         void Handle(TCommand command);
     }

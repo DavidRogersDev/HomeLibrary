@@ -34,5 +34,11 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers.Decorators
                 throw new ValidationException(validateResult.Errors);
             }
         }
+
+        public void Dispose()
+        {
+            _commandHandler.Dispose();
+            _container.Dispose();
+        }
     }
 }

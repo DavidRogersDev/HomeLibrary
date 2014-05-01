@@ -42,6 +42,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
         private void ManualRegistrations()
         {
+            _container.RegisterType<IUnityContainer, UnityContainer>(new TransientLifetimeManager());
             _container.RegisterType<INavigator, Navigator>(new TransientLifetimeManager());
 
             _container.RegisterInstance<IMappingEngine>(AutoMapper.Mapper.Engine)
@@ -54,8 +55,9 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
             _container.RegisterType<IEntitiesContext, HomeLibraryContext>(new TransientLifetimeManager());
             _container.RegisterType<IUnitOfWork, UnitOfWork>(new TransientLifetimeManager());
-            _container.RegisterType<IQueryProcessor, QueryProcessor>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<ICommandProcessor, CommandProcessor>(new ContainerControlledLifetimeManager());
+
+            _container.RegisterType<IQueryProcessor, QueryProcessor>(new TransientLifetimeManager());
+            _container.RegisterType<ICommandProcessor, CommandProcessor>(new TransientLifetimeManager());
         }
 
 
@@ -84,7 +86,8 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                 _container.RegisterType(
                     registration.service,
                     registration.implementation,
-                    type.Name + Registration);
+                    type.Name + Registration,
+                    new TransientLifetimeManager());
             }
 
             if (type == typeof (IQueryHandler<,>))
@@ -108,7 +111,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                     "Commander",
                     new InjectionMember[]
                     {
-                        new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), _container)
+                        new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), _container.Resolve<IUnityContainer>())
                     });
 
             }
