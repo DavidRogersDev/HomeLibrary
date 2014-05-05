@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using AutoMapper;
@@ -9,8 +10,11 @@ using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.EF.Repositories.Factories;
 using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.CommandHandlers.Decorators;
+using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.QueryHandlers.Decorators;
+using KesselRun.HomeLibrary.Service.Validation;
+using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 using WinFormsMvp.Binder;
 using WinFormsMvp.Unity;
@@ -47,10 +51,10 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
             _container.RegisterInstance<IMappingEngine>(AutoMapper.Mapper.Engine)
                 .RegisterType<IUniversalMapper, UniversalMapper>(new TransientLifetimeManager());
-
+            
             _container.RegisterType<IRepositoryProvider, RepositoryProvider>(
                 new TransientLifetimeManager(),
-                new InjectionMember[] {new InjectionConstructor(new RepositoryFactories())}
+                new InjectionMember[] { new InjectionConstructor(new RepositoryFactories()) }
                 );
 
             _container.RegisterType<IEntitiesContext, HomeLibraryContext>(new TransientLifetimeManager());
@@ -58,28 +62,33 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
             _container.RegisterType<IQueryProcessor, QueryProcessor>(new TransientLifetimeManager());
             _container.RegisterType<ICommandProcessor, CommandProcessor>(new TransientLifetimeManager());
+            
+            RegisterValidators();
+
+        }
+
+        private void RegisterValidators()
+        {
+            _container.RegisterType<IValidator<AddLendingCommand>, AddLendingValidator>(new TransientLifetimeManager());
         }
 
 
         /// <summary>
-        /// From http://stackoverflow.com/a/13859582/540156, as updated by me
+        /// From http://stackoverflow.com/a/13859582/540156, as updated by me with expression-style syntax
         /// </summary>
         /// <param name="type"></param>
         private void AutoRegisterType(Type type)
         {
             const string Registration = "Registration";
 
-            var handlerRegistrations =
-                from implementation in _serviceAssembly.GetExportedTypes()
-                where !implementation.IsAbstract
-                where !implementation.ContainsGenericParameters
-                let services =
-                    from iface in implementation.GetInterfaces()
-                    where iface.IsGenericType
-                    where iface.GetGenericTypeDefinition() == type
-                    select iface
-                from service in services
-                select new {service, implementation};
+            var handlerRegistrations = _serviceAssembly.GetExportedTypes()
+                .Where(x => !x.IsAbstract)
+                .Where(x => !x.ContainsGenericParameters)
+                .SelectMany(x => x.GetInterfaces()
+                    .Where(i => i.IsGenericType)
+                    .Where(i => i.GetGenericTypeDefinition() == type)
+                    .Select(i => new { service = i, implementation = x })
+                    );
 
             foreach (var registration in handlerRegistrations)
             {
@@ -90,28 +99,28 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                     new TransientLifetimeManager());
             }
 
-            if (type == typeof (IQueryHandler<,>))
+            if (type == typeof(IQueryHandler<,>))
             {
                 // Decorate each returned IQueryHandler<T> object with an
-                // ValidationQueryHandlerDecorator<T>.
+                // QueryHandlerValidatorDecorator<T>.
                 _container.RegisterType(
                     type,
-                    typeof (QueryHandlerValidatorDecorator<,>),
+                    typeof(QueryHandlerValidatorDecorator<,>),
                     "Queryor",
                     new InjectionMember[] { new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration)) }
                     );
             }
-            else if(type == typeof (ICommandHandler<>))
+            else if (type == typeof(ICommandHandler<>))
             {
-                // Decorate each returned IQueryHandler<T> object with an
-                // ValidationQueryHandlerDecorator<T>.
+                // Decorate each returned ICommandHandler<T> object with an
+                // CommandHandlerValidatorDecorator<T>.
                 _container.RegisterType(
                     type,
-                    typeof (CommandHandlerValidatorDecorator<>),
+                    typeof(CommandHandlerValidatorDecorator<>),
                     "Commander",
                     new InjectionMember[]
                     {
-                        new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), _container.Resolve<IUnityContainer>())
+                        new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), _container)
                     });
 
             }
