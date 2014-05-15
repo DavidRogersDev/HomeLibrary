@@ -58,6 +58,8 @@ namespace KesselRun.HomeLibrary.Ui.Core
 
         public void NavigateTo(Type view, Control containerControl)
         {
+            containerControl.Controls.Clear();
+
             var typeOfControl = GetViewTypeFromInterface(view);
             var constructors = typeOfControl.GetConstructors();
             var destinationView = constructors[0].Invoke(new object[] { });
@@ -66,7 +68,7 @@ namespace KesselRun.HomeLibrary.Ui.Core
 
             containerControl.Controls.Add(destinationViewControl);
 
-            if (destinationView is IStackableView)
+            //if (destinationView is IStackableView)
             {
                 ManageStack(destinationViewControl, containerControl);
             }
@@ -109,10 +111,40 @@ namespace KesselRun.HomeLibrary.Ui.Core
 
         public void Return(Control containerControl)
         {
-            _controlStacks[containerControl.Name].Pop();
+            var controlToDestroy = _controlStacks[containerControl.Name].Pop();
+            controlToDestroy.Dispose();
 
-            var control = _controlStacks[containerControl.Name].Peek() as UserControl;
-            containerControl.Controls.Add(_controlStacks[containerControl.Name].Peek());
+            if (_controlStacks[containerControl.Name].Any())
+            {
+                containerControl.Controls.Clear();
+                var control = _controlStacks[containerControl.Name].Peek() as UserControl;
+                containerControl.Controls.Add(_controlStacks[containerControl.Name].Peek());
+            }
+        }
+
+        public void ClearContainer(Control containerControl)
+        {
+            while (_controlStacks[containerControl.Name].Any())
+            {
+                var controlToDestroy = _controlStacks[containerControl.Name].Pop();
+                controlToDestroy.Dispose();
+            }
+
+            containerControl.Controls.Clear();
+        }
+
+        public void ClearAll()
+        {
+            foreach (var controlStack in _controlStacks)
+            {
+                while (controlStack.Value.Any())
+                {
+                    var controlToDestroy = controlStack.Value.Pop();
+                    controlToDestroy.Dispose();
+                }
+            }
+
+            _controlStacks.Clear();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using SCMDA = System.ComponentModel.DataAnnotations;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiLogic.EventArgs;
@@ -9,19 +8,18 @@ using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel.Models;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
+using SCMDA = System.ComponentModel.DataAnnotations;
 
 namespace KesselRun.HomeLibrary.UiLogic.Presenters
 {
     public class LendingsPresenter: Presenter<ILendingsView>, IDisposable
     {
         private readonly IQueryProcessor _queryProcessor;
-        private readonly IQueryHandler<GetLendingsPagedSortedQuery, IList<Lending>> _handler;
 
         public LendingsPresenter(ILendingsView view, IQueryProcessor queryProcessor)
             : base(view)
         {
             _queryProcessor = queryProcessor;
-            //_handler = handler;
             View.Load += View_Load;
             View.ViewClosing += View_ViewClosing;
             View.AddLending += View_AddLending;
@@ -47,8 +45,6 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         void View_Load(object sender, System.EventArgs e)
         {
-            //var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery { PageNr = 0, PageSize = 10 };
-            //LoadLendings(getLendingsPagedSortedQuery);
         }
 
         private void LoadLendings(GetLendingsPagedSortedQuery getLendingsPagedSortedQuery)
