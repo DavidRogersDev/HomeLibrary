@@ -28,6 +28,7 @@ _ReSharper*
 *.csproj.user
 *.resharper.user
 *.cache
+*.jtconfig
 TestResult.xml
 TestResults/*
 Thumbs.db
