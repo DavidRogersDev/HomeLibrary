@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using KesselRun.HomeLibrary.Common.Contracts;
-using KesselRun.HomeLibrary.UiLogic.Views;
 
 namespace KesselRun.HomeLibrary.Ui.Core
 {
@@ -13,11 +12,10 @@ namespace KesselRun.HomeLibrary.Ui.Core
         private readonly Dictionary<Type, Type> _viewTypesCache;
         private readonly Dictionary<string, Stack<Control>> _controlStacks = new Dictionary<string, Stack<Control>>();
         public Control NavigationRootControl { get; set; }
-        public IList<Navigator> DescendantNavigators { get; set; }
+        
 
         private Navigator()
         {
-            DescendantNavigators = new List<Navigator>();
             _viewTypesCache = new Dictionary<Type, Type>();
         }
 
@@ -68,13 +66,10 @@ namespace KesselRun.HomeLibrary.Ui.Core
 
             containerControl.Controls.Add(destinationViewControl);
 
-            //if (destinationView is IStackableView)
-            {
-                ManageStack(destinationViewControl, containerControl);
-            }
+            ManageStack(destinationViewControl, containerControl);
         }
 
-        public void ManageStack(Control control, Control containerControl)
+        private void ManageStack(Control control, Control containerControl)
         {
             if (!_controlStacks.ContainsKey(containerControl.Name))
             {
@@ -83,7 +78,7 @@ namespace KesselRun.HomeLibrary.Ui.Core
             _controlStacks[containerControl.Name].Push(control);
         }
 
-        public Type GetViewTypeFromInterface(Type type)
+        private Type GetViewTypeFromInterface(Type type)
         {
             Type viewType;
 

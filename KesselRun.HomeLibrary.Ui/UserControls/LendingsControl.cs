@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
-using KesselRun.HomeLibrary.Common.Contracts;
 using KesselRun.HomeLibrary.Ui.Assets.Resources;
 using KesselRun.HomeLibrary.Ui.Core;
 using KesselRun.HomeLibrary.Ui.Forms;
@@ -12,13 +11,12 @@ using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel.Models;
 using WinFormsMvp;
-using WinFormsMvp.Binder;
 using WinFormsMvp.Forms;
 
 namespace KesselRun.HomeLibrary.Ui.UserControls
 {
     [PresenterBinding(typeof(LendingsPresenter))]
-    public partial class LendingsControl : MvpUserControl, ILendingsView, IStackableView
+    public partial class LendingsControl : MvpUserControl, ILendingsView
     {
         private readonly Navigator _navigator = Navigator.SingleNavigator;
         private readonly Lazy<MainForm> _mainWindow;
