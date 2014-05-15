@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="Contracts\IBootstrapper.cs" />
     <Compile Include="Contracts\INavigator.cs" />
-    <Compile Include="Contracts\IStackableView.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
