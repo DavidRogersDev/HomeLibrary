@@ -115,12 +115,6 @@
     <Compile Include="UserControls\AddLendingControl.Designer.cs">
       <DependentUpon>AddLendingControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\TmpControl2.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\TmpControl2.Designer.cs">
-      <DependentUpon>TmpControl2.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\LendingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -129,12 +123,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserControls\TmpControl1.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\TmpControl1.Designer.cs">
-      <DependentUpon>TmpControl1.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Assets\Resources\ImageResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ImageResources.Designer.cs</LastGenOutput>
@@ -154,14 +142,8 @@
     <EmbeddedResource Include="UserControls\AddLendingControl.resx">
       <DependentUpon>AddLendingControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\TmpControl2.resx">
-      <DependentUpon>TmpControl2.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\LendingsControl.resx">
       <DependentUpon>LendingsControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\TmpControl1.resx">
-      <DependentUpon>TmpControl1.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

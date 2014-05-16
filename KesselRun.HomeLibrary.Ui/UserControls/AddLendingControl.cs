@@ -23,7 +23,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         {
             _mainWindow = new Lazy<MainForm>(() => ((MainForm)ParentForm), LazyThreadSafetyMode.None);
             InitializeComponent();
-            _navigator.NavigateTo(typeof(ILikeThisView), panel1);
         }
 
         protected override void OnLoad(System.EventArgs e)
@@ -62,11 +61,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         private void btnAdd_Click(object sender, System.EventArgs e)
         {
             AddNewLending(this, new AddLendingEventArgs((int)cboBook.SelectedValue, (int)cboBorrower.SelectedValue, dtpDateLent.Value, dtpDateDue.Value));
-        }
-
-        private void button1_Click(object sender, System.EventArgs e)
-        {
-            _navigator.NavigateTo(typeof(ILikeThisViewALot), panel1);
         }
     }
 }

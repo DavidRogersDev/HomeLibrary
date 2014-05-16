@@ -119,13 +119,16 @@ namespace KesselRun.HomeLibrary.Ui.Core
 
         public void ClearContainer(Control containerControl)
         {
-            while (_controlStacks[containerControl.Name].Any())
+            if (_controlStacks.ContainsKey(containerControl.Name))
             {
-                var controlToDestroy = _controlStacks[containerControl.Name].Pop();
-                controlToDestroy.Dispose();
-            }
+                while (_controlStacks[containerControl.Name].Any())
+                {
+                    var controlToDestroy = _controlStacks[containerControl.Name].Pop();
+                    controlToDestroy.Dispose();
+                }
 
-            containerControl.Controls.Clear();
+                containerControl.Controls.Clear();
+            }
         }
 
         public void ClearAll()
