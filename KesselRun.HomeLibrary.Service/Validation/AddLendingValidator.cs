@@ -15,13 +15,13 @@ namespace KesselRun.HomeLibrary.Service.Validation
             _unitOfWork = unitOfWork;
 
 
-            RuleFor(c => c.DateDue).NotNull();
-            RuleFor(c => c.BookId).Must(BookNotAlreadyLent);
+            RuleFor(c => c.DateDue).NotNull().WithMessage("The Due Date cannot be null.");
+            RuleFor(c => c.BookId).Must(BookNotAlreadyLent).WithMessage("The book is currently on loan to another person.");
         }
 
         private bool BookNotAlreadyLent(int bookId)
         {
-            var book = _unitOfWork.Books.GetSingleIncluding(bookId, b => b.Lendings);
+            var book = _unitOfWork.Repository<Model.Book>().GetSingleIncluding(bookId, b => b.Lendings);
             Lending loanNotReturned = null;
 
             if (!ReferenceEquals(null, book))

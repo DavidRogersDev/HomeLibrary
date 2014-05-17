@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.EF.Repositories;
 using KesselRun.HomeLibrary.EF.Repositories.Factories;
@@ -22,6 +23,7 @@ namespace KesselRun.HomeLibrary.EF
     public class UnitOfWork : IUnitOfWork
     {
         private bool _disposed;
+        private Lazy<Dictionary<string, object>> _repositories;
 
         private HomeLibraryContext DbContext { get; set; }
 
@@ -31,12 +33,30 @@ namespace KesselRun.HomeLibrary.EF
 
             repositoryProvider.DbContext = DbContext;
             RepositoryProvider = repositoryProvider;
+
+            _repositories= new Lazy<Dictionary<string, object>>(() => new Dictionary<string, object>(StringComparer.Ordinal));
         }
 
         // repositories
         public IEntityRepository<Book> Books { get { return GetStandardRepo<Book>(); } }
         public IEntityRepository<Person> People { get { return GetStandardRepo<Person>(); } }
         public IEntityRepository<Lending> Lendings { get { return GetStandardRepo<Lending>(); } }
+
+        public IEntityRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity
+        {
+            var type = typeof (TEntity).Name;
+
+            if (_repositories.Value.ContainsKey(type))
+            {
+                return (IEntityRepository<TEntity>) _repositories.Value[type];
+            }
+
+            var repositoryType = typeof(EntityRepository<>);
+
+            _repositories.Value.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), DbContext));
+        
+            return (IEntityRepository<TEntity>)_repositories.Value[type];
+        }
 
         protected IRepositoryProvider RepositoryProvider { get; set; }
 

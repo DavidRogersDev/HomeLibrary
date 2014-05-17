@@ -16,7 +16,7 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
 
         public void Handle(AddLendingCommand command)
         {
-            _unitOfWork.Lendings.Add(new Lending
+            _unitOfWork.Repository<Model.Lending>().Add(new Lending
             {
                 BookId = command.BookId,
                 BorrowerId = command.BorrowerId,
@@ -24,7 +24,7 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
                 DueDate = command.DateDue
             });
 
-            _unitOfWork.Lendings.Save();
+            _unitOfWork.Repository<Model.Lending>().Save();
         }
 
         public void Dispose()

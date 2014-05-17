@@ -23,7 +23,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         {
             IList<Person> people = new List<Person>();
 
-            foreach (var person in _unitOfWork.People.GetAll())
+            foreach (var person in _unitOfWork.Repository<Model.Person>().GetAll())
             {
                 var uiPerson = new Person();
                 people.Add(_mapper.Map(person, uiPerson));

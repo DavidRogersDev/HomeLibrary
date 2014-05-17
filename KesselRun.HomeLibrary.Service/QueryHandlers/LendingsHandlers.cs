@@ -25,7 +25,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         {
              IList<Lending> lendings = new List<Lending>();
 
-             foreach (var lending in _unitOfWork.Lendings.Paginate(query.PageNr, query.PageSize, l => l.Id, l => true, l => l.Book.Authors, l => l.Borrower ))
+             foreach (var lending in _unitOfWork.Repository<Model.Lending>().Paginate(query.PageNr, query.PageSize, l => l.Id, l => true, l => l.Book.Authors, l => l.Borrower ))
              {
                  var uiLending = new Lending();
                  lendings.Add(_mapper.Map(lending, uiLending));
@@ -37,7 +37,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         public Lending Handle(GetLendingByPkQuery queryObject)
         {
             var uiLending = new Lending();
-            return _mapper.Map(_unitOfWork.Lendings.FindBy(l => l.Id == queryObject.Id).Single(), uiLending);
+            return _mapper.Map(_unitOfWork.Repository<Model.Lending>().FindBy(l => l.Id == queryObject.Id).Single(), uiLending);
         }
 
         public void Dispose()

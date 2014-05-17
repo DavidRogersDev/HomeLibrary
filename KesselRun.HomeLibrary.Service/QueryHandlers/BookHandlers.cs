@@ -23,7 +23,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         {
             IList<Book> books = new List<Book>();
 
-            foreach (var book in _unitOfWork.Books.GetAll())
+            foreach (var book in _unitOfWork.Repository<Model.Book>().GetAll())
             {
                 var uiBook = new Book();
                 books.Add(_mapper.Map(book, uiBook));

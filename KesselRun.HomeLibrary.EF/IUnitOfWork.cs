@@ -1,5 +1,6 @@
 ﻿using System;
 using KesselRun.HomeLibrary.EF.Repositories;
+using KesselRun.HomeLibrary.GenericRepository;
 using KesselRun.HomeLibrary.Model;
 
 namespace KesselRun.HomeLibrary.EF
@@ -12,9 +13,6 @@ namespace KesselRun.HomeLibrary.EF
         // Save pending changes to the data store.
         void Commit();
 
-        // Repositories
-        IEntityRepository<Book> Books { get; }
-        IEntityRepository<Person> People { get; }
-        IEntityRepository<Lending> Lendings { get; }
+        IEntityRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity;
     }
 }

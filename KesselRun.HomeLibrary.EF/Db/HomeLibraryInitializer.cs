@@ -43,6 +43,16 @@ namespace KesselRun.HomeLibrary.EF.Db
                     Sobriquet = "ORM Guy"
                 };
 
+            var tonyMorgan =
+                new Person
+                {
+                    FirstName = "Tony",
+                    LastName = "Morgan",
+                    Email = "tony@halpin.com",
+                    IsAuthor = true,
+                    Sobriquet = null
+                };
+
             var alanTuring = new Person
             {
                 FirstName = "Alan",
@@ -61,12 +71,14 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Sobriquet = "Father of Awesome"
             };
 
-            context.People.AddRange(new List<Person> {johnKennedyToole, hunterSTompson, terryHalpin, alanTuring});
+            context.People.AddRange(new List<Person> { johnKennedyToole, hunterSTompson, terryHalpin, tonyMorgan, alanTuring, edgarCodd });
             context.SaveChanges();
 
             var penguin = new Publisher {Name = "Penguin"};
+            var morganKaufmann = new Publisher { Name = "Morgan Kaufmann" };
 
             context.Publishers.Add(penguin);
+            context.Publishers.Add(morganKaufmann);
             context.SaveChanges();
 
             var aConfederacyOfDunces = new Book
@@ -87,7 +99,16 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Authors = new List<Person> {hunterSTompson}
             };
 
-            context.Books.AddRange(new List<Book> {aConfederacyOfDunces, hellsAngels});
+            var informationModelingAndRelationalDatabases = new Book
+            {
+                Edition = Edition.Second,
+                Publisher = morganKaufmann,
+                Title = "Information Modeling and Relational Databases",
+                TypeOfBook = BookType.TextBook,
+                Authors = new List<Person> { terryHalpin, tonyMorgan }
+            };
+
+            context.Books.AddRange(new List<Book> {aConfederacyOfDunces, hellsAngels, informationModelingAndRelationalDatabases });
 
             var lendingToTerry = new Lending {Book = aConfederacyOfDunces, DateLent = DateTime.Now};
             var lendingToAlan = new Lending { Book = hellsAngels, DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(90)) };

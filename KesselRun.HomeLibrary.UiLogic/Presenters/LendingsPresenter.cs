@@ -20,7 +20,6 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             : base(view)
         {
             _queryProcessor = queryProcessor;
-            View.Load += View_Load;
             View.ViewClosing += View_ViewClosing;
             View.AddLending += View_AddLending;
             View.ReloadView += View_ReloadView;
@@ -41,10 +40,6 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
         void View_AddLending(object sender, System.EventArgs e)
         {
             View.LoadAddLendingView(typeof(IAddLendingsView));
-        }
-
-        void View_Load(object sender, System.EventArgs e)
-        {
         }
 
         private void LoadLendings(GetLendingsPagedSortedQuery getLendingsPagedSortedQuery)
