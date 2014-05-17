@@ -62,11 +62,5 @@ namespace KesselRun.HomeLibrary.Ui.Forms
         {
             CloseControl(this, System.EventArgs.Empty);
         }
-
-        private void button1_Click(object sender, System.EventArgs e)
-        {
-            _navigator.ClearAll();
-        }
-        
     }
 }

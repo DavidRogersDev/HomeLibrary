@@ -24,7 +24,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Sobriquet = "Troubled Genius"
             };
 
-            var hunterS = new Person
+            var hunterSTompson = new Person
             {
                 FirstName = "Hunter",
                 LastName = "S. Tompson",
@@ -42,6 +42,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                     IsAuthor = true,
                     Sobriquet = "ORM Guy"
                 };
+
             var alanTuring = new Person
             {
                 FirstName = "Alan",
@@ -51,7 +52,16 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Sobriquet = "Father of Awesome"
             };
 
-            context.People.AddRange(new List<Person> {johnKennedyToole, hunterS, terryHalpin, alanTuring});
+            var edgarCodd = new Person
+            {
+                FirstName = "Edgar",
+                LastName = "Codd",
+                Email = "edgar@codd.com",
+                IsAuthor = true,
+                Sobriquet = "Father of Awesome"
+            };
+
+            context.People.AddRange(new List<Person> {johnKennedyToole, hunterSTompson, terryHalpin, alanTuring});
             context.SaveChanges();
 
             var penguin = new Publisher {Name = "Penguin"};
@@ -74,7 +84,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Publisher = penguin,
                 Title = "Hells Angels",
                 TypeOfBook = BookType.Novel,
-                Authors = new List<Person> {hunterS}
+                Authors = new List<Person> {hunterSTompson}
             };
 
             context.Books.AddRange(new List<Book> {aConfederacyOfDunces, hellsAngels});
