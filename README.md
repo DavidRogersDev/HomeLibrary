@@ -1,6 +1,8 @@
 HomeLibrary
 ===========
 
+[![Build status](https://ci.appveyor.com/api/projects/status/he2x7p0lm8xb6eex)](https://ci.appveyor.com/project/DavidAlanRogers/homelibrary)
+
 A Winforms application for managing your home library.
 
 This is a sample application which has been developed to demonstrate how to use the [WinFormsMVP](http://winformsmvp.codeplex.com/ "winformsmvp") framework in the development of WinForms applications.
