@@ -123,6 +123,32 @@ namespace KesselRun.HomeLibrary.EF.Db
                 IsAuthor = false,
             };
 
+            var richardBarker = new Person
+            {
+                FirstName = "Richard",
+                LastName = "Barker",
+                Email = "dick@barker.com",
+                IsAuthor = false,
+            };
+
+            var tomWolfe = new Person
+            {
+                FirstName = "Tom",
+                LastName = "Wolfe",
+                Email = "tom@wolfe.com",
+                IsAuthor = false,
+                Sobriquet = "Tommy Lad"
+            };
+
+
+            var richardRhodes = new Person
+            {
+                FirstName = "Richard",
+                LastName = "Rhodes",
+                Email = "richard@tab.com",
+                IsAuthor = true,
+            };
+
             context.People.AddRange(new List<Person>
             {
                 johnKennedyToole,
@@ -136,7 +162,10 @@ namespace KesselRun.HomeLibrary.EF.Db
                 rayFeist,
                 johnLacey,
                 renoRaines,
-                bobbySixkiller
+                bobbySixkiller, 
+                richardBarker,
+                tomWolfe,
+                richardRhodes
             });
             //context.SaveChanges();
 
@@ -144,8 +173,9 @@ namespace KesselRun.HomeLibrary.EF.Db
             var morganKaufmann = new Publisher {Name = "Morgan Kaufmann"};
             var simonAndSchuster = new Publisher {Name = "Simon and Schuster"};
             var harperCollins = new Publisher {Name = "Harper Collins"};
+            var picador = new Publisher { Name = "Picador" };
 
-            context.Publishers.AddRange(new List<Publisher> {penguin, morganKaufmann, simonAndSchuster, harperCollins});
+            context.Publishers.AddRange(new List<Publisher> {penguin, morganKaufmann, simonAndSchuster, harperCollins, picador});
             //context.SaveChanges();
 
             var aConfederacyOfDunces = new Book
@@ -190,7 +220,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Publisher = penguin,
                 Title = "The Making of the Atom Bomb",
                 TypeOfBook = BookType.Novel,
-                Authors = new List<Person> {markBowden}
+                Authors = new List<Person> {richardRhodes}
             };
 
             var theMagician = new Book
@@ -202,6 +232,15 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Authors = new List<Person> {rayFeist}
             };
 
+            var theElectricKoolAidAcidTest = new Book
+            {
+                Edition = Edition.Second,
+                Publisher = picador,
+                Title = "The Electric Kool-Aid Acid Test",
+                TypeOfBook = BookType.Novel,
+                Authors = new List<Person> {tomWolfe}
+            };
+
             context.Books.AddRange(new List<Book>
             {
                 aConfederacyOfDunces,
@@ -209,7 +248,8 @@ namespace KesselRun.HomeLibrary.EF.Db
                 informationModelingAndRelationalDatabases,
                 killingPablo,
                 theMakingOfTheAtomBomb,
-                theMagician
+                theMagician,
+                theElectricKoolAidAcidTest
             });
 
             var lendingToTerry = new Lending
@@ -246,6 +286,12 @@ namespace KesselRun.HomeLibrary.EF.Db
                 DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(1))
             };
 
+            var lendingToDick = new Lending
+            {
+                Book = theElectricKoolAidAcidTest,
+                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(45))
+            };
+
             context.Lendings.AddRange(new List<Lending>
             {
                 lendingToTerry,
@@ -253,7 +299,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 lendingToFred,
                 lendingToLace,
                 lendingToReno,
-                lendingToBob
+                lendingToBob, lendingToDick
             });
 
             terryHalpin.Lendings = new List<Lending> {lendingToTerry};
@@ -262,6 +308,7 @@ namespace KesselRun.HomeLibrary.EF.Db
             johnLacey.Lendings = new List<Lending> {lendingToLace};
             renoRaines.Lendings = new List<Lending> {lendingToReno};
             bobbySixkiller.Lendings = new List<Lending> {lendingToBob};
+            richardBarker.Lendings = new List<Lending> {lendingToDick};
 
             //context.SaveChanges();
 
