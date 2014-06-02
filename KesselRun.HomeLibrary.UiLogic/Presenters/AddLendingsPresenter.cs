@@ -56,6 +56,8 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             try
             {
                 _commandProcessor.Execute(addLendingCommand);
+                Messages.Publish(addLendingCommand, new Guid("55D57C3F-9518-47AB-B41B-4DD70F1D0735"));
+
                 View.LogEventToView(new LogEvent { Event = "Lending added successfully" });
             }
             catch (ValidationException validationException)

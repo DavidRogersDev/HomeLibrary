@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiLogic.EventArgs;
@@ -28,8 +30,16 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         void View_ReloadView(object sender, LendingsViewEventArgs lendingsViewEventArgs)
         {
+            AddLendingCommand command;
+            Messages.Subscribe<AddLendingCommand>(c => ActionMethod(c), new Guid("55D57C3F-9518-47AB-B41B-4DD70F1D0735"));
+
             var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery { PageNr = lendingsViewEventArgs.PageIndex, PageSize = lendingsViewEventArgs.PageSize };
             LoadLendings(getLendingsPagedSortedQuery);
+        }
+
+        void ActionMethod(Service.Commands.AddLendingCommand bla)
+        {
+            Trace.WriteLine(bla.DateDue.Value.ToString());
         }
 
         void View_ViewClosing(object sender, System.EventArgs e)
