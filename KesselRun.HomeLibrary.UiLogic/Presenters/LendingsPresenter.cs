@@ -31,7 +31,6 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
         void View_ReloadView(object sender, LendingsViewEventArgs lendingsViewEventArgs)
         {
             AddLendingCommand command;
-            Messages.Subscribe<AddLendingCommand>(c => ActionMethod(c), new Guid("55D57C3F-9518-47AB-B41B-4DD70F1D0735"));
 
             var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery { PageNr = lendingsViewEventArgs.PageIndex, PageSize = lendingsViewEventArgs.PageSize };
             LoadLendings(getLendingsPagedSortedQuery);
