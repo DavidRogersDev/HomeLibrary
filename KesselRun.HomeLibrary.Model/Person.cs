@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using KesselRun.HomeLibrary.GenericRepository;
 using KesselRun.HomeLibrary.Model.Enums;
+using Repository.Pattern.Ef6;
 
 namespace KesselRun.HomeLibrary.Model
 {
-    public class Person : IEntity
+    public class Person : Entity
     {
         public int Id { get; set; }
         public string Email { get; set; }
@@ -15,7 +15,5 @@ namespace KesselRun.HomeLibrary.Model
 
         public virtual ICollection<Lending> Lendings { get; set; }
         public virtual ICollection<Book> Books { get; set; }
-        public State State { get; set; }
-        public Dictionary<string, object> OriginalValues { get; set; }
     }
 }

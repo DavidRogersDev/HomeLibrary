@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.Model;
+using Repository.Pattern.Infrastructure;
 
 namespace KesselRun.HomeLibrary.EF.Tests
 {
@@ -9,11 +10,25 @@ namespace KesselRun.HomeLibrary.EF.Tests
     {
         protected override void Seed(HomeLibraryContext context)
         {
-            new List<Person> { new Person { FirstName = "Terry", LastName = "Halpin", Email = "hi", IsAuthor = false},
-                new Person { FirstName = "Alan", LastName = "Turing", Email = "hi", IsAuthor = false }
-                , }.ForEach(p => context.People.Add(p));
+            var terry = new Person
+            {
+                FirstName = "Terry",
+                LastName = "Halpin",
+                Email = "hi",
+                IsAuthor = false,
+                ObjectState = ObjectState.Added
+            };
 
-            context.SaveChanges();
+            var alan = new Person
+            {
+                FirstName = "Alan",
+                LastName = "Turing",
+                Email = "hi",
+                IsAuthor = false,
+                ObjectState = ObjectState.Added
+            };
+
+            context.People.AddRange(new List<Person> {alan, terry});
 
             base.Seed(context);
         }

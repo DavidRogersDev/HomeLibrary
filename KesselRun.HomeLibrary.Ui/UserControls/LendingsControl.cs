@@ -92,7 +92,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
             if (Parent != null)
             {
-                ReloadView(this, new LendingsViewEventArgs(10, 0));
+                ReloadView(this, new LendingsViewEventArgs(10, 1));
                 dgvLendings.DataSource = Lendings;
             }
         }

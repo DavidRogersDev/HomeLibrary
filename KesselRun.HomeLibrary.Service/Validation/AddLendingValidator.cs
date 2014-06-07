@@ -3,14 +3,15 @@ using FluentValidation;
 using KesselRun.HomeLibrary.EF;
 using KesselRun.HomeLibrary.Model;
 using KesselRun.HomeLibrary.Service.Commands;
+using Repository.Pattern.UnitOfWork;
 
 namespace KesselRun.HomeLibrary.Service.Validation
 {
     public class AddLendingValidator : AbstractValidator<AddLendingCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWorkAsync _unitOfWork;
 
-        public AddLendingValidator(IUnitOfWork unitOfWork)
+        public AddLendingValidator(IUnitOfWorkAsync unitOfWork)
         {
             _unitOfWork = unitOfWork;
 
@@ -21,12 +22,12 @@ namespace KesselRun.HomeLibrary.Service.Validation
 
         private bool BookNotAlreadyLent(int bookId)
         {
-            var book = _unitOfWork.Repository<Model.Book>().GetSingleIncluding(bookId, b => b.Lendings);
+            var book = _unitOfWork.Repository<Model.Book>().Query(b => b.Id == bookId).Include(b => b.Lendings).Select().SingleOrDefault();
             Lending loanNotReturned = null;
 
             if (!ReferenceEquals(null, book))
             {
-                loanNotReturned = book.Lendings.FirstOrDefault(l => l.ReturnDate == null);
+                book.Lendings.FirstOrDefault(l => l.ReturnDate == null);
             }
 
             return ReferenceEquals(null, loanNotReturned);

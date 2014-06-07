@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using KesselRun.HomeLibrary.Model;
 using KesselRun.HomeLibrary.Model.Enums;
+ using Repository.Pattern.Infrastructure;
 
 namespace KesselRun.HomeLibrary.EF.Db
 {
@@ -21,6 +22,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "Kennedy-Toole",
                 Email = "john@dunces.com",
                 IsAuthor = true,
+                ObjectState = ObjectState.Added,
                 Sobriquet = "Troubled Genius"
             };
 
@@ -30,6 +32,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "S. Tompson",
                 Email = string.Empty,
                 IsAuthor = true,
+                ObjectState = ObjectState.Added,
                 Sobriquet = "Gonzo journo"
             };
 
@@ -40,6 +43,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                     LastName = "Halpin",
                     Email = "terry@halpin.com",
                     IsAuthor = true,
+                    ObjectState = ObjectState.Added,
                     Sobriquet = "ORM Guy"
                 };
 
@@ -50,6 +54,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                     LastName = "Morgan",
                     Email = "tony@halpin.com",
                     IsAuthor = true,
+                    ObjectState = ObjectState.Added,
                     Sobriquet = null
                 };
 
@@ -59,6 +64,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "Turing",
                 Email = "alan@turing.com",
                 IsAuthor = false,
+                ObjectState = ObjectState.Added,
                 Sobriquet = "Father of Awesome"
             };
 
@@ -68,6 +74,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "Codd",
                 Email = "edgar@codd.com",
                 IsAuthor = true,
+                ObjectState = ObjectState.Added,
                 Sobriquet = "Father of Awesome"
             };
 
@@ -76,6 +83,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 FirstName = "Mark",
                 LastName = "Bowden",
                 IsAuthor = true,
+                ObjectState = ObjectState.Added,
                 Email = string.Empty,
             };
 
@@ -85,6 +93,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "Jones",
                 Email = "fred@jone.com",
                 IsAuthor = false,
+                ObjectState = ObjectState.Added,
                 Sobriquet = "Freddy-boy"
             };
 
@@ -94,6 +103,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "Feist",
                 Email = "ray@feist.com",
                 IsAuthor = true,
+                ObjectState = ObjectState.Added,
                 Sobriquet = "Magic Man"
             };
 
@@ -103,6 +113,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "Lacey",
                 Email = "jon@lacey.com",
                 IsAuthor = false,
+                ObjectState = ObjectState.Added,
                 Sobriquet = "Lace"
             };
 
@@ -112,6 +123,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "Raines",
                 Email = "reno@raines.com",
                 IsAuthor = false,
+                ObjectState = ObjectState.Added,
                 Sobriquet = "Badlands Prowler"
             };
 
@@ -121,6 +133,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "Sixkiller",
                 Email = "bob@sixkiller.com",
                 IsAuthor = false,
+                ObjectState = ObjectState.Added
             };
 
             var richardBarker = new Person
@@ -129,6 +142,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "Barker",
                 Email = "dick@barker.com",
                 IsAuthor = false,
+                ObjectState = ObjectState.Added
             };
 
             var tomWolfe = new Person
@@ -137,7 +151,8 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "Wolfe",
                 Email = "tom@wolfe.com",
                 IsAuthor = false,
-                Sobriquet = "Tommy Lad"
+                Sobriquet = "Tommy Lad",
+                ObjectState = ObjectState.Added,
             };
 
 
@@ -147,6 +162,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 LastName = "Rhodes",
                 Email = "richard@tab.com",
                 IsAuthor = true,
+                ObjectState = ObjectState.Added
             };
 
             context.People.AddRange(new List<Person>
@@ -169,11 +185,11 @@ namespace KesselRun.HomeLibrary.EF.Db
             });
             //context.SaveChanges();
 
-            var penguin = new Publisher {Name = "Penguin"};
-            var morganKaufmann = new Publisher {Name = "Morgan Kaufmann"};
-            var simonAndSchuster = new Publisher {Name = "Simon and Schuster"};
-            var harperCollins = new Publisher {Name = "Harper Collins"};
-            var picador = new Publisher { Name = "Picador" };
+            var penguin = new Publisher { Name = "Penguin", ObjectState = ObjectState.Added};
+            var morganKaufmann = new Publisher { Name = "Morgan Kaufmann", ObjectState = ObjectState.Added };
+            var simonAndSchuster = new Publisher { Name = "Simon and Schuster", ObjectState = ObjectState.Added};
+            var harperCollins = new Publisher { Name = "Harper Collins", ObjectState = ObjectState.Added };
+            var picador = new Publisher { Name = "Picador", ObjectState = ObjectState.Added };
 
             context.Publishers.AddRange(new List<Publisher> {penguin, morganKaufmann, simonAndSchuster, harperCollins, picador});
             //context.SaveChanges();
@@ -184,6 +200,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Publisher = penguin,
                 Title = "A Confederacy ofDunces",
                 TypeOfBook = BookType.Novel,
+                ObjectState = ObjectState.Added,
                 Authors = new List<Person> {johnKennedyToole}
             };
 
@@ -193,6 +210,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Publisher = penguin,
                 Title = "Hells Angels",
                 TypeOfBook = BookType.Novel,
+                ObjectState = ObjectState.Added,
                 Authors = new List<Person> {hunterSTompson}
             };
 
@@ -202,6 +220,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Publisher = morganKaufmann,
                 Title = "Information Modeling and Relational Databases",
                 TypeOfBook = BookType.TextBook,
+                ObjectState = ObjectState.Added,
                 Authors = new List<Person> {terryHalpin, tonyMorgan}
             };
 
@@ -211,6 +230,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Publisher = penguin,
                 Title = "Killing Pablo: The Hunt for the World's Greatest Outlaw",
                 TypeOfBook = BookType.Novel,
+                ObjectState = ObjectState.Added,
                 Authors = new List<Person> {markBowden}
             };
 
@@ -220,6 +240,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Publisher = penguin,
                 Title = "The Making of the Atom Bomb",
                 TypeOfBook = BookType.Novel,
+                ObjectState = ObjectState.Added,
                 Authors = new List<Person> {richardRhodes}
             };
 
@@ -229,6 +250,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Publisher = harperCollins,
                 Title = "The Magician",
                 TypeOfBook = BookType.Novel,
+                ObjectState = ObjectState.Added,
                 Authors = new List<Person> {rayFeist}
             };
 
@@ -238,6 +260,7 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Publisher = picador,
                 Title = "The Electric Kool-Aid Acid Test",
                 TypeOfBook = BookType.Novel,
+                ObjectState = ObjectState.Added,
                 Authors = new List<Person> {tomWolfe}
             };
 
@@ -254,42 +277,51 @@ namespace KesselRun.HomeLibrary.EF.Db
 
             var lendingToTerry = new Lending
             {
-                Book = aConfederacyOfDunces, DateLent = DateTime.Now
+                Book = aConfederacyOfDunces,
+                DateLent = DateTime.Now,
+                ObjectState = ObjectState.Added,
             };
 
             var lendingToAlan = new Lending
             {
                 Book = hellsAngels,
-                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(90))
+                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(90)),
+                ObjectState = ObjectState.Added,
             };
 
             var lendingToFred = new Lending
             {
                 Book = informationModelingAndRelationalDatabases,
-                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(120))
+                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(120)),
+                ObjectState = ObjectState.Added,
             };
 
             var lendingToLace = new Lending
             {
-                Book = theMagician, DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(4))
+                Book = theMagician,
+                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(4)),
+                ObjectState = ObjectState.Added,
             };
 
             var lendingToReno = new Lending
             {
                 Book = killingPablo,
-                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(44))
+                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(44)),
+                ObjectState = ObjectState.Added,
             };
             
             var lendingToBob = new Lending
             {
                 Book = theMakingOfTheAtomBomb,
-                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(1))
+                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(1)),
+                ObjectState = ObjectState.Added,
             };
 
             var lendingToDick = new Lending
             {
                 Book = theElectricKoolAidAcidTest,
-                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(45))
+                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(45)),
+                ObjectState = ObjectState.Added,
             };
 
             context.Lendings.AddRange(new List<Lending>

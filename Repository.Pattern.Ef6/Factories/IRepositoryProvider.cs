@@ -1,9 +1,10 @@
 ﻿using System;
-using KesselRun.HomeLibrary.EF.Db;
-using KesselRun.HomeLibrary.GenericRepository;
+using Repository.Pattern.DataContext;
+using Repository.Pattern.Infrastructure;
+using Repository.Pattern.Repositories;
+using Repository.Pattern.UnitOfWork;
 
-
-namespace KesselRun.HomeLibrary.EF.Repositories.Factories
+namespace Repository.Pattern.Ef6.Factories
 {
     /// <summary>
     /// Interface for a class that can provide repositories by type.
@@ -20,7 +21,9 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// Get and set the <see cref="DbContext"/> with which to initialize a repository
         /// if one must be created.
         /// </summary>
-        EntitiesContext DbContext { get; set; }
+        IDataContextAsync DbContext { get; set; }
+
+        IUnitOfWorkAsync UnitOfWork { get; set; }
 
         /// <summary>
         /// Get an <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/> for entity type, T.
@@ -28,7 +31,7 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// <typeparam name="T">
         /// Root entity type of the <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/>.
         /// </typeparam>
-        IEntityRepository<T> GetRepositoryForEntityType<T>() where T : class, IEntity<int>;
+        IRepositoryAsync<T> GetRepositoryForEntityType<T>() where T : class, IObjectState;
 
         /// <summary>
         /// Get a repository of type T.
@@ -45,7 +48,7 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// If not found, tries to make one with the factory, fallingback to 
         /// a default factory if the factory parameter is null.
         /// </remarks>
-        T GetRepository<T>(Func<EntitiesContext, object> factory = null) where T : class;
+        T GetRepository<T>(Func<IDataContextAsync, IUnitOfWorkAsync, object> factory = null) where T : class;
 
 
         /// <summary>

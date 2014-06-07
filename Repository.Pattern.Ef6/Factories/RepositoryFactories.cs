@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using KesselRun.HomeLibrary.EF.Db;
-using KesselRun.HomeLibrary.GenericRepository;
+using Repository.Pattern.DataContext;
+using Repository.Pattern.Infrastructure;
+using Repository.Pattern.UnitOfWork;
 
-namespace KesselRun.HomeLibrary.EF.Repositories.Factories
+namespace Repository.Pattern.Ef6.Factories
 {
     /// <summary>
     /// A maker of Repositories.
@@ -29,9 +30,9 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// <remarks>
         /// MODIFY THIS METHOD TO ADD CUSTOM FACTORY FUNCTIONS
         /// </remarks>
-        private IDictionary<Type, Func<EntitiesContext, object>> GetFactories()
+        private IDictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, object>> GetFactories()
         {
-            return new Dictionary<Type, Func<EntitiesContext, object>>
+            return new Dictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, object>>
             {
                 //{typeof(IArticleRepository), dbContext => new ArticleRepository(dbContext)},
                 //{typeof(IUrlRepository), dbContext => new UrlRepository(dbContext)},
@@ -55,7 +56,7 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// <remarks>
         /// This consructor is primarily useful for testing this class
         /// </remarks>
-        public RepositoryFactories(IDictionary<Type, Func<EntitiesContext, object>> factories)
+        public RepositoryFactories(IDictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, object>> factories)
         {
             _repositoryFactories = factories;
         }
@@ -69,10 +70,10 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// The type parameter, T, is typically the repository type 
         /// but could be any type (e.g., an entity type)
         /// </remarks>
-        public Func<EntitiesContext, object> GetRepositoryFactory<T>()
+        public Func<IDataContextAsync, IUnitOfWorkAsync, object> GetRepositoryFactory<T>()
         {
 
-            Func<EntitiesContext, object> factory;
+            Func<IDataContextAsync, IUnitOfWorkAsync, object> factory;
             _repositoryFactories.TryGetValue(typeof(T), out factory);
             return factory;
         }
@@ -90,7 +91,7 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// You can substitute an alternative factory for the default one by adding
         /// a repository factory for type "T" to <see cref="_repositoryFactories"/>.
         /// </remarks>
-        public Func<EntitiesContext, object> GetRepositoryFactoryForEntityType<T>() where T : class, IEntity<int>
+        public Func<IDataContextAsync, IUnitOfWorkAsync, object> GetRepositoryFactoryForEntityType<T>() where T : class, IObjectState
         {
             return GetRepositoryFactory<T>() ?? DefaultEntityRepositoryFactory<T>();
         }
@@ -99,9 +100,9 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// Default factory for a <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/> where T is an entity.
         /// </summary>
         /// <typeparam name="T">Type of the repository's root entity</typeparam>
-        protected virtual Func<IEntitiesContext, object> DefaultEntityRepositoryFactory<T>() where T : class, IEntity<int>
+        protected virtual Func<IDataContextAsync, IUnitOfWorkAsync, object> DefaultEntityRepositoryFactory<T>() where T : class, IObjectState
         {
-            return dbContext => new EntityRepository<T>(dbContext);
+            return (dbContext, unitOfWork) => new Repository<T>(dbContext, unitOfWork);
         }
 
         /// <summary>
@@ -113,6 +114,6 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// that takes a <see cref="DbContext"/> argument and returns
         /// a repository object. Caller must know how to cast it.
         /// </remarks>
-        private readonly IDictionary<Type, Func<EntitiesContext, object>> _repositoryFactories;
+        private readonly IDictionary<Type, Func<IDataContextAsync, IUnitOfWorkAsync, object>> _repositoryFactories;
     }
 }

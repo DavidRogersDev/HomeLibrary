@@ -21,7 +21,7 @@ THIS SOFTWARE IS PROVIDED BY Brock Allen "AS IS" AND ANY EXPRESS OR IMPLIED WARR
 
 using System;
 
-namespace KesselRun.HomeLibrary.EF
+namespace KesselRun.HomeLibrary.Common.Extensions
 {
     public static class DisposableExtensions
     {

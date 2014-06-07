@@ -7,7 +7,6 @@ using FluentValidation;
 using KesselRun.HomeLibrary.Common.Contracts;
 using KesselRun.HomeLibrary.EF;
 using KesselRun.HomeLibrary.EF.Db;
-using KesselRun.HomeLibrary.EF.Repositories.Factories;
 using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.CommandHandlers.Decorators;
 using KesselRun.HomeLibrary.Service.Commands;
@@ -16,6 +15,10 @@ using KesselRun.HomeLibrary.Service.QueryHandlers.Decorators;
 using KesselRun.HomeLibrary.Service.Validation;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
+using Repository.Pattern.DataContext;
+using Repository.Pattern.Ef6;
+using Repository.Pattern.Ef6.Factories;
+using Repository.Pattern.UnitOfWork;
 using WinFormsMvp.Binder;
 using WinFormsMvp.Unity;
 
@@ -57,8 +60,8 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                 new InjectionMember[] { new InjectionConstructor(new RepositoryFactories()) }
                 );
 
-            _container.RegisterType<IEntitiesContext, HomeLibraryContext>(new TransientLifetimeManager());
-            _container.RegisterType<IUnitOfWork, UnitOfWork>(new TransientLifetimeManager());
+            _container.RegisterType<IDataContextAsync, HomeLibraryContext>(new TransientLifetimeManager());
+            _container.RegisterType<IUnitOfWorkAsync, UnitOfWork>(new TransientLifetimeManager());
 
             _container.RegisterType<IQueryProcessor, QueryProcessor>(new TransientLifetimeManager());
             _container.RegisterType<ICommandProcessor, CommandProcessor>(new TransientLifetimeManager());

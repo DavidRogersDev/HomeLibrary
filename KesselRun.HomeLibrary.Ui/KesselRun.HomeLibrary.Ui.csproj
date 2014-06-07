@@ -178,10 +178,6 @@
       <Project>{604EE641-A068-4783-A6A8-79418687EBB7}</Project>
       <Name>KesselRun.HomeLibrary.EF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KesselRun.HomeLibrary.GenericRepository\KesselRun.HomeLibrary.GenericRepository.csproj">
-      <Project>{4448ba77-f0de-48b2-8935-d3844a48d050}</Project>
-      <Name>KesselRun.HomeLibrary.GenericRepository</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KesselRun.HomeLibrary.Mapper\KesselRun.HomeLibrary.Mapper.csproj">
       <Project>{608CB184-245D-48CD-B405-2D3E4CCF8C28}</Project>
       <Name>KesselRun.HomeLibrary.Mapper</Name>
@@ -197,6 +193,14 @@
     <ProjectReference Include="..\KesselRun.HomeLibrary.UiModel\KesselRun.HomeLibrary.UiModel.csproj">
       <Project>{DE516021-3806-49ED-933B-BA9122DDDA79}</Project>
       <Name>KesselRun.HomeLibrary.UiModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
+      <Project>{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}</Project>
+      <Name>Repository.Pattern.Ef6</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository.Pattern\Repository.Pattern.csproj">
+      <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
+      <Name>Repository.Pattern</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

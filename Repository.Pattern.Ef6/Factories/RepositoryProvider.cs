@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using KesselRun.HomeLibrary.EF.Db;
-using KesselRun.HomeLibrary.GenericRepository;
+using Repository.Pattern.DataContext;
+using Repository.Pattern.Infrastructure;
+using Repository.Pattern.Repositories;
+using Repository.Pattern.UnitOfWork;
 
-namespace KesselRun.HomeLibrary.EF.Repositories.Factories
+namespace Repository.Pattern.Ef6.Factories
 {
     /// <summary>
     /// Provides an <see cref="KesselRun.HomeLibrary.GenericRepository.IRepository{T}"/> for a client request.
@@ -30,7 +32,8 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// <summary>
         /// Get and set the <see cref="DbContext"/> with which to initialize a repository if one must be created.
         /// </summary>
-        public EntitiesContext DbContext { get; set; }
+        public IDataContextAsync DbContext { get; set; }
+        public IUnitOfWorkAsync UnitOfWork { get; set; }
 
         /// <summary>
         /// Get the dictionary of repository objects, keyed by repository type.
@@ -51,9 +54,9 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// <remarks>
         /// If can't find repository in cache, use a factory to create one.
         /// </remarks>
-        public IEntityRepository<T> GetRepositoryForEntityType<T>() where T : class, IEntity<int>
+        public IRepositoryAsync<T> GetRepositoryForEntityType<T>() where T : class, IObjectState
         {
-            return GetRepository<IEntityRepository<T>>(_repositoryFactories.GetRepositoryFactoryForEntityType<T>());
+            return GetRepository<IRepositoryAsync<T>>(_repositoryFactories.GetRepositoryFactoryForEntityType<T>());
         }
 
         /// <summary>
@@ -72,7 +75,7 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// Looks for the requested repository in its cache, returning if found.
         /// If not found, tries to make one using <see cref="MakeRepository{T}"/>.
         /// </remarks>
-        public virtual T GetRepository<T>(Func<EntitiesContext, object> factory = null) where T : class
+        public virtual T GetRepository<T>(Func<IDataContextAsync, IUnitOfWorkAsync, object> factory = null) where T : class
         {
             // Look for T dictionary cache under typeof(T).
             object cachedRepository;
@@ -83,7 +86,7 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
             }
 
             // Not found or null; make one, add to dictionary cache, and return it.
-            return MakeRepository<T>(factory, DbContext);
+            return MakeRepository<T>(factory, DbContext, UnitOfWork);
         }
 
         /// <summary>Make a repository of type T.</summary>
@@ -96,7 +99,7 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
         /// If null, gets factory from <see cref="_repositoryFactories"/>.
         /// </param>
         /// <returns></returns>
-        protected virtual T MakeRepository<T>(Func<EntitiesContext, object> factory, EntitiesContext dbContext)
+        protected virtual T MakeRepository<T>(Func<IDataContextAsync, IUnitOfWorkAsync, object> factory, IDataContextAsync dbContext, IUnitOfWorkAsync unitOfWorkAsync)
         {
             var repositoryFactory = factory ?? _repositoryFactories.GetRepositoryFactory<T>();
 
@@ -105,7 +108,7 @@ namespace KesselRun.HomeLibrary.EF.Repositories.Factories
                 throw new NotImplementedException("No factory for repository type, " + typeof(T).FullName);
             }
 
-            var repository = (T)repositoryFactory(dbContext);
+            var repository = (T)repositoryFactory(dbContext, unitOfWorkAsync);
             Repositories[typeof(T)] = repository;
 
             return repository;

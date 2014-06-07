@@ -81,13 +81,17 @@
       <Project>{604ee641-a068-4783-a6a8-79418687ebb7}</Project>
       <Name>KesselRun.HomeLibrary.EF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KesselRun.HomeLibrary.GenericRepository\KesselRun.HomeLibrary.GenericRepository.csproj">
-      <Project>{4448BA77-F0DE-48B2-8935-D3844A48D050}</Project>
-      <Name>KesselRun.HomeLibrary.GenericRepository</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KesselRun.HomeLibrary.Model\KesselRun.HomeLibrary.Model.csproj">
       <Project>{36e2ce6f-f974-4bdf-89fa-60fbf697e7cb}</Project>
       <Name>KesselRun.HomeLibrary.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
+      <Project>{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}</Project>
+      <Name>Repository.Pattern.Ef6</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository.Pattern\Repository.Pattern.csproj">
+      <Project>{6E682A14-C872-4813-B620-76E108DEA683}</Project>
+      <Name>Repository.Pattern</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
