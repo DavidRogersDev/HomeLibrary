@@ -71,14 +71,14 @@ namespace Repository.Pattern.Ef6
         {
             if (_repositories == null)
             {
-                _repositories = new Dictionary<string, object>();
+                _repositories = new Dictionary<string, dynamic>();
             }
 
             var type = typeof(TEntity).Name;
 
             if (_repositories.ContainsKey(type))
             {
-                return (IRepositoryAsync<TEntity>)_repositories[type];
+                return _repositories[type];
             }
 
             _repositories.Add(type, RepositoryProvider.GetRepositoryForEntityType<TEntity>());

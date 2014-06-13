@@ -27,7 +27,6 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
              IList<Lending> lendings = new List<Lending>();
             int totalSize;
                  
-            //foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query().Include(l => l.Borrower).SelectPage(query.PageNr,query.PageSize, out totalSize))
             foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query()
                 .Include(l => l.Borrower)
                 .Include(l => l.Book.Authors)
