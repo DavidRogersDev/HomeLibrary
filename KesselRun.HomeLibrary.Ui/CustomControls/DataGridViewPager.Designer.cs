@@ -50,6 +50,7 @@
             this.btnNextPage.TabIndex = 1;
             this.btnNextPage.Text = "Next Page";
             this.btnNextPage.UseVisualStyleBackColor = true;
+            this.btnNextPage.Click += new System.EventHandler(this.btnNextPage_Click);
             // 
             // txtPagingInfo
             // 
@@ -69,6 +70,7 @@
             this.Size = new System.Drawing.Size(339, 33);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

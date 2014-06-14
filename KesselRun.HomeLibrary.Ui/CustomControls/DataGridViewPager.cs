@@ -7,14 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using KesselRun.HomeLibrary.Ui.CustomControls.EventArgs;
 
 namespace KesselRun.HomeLibrary.Ui.CustomControls
 {
     public partial class DataGridViewPager : UserControl
     {
+        [Category("Behaviour"), Description("The page index.")]
         public int PageIndex { get; set; }
+        [Category("Behaviour"), Description("The page size.")]
         public int PageSize { get; set; }
+        [Category("Behaviour"), Description("The page count.")]
         public int PageCount { get; set; }
+
+        public event EventHandler<NextPageEventArgs> NextPageSubmitted;
+
+        protected virtual void OnNextPageSubmitted(NextPageEventArgs e)
+        {
+            EventHandler<NextPageEventArgs> handler = NextPageSubmitted;
+            if (handler != null) handler(this, e);
+        }
 
         public DataGridViewPager()
         {
@@ -26,12 +38,24 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
             set { txtPagingInfo.Text = string.Format("{0} of {1}", PageIndex, PageCount); }
         }
 
-        public event EventHandler NextPageSubmitted;
-
-        protected virtual void OnNextPageSubmitted()
+        private void btnNextPage_Click(object sender, System.EventArgs e)
         {
-            EventHandler handler = NextPageSubmitted;
-            if (handler != null) handler(this, System.EventArgs.Empty);
+            var fromPageIndex = PageIndex;
+
+            if (PageIndex < PageCount)
+            {
+                if (PageIndex == 0)
+                {
+                    btnPreviousPage.Enabled = true;
+                }
+
+                PageIndex++;
+
+                if (PageIndex == PageCount)
+                    btnNextPage.Enabled = false;
+            }
+
+            OnNextPageSubmitted(new NextPageEventArgs(fromPageIndex, PageIndex));
         }
 
         //private void btnNextPage_Click(object sender, EventArgs e)

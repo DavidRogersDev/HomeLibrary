@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using KesselRun.HomeLibrary.Model;
@@ -165,6 +165,25 @@ namespace KesselRun.HomeLibrary.EF.Db
                 ObjectState = ObjectState.Added
             };
 
+            var douglasAdams = new Person
+            {
+                FirstName = "Douglas",
+                LastName = "Adams",
+                Email = "doug@adams.com",
+                IsAuthor = true,
+                ObjectState = ObjectState.Added
+            };
+
+            var frankSweeney = new Person
+            {
+                FirstName = "Frank",
+                LastName = "Sweeney",
+                Email = "frank@yahoo.com",
+                IsAuthor = false,
+                ObjectState = ObjectState.Added,
+                Sobriquet = "Mutton cheeks"
+            };
+
             context.People.AddRange(new List<Person>
             {
                 johnKennedyToole,
@@ -181,19 +200,24 @@ namespace KesselRun.HomeLibrary.EF.Db
                 bobbySixkiller, 
                 richardBarker,
                 tomWolfe,
-                richardRhodes
+                richardRhodes,
+                douglasAdams,
+                frankSweeney
             });
             //context.SaveChanges();
 
+            /****************************** Publishers ******************************/
+            var delRay = new Publisher { Name = "Del Ray", ObjectState = ObjectState.Added};
             var penguin = new Publisher { Name = "Penguin", ObjectState = ObjectState.Added};
             var morganKaufmann = new Publisher { Name = "Morgan Kaufmann", ObjectState = ObjectState.Added };
             var simonAndSchuster = new Publisher { Name = "Simon and Schuster", ObjectState = ObjectState.Added};
             var harperCollins = new Publisher { Name = "Harper Collins", ObjectState = ObjectState.Added };
             var picador = new Publisher { Name = "Picador", ObjectState = ObjectState.Added };
 
-            context.Publishers.AddRange(new List<Publisher> {penguin, morganKaufmann, simonAndSchuster, harperCollins, picador});
+            context.Publishers.AddRange(new List<Publisher> {penguin, morganKaufmann, simonAndSchuster, harperCollins, picador, delRay});
             //context.SaveChanges();
 
+            /****************************** Books ******************************/
             var aConfederacyOfDunces = new Book
             {
                 Edition = Edition.First,
@@ -264,6 +288,17 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Authors = new List<Person> {tomWolfe}
             };
 
+
+            var soLongandThanksforAlltheFish = new Book
+            {
+                Edition = Edition.Second,
+                Publisher = delRay,
+                Title = "So Long, and Thanks for All the Fish",
+                TypeOfBook = BookType.Novel,
+                ObjectState = ObjectState.Added,
+                Authors = new List<Person> { douglasAdams }
+            };
+
             context.Books.AddRange(new List<Book>
             {
                 aConfederacyOfDunces,
@@ -272,8 +307,11 @@ namespace KesselRun.HomeLibrary.EF.Db
                 killingPablo,
                 theMakingOfTheAtomBomb,
                 theMagician,
-                theElectricKoolAidAcidTest
+                theElectricKoolAidAcidTest,
+                soLongandThanksforAlltheFish
             });
+
+            /****************************** Lendings ******************************/
 
             var lendingToTerry = new Lending
             {

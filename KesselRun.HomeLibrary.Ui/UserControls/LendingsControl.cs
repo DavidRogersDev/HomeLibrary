@@ -4,12 +4,15 @@ using System.Threading;
 using System.Windows.Forms;
 using KesselRun.HomeLibrary.Ui.Assets.Resources;
 using KesselRun.HomeLibrary.Ui.Core;
+using KesselRun.HomeLibrary.Ui.CustomControls.EventArgs;
 using KesselRun.HomeLibrary.Ui.Forms;
 using KesselRun.HomeLibrary.UiLogic;
 using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
+using KesselRun.HomeLibrary.UiModel;
 using KesselRun.HomeLibrary.UiModel.Models;
+using KesselRun.HomeLibrary.UiModel.ViewModels;
 using WinFormsMvp;
 using WinFormsMvp.Forms;
 
@@ -36,7 +39,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public event EventHandler ViewClosing;
         public event EventHandler CloseControl;
         public Type NavigationSource { get; set; }
-        public BindingList<Lending> Lendings { get; set; }
+        public LendingsViewModel Lendings { get; set; }
         public event EventHandler AddLending;
         public event EventHandler<LendingsViewEventArgs> ReloadView;
 
@@ -92,9 +95,16 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
             if (Parent != null)
             {
-                ReloadView(this, new LendingsViewEventArgs(10, 1));
-                dgvLendings.DataSource = Lendings;
+                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex));
+                dgvLendings.DataSource = Lendings.Lendings;
+                dgvPager.PageCount = Lendings.NumberOfPages;
             }
+        }
+
+        private void dgvPager_NextPageSubmitted(object sender, NextPageEventArgs e)
+        {
+            ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, e.NewPageNumber));
+            dgvLendings.DataSource = Lendings.Lendings;
         }
     }
 }

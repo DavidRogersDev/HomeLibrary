@@ -1,4 +1,6 @@
-﻿namespace KesselRun.HomeLibrary.Ui.Forms
+﻿using KesselRun.HomeLibrary.UiModel.ViewModels;
+
+namespace KesselRun.HomeLibrary.Ui.Forms
 {
     partial class MainForm
     {
@@ -106,7 +108,7 @@
             // 
             // logDisplayBindingSource
             // 
-            this.logDisplayBindingSource.DataSource = typeof(KesselRun.HomeLibrary.UiLogic.Views.ViewModels.MainViewModel);
+            this.logDisplayBindingSource.DataSource = typeof(MainViewModel);
             // 
             // MainForm
             // 

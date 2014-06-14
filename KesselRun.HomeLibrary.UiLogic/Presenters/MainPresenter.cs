@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using KesselRun.HomeLibrary.UiLogic.Views;
-using KesselRun.HomeLibrary.UiLogic.Views.ViewModels;
+using KesselRun.HomeLibrary.UiModel;
+using KesselRun.HomeLibrary.UiModel.ViewModels;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
 

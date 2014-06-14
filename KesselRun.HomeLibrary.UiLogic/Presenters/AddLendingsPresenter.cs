@@ -5,8 +5,9 @@ using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiLogic.Views;
-using KesselRun.HomeLibrary.UiLogic.Views.ViewModels;
+using KesselRun.HomeLibrary.UiModel;
 using KesselRun.HomeLibrary.UiModel.Models;
+using KesselRun.HomeLibrary.UiModel.ViewModels;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
 

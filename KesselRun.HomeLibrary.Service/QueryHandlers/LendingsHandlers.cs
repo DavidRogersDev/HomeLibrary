@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using KesselRun.HomeLibrary.EF;
 using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiModel.Models;
+using KesselRun.HomeLibrary.UiModel.ViewModels;
 using Repository.Pattern.UnitOfWork;
 
 namespace KesselRun.HomeLibrary.Service.QueryHandlers
 {
     public class LendingsHandlers : 
-        IQueryHandler<GetLendingsPagedSortedQuery, IList<Lending>>,
+        IQueryHandler<GetLendingsPagedSortedQuery, LendingsViewModel>,
         IQueryHandler<GetLendingByPkQuery, Lending>
     {
         private readonly IUnitOfWorkAsync _unitOfWork;
@@ -22,8 +23,9 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             _mapper = mapper;
         }
 
-        public IList<Lending> Handle(GetLendingsPagedSortedQuery query)
+        public LendingsViewModel Handle(GetLendingsPagedSortedQuery query)
         {
+            var lendingsViewModel = new LendingsViewModel();
              IList<Lending> lendings = new List<Lending>();
             int totalSize;
                  
@@ -36,8 +38,10 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
                  var uiLending = new Lending();
                  lendings.Add(_mapper.Map(lending, uiLending));
              }
-            
-            return lendings;
+
+            lendingsViewModel.Lendings = new BindingList<Lending>(lendings);
+            lendingsViewModel.NumberOfPages = (totalSize / query.PageSize) + 1;
+            return lendingsViewModel;
         }
 
         public Lending Handle(GetLendingByPkQuery queryObject)

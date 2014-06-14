@@ -1,4 +1,6 @@
-﻿namespace KesselRun.HomeLibrary.Ui.UserControls
+﻿using KesselRun.HomeLibrary.Ui.CustomControls.EventArgs;
+
+namespace KesselRun.HomeLibrary.Ui.UserControls
 {
     partial class LendingsControl
     {
@@ -38,6 +40,7 @@
             this.dgvtcDateDue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvlcAuthor = new System.Windows.Forms.DataGridViewLinkColumn();
             this.btnAddLending = new System.Windows.Forms.Button();
+            this.dgvPager = new KesselRun.HomeLibrary.Ui.CustomControls.DataGridViewPager();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLendings)).BeginInit();
             this.SuspendLayout();
             // 
@@ -121,7 +124,7 @@
             // 
             // btnAddLending
             // 
-            this.btnAddLending.Location = new System.Drawing.Point(20, 165);
+            this.btnAddLending.Location = new System.Drawing.Point(20, 209);
             this.btnAddLending.Name = "btnAddLending";
             this.btnAddLending.Size = new System.Drawing.Size(75, 23);
             this.btnAddLending.TabIndex = 2;
@@ -129,14 +132,26 @@
             this.btnAddLending.UseVisualStyleBackColor = true;
             this.btnAddLending.Click += new System.EventHandler(this.btnAddLending_Click);
             // 
+            // dgvPager
+            // 
+            this.dgvPager.Location = new System.Drawing.Point(4, 157);
+            this.dgvPager.Name = "dgvPager";
+            this.dgvPager.PageCount = 0;
+            this.dgvPager.PageIndex = 1;
+            this.dgvPager.PageSize = 4;
+            this.dgvPager.Size = new System.Drawing.Size(339, 33);
+            this.dgvPager.TabIndex = 3;
+            this.dgvPager.NextPageSubmitted += dgvPager_NextPageSubmitted;
+            // 
             // LendingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dgvPager);
             this.Controls.Add(this.btnAddLending);
             this.Controls.Add(this.dgvLendings);
             this.Name = "LendingsControl";
-            this.Size = new System.Drawing.Size(1050, 202);
+            this.Size = new System.Drawing.Size(1050, 248);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLendings)).EndInit();
             this.ResumeLayout(false);
 
@@ -154,6 +169,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDateDue;
         private System.Windows.Forms.DataGridViewLinkColumn dgvlcAuthor;
         private System.Windows.Forms.Button btnAddLending;
+        private CustomControls.DataGridViewPager dgvPager;
 
     }
 }

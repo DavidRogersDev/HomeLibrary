@@ -1,4 +1,5 @@
 ﻿using System;
+using KesselRun.HomeLibrary.UiModel;
 using WinFormsMvp;
 
 namespace KesselRun.HomeLibrary.UiLogic.Views

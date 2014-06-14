@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel;
 
-namespace KesselRun.HomeLibrary.UiLogic.Views.ViewModels
+namespace KesselRun.HomeLibrary.UiModel.ViewModels
 {
     public class MainViewModel
     {

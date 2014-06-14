@@ -108,6 +108,7 @@
       <DependentUpon>DataGridViewPager.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Config\DiContainerConfigurer.cs" />
+    <Compile Include="CustomControls\EventArgs\NextPageEventArgs.cs" />
     <Compile Include="EventArgs\AddLendingEventArgs.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -132,6 +133,9 @@
     <EmbeddedResource Include="Assets\Resources\ImageResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ImageResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\DataGridViewPager.resx">
+      <DependentUpon>DataGridViewPager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

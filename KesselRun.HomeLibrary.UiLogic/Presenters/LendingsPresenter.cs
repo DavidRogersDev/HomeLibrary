@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Views;
-using KesselRun.HomeLibrary.UiModel.Models;
+using KesselRun.HomeLibrary.UiModel;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
 using SCMDA = System.ComponentModel.DataAnnotations;
@@ -56,7 +54,8 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             try
             {
                 var lendings = _queryProcessor.Process(getLendingsPagedSortedQuery);
-                View.Lendings = new BindingList<Lending>(lendings);
+                View.Lendings = lendings;
+
             }
             catch (SCMDA.ValidationException validationException)
             {

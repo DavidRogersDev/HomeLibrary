@@ -1,11 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using KesselRun.HomeLibrary.UiModel.Models;
 
-namespace KesselRun.HomeLibrary.UiLogic.Views.ViewModels
+namespace KesselRun.HomeLibrary.UiModel.ViewModels
 {
     public class LendingsViewModel
     {
         public BindingList<Lending> Lendings { get; set; }
+        public int NumberOfPages { get; set; }
     }
 }

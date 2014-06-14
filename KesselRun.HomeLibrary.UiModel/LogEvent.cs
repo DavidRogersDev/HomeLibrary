@@ -1,4 +1,4 @@
-﻿namespace KesselRun.HomeLibrary.UiLogic
+﻿namespace KesselRun.HomeLibrary.UiModel
 {
     public class LogEvent
     {
