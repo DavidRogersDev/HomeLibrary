@@ -68,6 +68,7 @@
     <Compile Include="CommandHandlers\Decorators\CommandHandlerValidatorDecorator.cs" />
     <Compile Include="CommandHandlers\LendingsCommandHandlers.cs" />
     <Compile Include="Commands\AddLendingCommand.cs" />
+    <Compile Include="Converters\LendingsConverters.cs" />
     <Compile Include="Infrastructure\CommandProcessor.cs" />
     <Compile Include="Infrastructure\ICommandHandler.cs" />
     <Compile Include="Infrastructure\ICommandProcessor.cs" />

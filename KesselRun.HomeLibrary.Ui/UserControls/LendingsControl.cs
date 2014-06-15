@@ -93,9 +93,11 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         {
             base.OnParentChanged(e);
 
+            string sortBy = "Title";
+
             if (Parent != null)
             {
-                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex));
+                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex, sortBy));
                 dgvLendings.DataSource = Lendings.Lendings;
                 dgvPager.PageCount = Lendings.NumberOfPages;
             }
@@ -103,7 +105,9 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
         private void dgvPager_NextPageSubmitted(object sender, NextPageEventArgs e)
         {
-            ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, e.NewPageNumber));
+            string sortBy = "Title";
+
+            ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, e.NewPageNumber, sortBy));
             dgvLendings.DataSource = Lendings.Lendings;
         }
     }

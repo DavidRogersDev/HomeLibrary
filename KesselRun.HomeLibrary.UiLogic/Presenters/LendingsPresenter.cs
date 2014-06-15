@@ -12,7 +12,7 @@ using SCMDA = System.ComponentModel.DataAnnotations;
 
 namespace KesselRun.HomeLibrary.UiLogic.Presenters
 {
-    public class LendingsPresenter: Presenter<ILendingsView>, IDisposable
+    public class LendingsPresenter : Presenter<ILendingsView>, IDisposable
     {
         private readonly IQueryProcessor _queryProcessor;
 
@@ -26,27 +26,32 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             _queryProcessor = queryProcessor;
         }
 
-        void View_ReloadView(object sender, LendingsViewEventArgs lendingsViewEventArgs)
+        private void View_ReloadView(object sender, LendingsViewEventArgs lendingsViewEventArgs)
         {
             AddLendingCommand command;
 
-            var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery { PageNr = lendingsViewEventArgs.PageIndex, PageSize = lendingsViewEventArgs.PageSize };
+            var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery
+            {
+                PageNr = lendingsViewEventArgs.PageIndex,
+                PageSize = lendingsViewEventArgs.PageSize,
+                SortBy = lendingsViewEventArgs.SortBy
+            };
             LoadLendings(getLendingsPagedSortedQuery);
         }
 
-        void ActionMethod(Service.Commands.AddLendingCommand bla)
+        private void ActionMethod(Service.Commands.AddLendingCommand bla)
         {
             Trace.WriteLine(bla.DateDue.Value.ToString());
         }
 
-        void View_ViewClosing(object sender, System.EventArgs e)
+        private void View_ViewClosing(object sender, System.EventArgs e)
         {
             PresenterBinder.Factory.Release(this);
         }
 
-        void View_AddLending(object sender, System.EventArgs e)
+        private void View_AddLending(object sender, System.EventArgs e)
         {
-            View.LoadAddLendingView(typeof(IAddLendingsView));
+            View.LoadAddLendingView(typeof (IAddLendingsView));
         }
 
         private void LoadLendings(GetLendingsPagedSortedQuery getLendingsPagedSortedQuery)
@@ -59,7 +64,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             }
             catch (SCMDA.ValidationException validationException)
             {
-                View.LogEventToView(new LogEvent{ Event = validationException.Message});   //TODO: log informative message
+                View.LogEventToView(new LogEvent {Event = validationException.Message}); //TODO: log informative message
             }
         }
 

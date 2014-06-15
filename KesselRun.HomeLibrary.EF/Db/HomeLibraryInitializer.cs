@@ -7,9 +7,9 @@ using KesselRun.HomeLibrary.Model.Enums;
 
 namespace KesselRun.HomeLibrary.EF.Db
 {
-    //public class HomeLibraryInitializer : CreateDatabaseIfNotExists<HomeLibraryContext>
+    public class HomeLibraryInitializer : CreateDatabaseIfNotExists<HomeLibraryContext>
     //public class HomeLibraryInitializer : DropCreateDatabaseIfModelChanges<HomeLibraryContext>
-    public class HomeLibraryInitializer : DropCreateDatabaseAlways<HomeLibraryContext>
+    //public class HomeLibraryInitializer : DropCreateDatabaseAlways<HomeLibraryContext>
     {
         protected override void Seed(HomeLibraryContext context)
         {
