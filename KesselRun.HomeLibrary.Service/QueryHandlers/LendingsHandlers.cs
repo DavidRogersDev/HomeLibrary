@@ -7,6 +7,7 @@ using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.Converters;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
+using KesselRun.HomeLibrary.UiModel;
 using KesselRun.HomeLibrary.UiModel.Models;
 using KesselRun.HomeLibrary.UiModel.ViewModels;
 using Repository.Pattern.UnitOfWork;
@@ -30,7 +31,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
 
         public LendingsViewModel Handle(GetLendingsPagedSortedQuery query)
         {
-            var lendingsViewModel = new LendingsViewModel();
+            var lendingsViewModel = new LendingsViewModel{ PagerData = new PagerData() };
              IList<Lending> lendings = new List<Lending>();
             int totalSize;
             var sortbySelector = _keySelector(query.SortBy);
@@ -39,15 +40,25 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
                 .Include(l => l.Borrower)
                 .Include(l => l.Book.Authors)
                 .OrderBy(q => q.OrderBy(sortbySelector))
-                .SelectPage(query.PageNr, query.PageSize, out totalSize))
+                .SelectPage(query.PageIndex, query.PageSize, out totalSize))
              {
                  var uiLending = new Lending();
                  lendings.Add(_mapper.Map(lending, uiLending));
              }
 
             lendingsViewModel.Lendings = new BindingList<Lending>(lendings);
-            lendingsViewModel.NumberOfPages = (totalSize / query.PageSize) + 1;
+            lendingsViewModel.PagerData.NumberOfPages = (totalSize / query.PageSize) + 1;
+            
+            PopulateOtherPagerInfo(query, lendingsViewModel);
+
             return lendingsViewModel;
+        }
+
+        private static void PopulateOtherPagerInfo(GetLendingsPagedSortedQuery query, LendingsViewModel lendingsViewModel)
+        {
+            lendingsViewModel.PagerData.PageNumber = query.PageIndex;
+            lendingsViewModel.PagerData.PageSize = query.PageSize;
+            lendingsViewModel.PagerData.SortByField = query.SortBy;
         }
 
         public Lending Handle(GetLendingByPkQuery queryObject)

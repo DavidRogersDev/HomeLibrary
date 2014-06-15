@@ -32,7 +32,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
             var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery
             {
-                PageNr = lendingsViewEventArgs.PageIndex,
+                PageIndex = lendingsViewEventArgs.PageIndex,
                 PageSize = lendingsViewEventArgs.PageSize,
                 SortBy = lendingsViewEventArgs.SortBy
             };
@@ -58,8 +58,8 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
         {
             try
             {
-                var lendings = _queryProcessor.Process(getLendingsPagedSortedQuery);
-                View.Lendings = lendings;
+                var lendingsViewModel = _queryProcessor.Process(getLendingsPagedSortedQuery);
+                View.LendingsViewModel = lendingsViewModel;
 
             }
             catch (SCMDA.ValidationException validationException)

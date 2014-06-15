@@ -85,7 +85,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             this.btnLendings.Name = "btnLendings";
             this.btnLendings.Size = new System.Drawing.Size(75, 23);
             this.btnLendings.TabIndex = 0;
-            this.btnLendings.Text = "Lendings";
+            this.btnLendings.Text = "LendingsViewModel";
             this.btnLendings.UseVisualStyleBackColor = true;
             // 
             // lstMainViewLog

@@ -39,7 +39,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public event EventHandler ViewClosing;
         public event EventHandler CloseControl;
         public Type NavigationSource { get; set; }
-        public LendingsViewModel Lendings { get; set; }
+        public LendingsViewModel LendingsViewModel { get; set; }
         public event EventHandler AddLending;
         public event EventHandler<LendingsViewEventArgs> ReloadView;
 
@@ -93,22 +93,34 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         {
             base.OnParentChanged(e);
 
-            string sortBy = "Title";
-
             if (Parent != null)
             {
-                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex, sortBy));
-                dgvLendings.DataSource = Lendings.Lendings;
-                dgvPager.PageCount = Lendings.NumberOfPages;
+                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex, dgvPager.SortByColumn, dgvPager.GetSortDirection()));
+                dgvLendings.DataSource = LendingsViewModel.Lendings;
+                dgvPager.PageCount = LendingsViewModel.PagerData.NumberOfPages;
+                dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
+                dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
             }
         }
 
         private void dgvPager_NextPageSubmitted(object sender, NextPageEventArgs e)
         {
-            string sortBy = "Title";
-
-            ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, e.NewPageNumber, sortBy));
-            dgvLendings.DataSource = Lendings.Lendings;
+            ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, e.NewPageIndex, dgvPager.SortByColumn, dgvPager.GetSortDirection()));
+            dgvLendings.DataSource = LendingsViewModel.Lendings;
         }
+
+        private void dgvLendings_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+
+            //  if less than 0, must be the Header column.
+            if (rowIndex < 0)
+            {
+                dgvPager.SortByColumn = dgvLendings.Columns[e.ColumnIndex].DataPropertyName;
+                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex, dgvPager.SortByColumn, dgvPager.GetSortDirection()));
+                dgvLendings.DataSource = LendingsViewModel.Lendings;
+            }
+        }
+
     }
 }

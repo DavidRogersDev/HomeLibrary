@@ -6,7 +6,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Views
 {
     public interface ILendingsView : IClosableView
     {
-        LendingsViewModel Lendings { get; set; }
+        LendingsViewModel LendingsViewModel { get; set; }
 
         event EventHandler AddLending;
         event EventHandler<LendingsViewEventArgs> ReloadView;

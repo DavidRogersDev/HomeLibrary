@@ -6,6 +6,6 @@ namespace KesselRun.HomeLibrary.UiModel.ViewModels
     public class LendingsViewModel
     {
         public BindingList<Lending> Lendings { get; set; }
-        public int NumberOfPages { get; set; }
+        public PagerData PagerData { get; set; }
     }
 }

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using KesselRun.HomeLibrary.Ui.CustomControls.EventArgs;
 
@@ -19,6 +13,10 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         public int PageSize { get; set; }
         [Category("Behaviour"), Description("The page count.")]
         public int PageCount { get; set; }
+        [Category("Behaviour"), Description("The column on which the grid's data is sorted.")]
+        public string SortByColumn { get; set; }
+        [Category("Behaviour"), Description("Whether sort order is asc or desc.")]
+        public string SortOrder { get; set; }
 
         public event EventHandler<NextPageEventArgs> NextPageSubmitted;
 
@@ -32,7 +30,17 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         {
             InitializeComponent();
         }
-        
+
+        public ListSortDirection GetSortDirection()
+        {
+            switch (SortOrder)
+            {
+                case "Asc": return ListSortDirection.Ascending;
+                case "Desc": return ListSortDirection.Descending;
+                default: return ListSortDirection.Ascending;
+            }
+        }
+
         public string PageInfoText
         {
             set { txtPagingInfo.Text = string.Format("{0} of {1}", PageIndex, PageCount); }

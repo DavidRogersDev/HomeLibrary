@@ -49,6 +49,7 @@
     <Compile Include="Models\Lending.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Publisher.cs" />
+    <Compile Include="PagerData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AddLendingViewModel.cs" />
     <Compile Include="ViewModels\LendingsViewModel.cs" />

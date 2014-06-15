@@ -3,13 +3,13 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls.EventArgs
 {
     public class NextPageEventArgs : System.EventArgs
     {
-        public readonly int NewPageNumber;
-        public readonly int OldPageNumber;
+        public readonly int NewPageIndex;
+        public readonly int OldPageIndex;
 
-        public NextPageEventArgs(int oldPageNumber, int newPageNumber)
+        public NextPageEventArgs(int oldPageIndex, int newPageIndex)
         {
-            NewPageNumber = newPageNumber;
-            OldPageNumber = oldPageNumber;
+            NewPageIndex = newPageIndex;
+            OldPageIndex = oldPageIndex;
         }
     }
 }

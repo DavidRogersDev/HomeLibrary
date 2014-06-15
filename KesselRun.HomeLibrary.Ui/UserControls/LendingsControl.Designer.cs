@@ -62,6 +62,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvLendings.Name = "dgvLendings";
             this.dgvLendings.Size = new System.Drawing.Size(1040, 150);
             this.dgvLendings.TabIndex = 1;
+            this.dgvLendings.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLendings_CellContentClick);
             this.dgvLendings.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvLendingsCellFormatting);
             // 
             // dgvlcTitle
@@ -140,8 +141,10 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvPager.PageIndex = 1;
             this.dgvPager.PageSize = 4;
             this.dgvPager.Size = new System.Drawing.Size(339, 33);
+            this.dgvPager.SortByColumn = "Email";
+            this.dgvPager.SortOrder = "Asc";
             this.dgvPager.TabIndex = 3;
-            this.dgvPager.NextPageSubmitted += dgvPager_NextPageSubmitted;
+            this.dgvPager.NextPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.NextPageEventArgs>(this.dgvPager_NextPageSubmitted);
             // 
             // LendingsControl
             // 
