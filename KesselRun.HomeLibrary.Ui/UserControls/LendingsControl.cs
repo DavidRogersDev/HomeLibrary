@@ -6,12 +6,10 @@ using KesselRun.HomeLibrary.Ui.Assets.Resources;
 using KesselRun.HomeLibrary.Ui.Core;
 using KesselRun.HomeLibrary.Ui.CustomControls.EventArgs;
 using KesselRun.HomeLibrary.Ui.Forms;
-using KesselRun.HomeLibrary.UiLogic;
 using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel;
-using KesselRun.HomeLibrary.UiModel.Models;
 using KesselRun.HomeLibrary.UiModel.ViewModels;
 using WinFormsMvp;
 using WinFormsMvp.Forms;
@@ -95,32 +93,59 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
             if (Parent != null)
             {
-                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex, dgvPager.SortByColumn, dgvPager.GetSortDirection()));
+                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex, dgvPager.SortByColumn, dgvPager.SortOrder));
                 dgvLendings.DataSource = LendingsViewModel.Lendings;
                 dgvPager.PageCount = LendingsViewModel.PagerData.NumberOfPages;
                 dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
                 dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
+                dgvPager.SortOrder = LendingsViewModel.PagerData.SortOrder;
             }
         }
 
         private void dgvPager_NextPageSubmitted(object sender, NextPageEventArgs e)
         {
-            ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, e.NewPageIndex, dgvPager.SortByColumn, dgvPager.GetSortDirection()));
+            ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, e.NewPageIndex, dgvPager.SortByColumn, dgvPager.SortOrder));
             dgvLendings.DataSource = LendingsViewModel.Lendings;
+
+            dgvPager.PageCount = LendingsViewModel.PagerData.NumberOfPages;
+            dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
+            dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
+            dgvPager.SortOrder = LendingsViewModel.PagerData.SortOrder;
         }
 
-        private void dgvLendings_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvLendings_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
+            var columnClicked = dgvLendings.Columns[e.ColumnIndex];
 
             //  if less than 0, must be the Header column.
-            if (rowIndex < 0)
+            if (rowIndex < 0 && columnClicked.SortMode == DataGridViewColumnSortMode.Programmatic)
             {
-                dgvPager.SortByColumn = dgvLendings.Columns[e.ColumnIndex].DataPropertyName;
-                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex, dgvPager.SortByColumn, dgvPager.GetSortDirection()));
+                SortOutSorting(columnClicked);
+
+                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex, dgvPager.SortByColumn, dgvPager.SortOrder));
                 dgvLendings.DataSource = LendingsViewModel.Lendings;
+
+                dgvPager.PageCount = LendingsViewModel.PagerData.NumberOfPages;
+                dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
+                dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
+                dgvPager.SortOrder = LendingsViewModel.PagerData.SortOrder;
             }
         }
 
+        private void SortOutSorting(DataGridViewColumn columnClicked)
+        {
+            if (dgvPager.SortByColumn == columnClicked.DataPropertyName)
+            {
+                dgvPager.SortOrder = dgvPager.SortOrder == ListSortDirection.Ascending
+                    ? ListSortDirection.Descending
+                    : ListSortDirection.Ascending;
+            }
+            else
+            {
+                dgvPager.SortByColumn = columnClicked.DataPropertyName;
+                dgvPager.SortOrder = ListSortDirection.Ascending;
+            }
+        }
     }
 }

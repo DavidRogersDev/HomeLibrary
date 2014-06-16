@@ -34,12 +34,11 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             var lendingsViewModel = new LendingsViewModel{ PagerData = new PagerData() };
              IList<Lending> lendings = new List<Lending>();
             int totalSize;
-            var sortbySelector = _keySelector(query.SortBy);
                  
             foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query()
                 .Include(l => l.Borrower)
                 .Include(l => l.Book.Authors)
-                .OrderBy(q => q.OrderBy(sortbySelector))
+                .OrderBy(GetOrderByFunc(query))
                 .SelectPage(query.PageIndex, query.PageSize, out totalSize))
              {
                  var uiLending = new Lending();
@@ -54,11 +53,26 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             return lendingsViewModel;
         }
 
+        private Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> GetOrderByFunc(
+            GetLendingsPagedSortedQuery query)
+        {
+            switch (query.OrderByDirection)
+            {
+                case ListSortDirection.Ascending:
+                    return l => l.OrderBy(_keySelector(query.SortBy));
+                case ListSortDirection.Descending:
+                    return l => l.OrderByDescending(_keySelector(query.SortBy));
+            }
+
+            return null;
+        }
+
         private static void PopulateOtherPagerInfo(GetLendingsPagedSortedQuery query, LendingsViewModel lendingsViewModel)
         {
             lendingsViewModel.PagerData.PageNumber = query.PageIndex;
             lendingsViewModel.PagerData.PageSize = query.PageSize;
             lendingsViewModel.PagerData.SortByField = query.SortBy;
+            lendingsViewModel.PagerData.SortOrder = query.OrderByDirection;
         }
 
         public Lending Handle(GetLendingByPkQuery queryObject)

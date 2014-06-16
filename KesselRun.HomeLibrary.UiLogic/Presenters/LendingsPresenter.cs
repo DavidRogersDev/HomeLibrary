@@ -32,6 +32,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
             var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery
             {
+                OrderByDirection = lendingsViewEventArgs.SortDirection,
                 PageIndex = lendingsViewEventArgs.PageIndex,
                 PageSize = lendingsViewEventArgs.PageSize,
                 SortBy = lendingsViewEventArgs.SortBy

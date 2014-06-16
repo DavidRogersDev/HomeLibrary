@@ -31,6 +31,9 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         private void InitializeComponent()
         {
             this.dgvLendings = new System.Windows.Forms.DataGridView();
+            this.btnAddLending = new System.Windows.Forms.Button();
+            this.dgvPager = new KesselRun.HomeLibrary.Ui.CustomControls.DataGridViewPager();
+            this.dgvtcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvlcTitle = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dgvlcBorrower = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dgvlcEmail = new System.Windows.Forms.DataGridViewLinkColumn();
@@ -39,8 +42,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvtcDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvtcDateDue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvlcAuthor = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.btnAddLending = new System.Windows.Forms.Button();
-            this.dgvPager = new KesselRun.HomeLibrary.Ui.CustomControls.DataGridViewPager();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLendings)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,6 +51,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvLendings.AllowUserToOrderColumns = true;
             this.dgvLendings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLendings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvtcId,
             this.dgvlcTitle,
             this.dgvlcBorrower,
             this.dgvlcEmail,
@@ -62,66 +64,8 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvLendings.Name = "dgvLendings";
             this.dgvLendings.Size = new System.Drawing.Size(1040, 150);
             this.dgvLendings.TabIndex = 1;
-            this.dgvLendings.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLendings_CellContentClick);
+            this.dgvLendings.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLendings_CellClick);
             this.dgvLendings.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvLendingsCellFormatting);
-            // 
-            // dgvlcTitle
-            // 
-            this.dgvlcTitle.DataPropertyName = "Title";
-            this.dgvlcTitle.HeaderText = "Title";
-            this.dgvlcTitle.Name = "dgvlcTitle";
-            this.dgvlcTitle.ToolTipText = "Title";
-            // 
-            // dgvlcBorrower
-            // 
-            this.dgvlcBorrower.DataPropertyName = "Borrower";
-            this.dgvlcBorrower.HeaderText = "Borrower";
-            this.dgvlcBorrower.Name = "dgvlcBorrower";
-            this.dgvlcBorrower.ToolTipText = "Borrower";
-            // 
-            // dgvlcEmail
-            // 
-            this.dgvlcEmail.DataPropertyName = "Email";
-            this.dgvlcEmail.HeaderText = "Email";
-            this.dgvlcEmail.Name = "dgvlcEmail";
-            this.dgvlcEmail.ToolTipText = "Email";
-            // 
-            // dgvicReturn
-            // 
-            this.dgvicReturn.DataPropertyName = "ReturnDate";
-            this.dgvicReturn.HeaderText = "Return";
-            this.dgvicReturn.Name = "dgvicReturn";
-            this.dgvicReturn.ToolTipText = "Return Book";
-            // 
-            // dgvtcDateLent
-            // 
-            this.dgvtcDateLent.DataPropertyName = "DateLent";
-            this.dgvtcDateLent.HeaderText = "Date Lent";
-            this.dgvtcDateLent.Name = "dgvtcDateLent";
-            this.dgvtcDateLent.ToolTipText = "Book Lent On";
-            // 
-            // dgvtcDuration
-            // 
-            this.dgvtcDuration.DataPropertyName = "Duration";
-            this.dgvtcDuration.FillWeight = 50F;
-            this.dgvtcDuration.HeaderText = "Duration";
-            this.dgvtcDuration.Name = "dgvtcDuration";
-            this.dgvtcDuration.ToolTipText = "Loan Duration";
-            // 
-            // dgvtcDateDue
-            // 
-            this.dgvtcDateDue.DataPropertyName = "DueDate";
-            this.dgvtcDateDue.HeaderText = "Date Due";
-            this.dgvtcDateDue.Name = "dgvtcDateDue";
-            this.dgvtcDateDue.ToolTipText = "Due Date for the Book";
-            // 
-            // dgvlcAuthor
-            // 
-            this.dgvlcAuthor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dgvlcAuthor.DataPropertyName = "Authors";
-            this.dgvlcAuthor.HeaderText = "Author/s";
-            this.dgvlcAuthor.Name = "dgvlcAuthor";
-            this.dgvlcAuthor.ToolTipText = "Authors";
             // 
             // btnAddLending
             // 
@@ -142,9 +86,80 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvPager.PageSize = 4;
             this.dgvPager.Size = new System.Drawing.Size(339, 33);
             this.dgvPager.SortByColumn = "Email";
-            this.dgvPager.SortOrder = "Asc";
+            this.dgvPager.SortOrder = System.ComponentModel.ListSortDirection.Ascending;
             this.dgvPager.TabIndex = 3;
             this.dgvPager.NextPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.NextPageEventArgs>(this.dgvPager_NextPageSubmitted);
+            // 
+            // dgvtcId
+            // 
+            this.dgvtcId.DataPropertyName = "Id";
+            this.dgvtcId.HeaderText = "Id";
+            this.dgvtcId.Name = "dgvtcId";
+            this.dgvtcId.Visible = false;
+            // 
+            // dgvlcTitle
+            // 
+            this.dgvlcTitle.DataPropertyName = "Title";
+            this.dgvlcTitle.HeaderText = "Title";
+            this.dgvlcTitle.Name = "dgvlcTitle";
+            this.dgvlcTitle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.dgvlcTitle.ToolTipText = "Title";
+            // 
+            // dgvlcBorrower
+            // 
+            this.dgvlcBorrower.DataPropertyName = "Borrower";
+            this.dgvlcBorrower.HeaderText = "Borrower";
+            this.dgvlcBorrower.Name = "dgvlcBorrower";
+            this.dgvlcBorrower.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.dgvlcBorrower.ToolTipText = "Borrower";
+            // 
+            // dgvlcEmail
+            // 
+            this.dgvlcEmail.DataPropertyName = "Email";
+            this.dgvlcEmail.HeaderText = "Email";
+            this.dgvlcEmail.Name = "dgvlcEmail";
+            this.dgvlcEmail.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.dgvlcEmail.ToolTipText = "Email";
+            // 
+            // dgvicReturn
+            // 
+            this.dgvicReturn.DataPropertyName = "ReturnDate";
+            this.dgvicReturn.HeaderText = "Return";
+            this.dgvicReturn.Name = "dgvicReturn";
+            this.dgvicReturn.ToolTipText = "Return Book";
+            // 
+            // dgvtcDateLent
+            // 
+            this.dgvtcDateLent.DataPropertyName = "DateLent";
+            this.dgvtcDateLent.HeaderText = "Date Lent";
+            this.dgvtcDateLent.Name = "dgvtcDateLent";
+            this.dgvtcDateLent.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.dgvtcDateLent.ToolTipText = "Book Lent On";
+            // 
+            // dgvtcDuration
+            // 
+            this.dgvtcDuration.DataPropertyName = "Duration";
+            this.dgvtcDuration.FillWeight = 50F;
+            this.dgvtcDuration.HeaderText = "Duration";
+            this.dgvtcDuration.Name = "dgvtcDuration";
+            this.dgvtcDuration.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.dgvtcDuration.ToolTipText = "Loan Duration";
+            // 
+            // dgvtcDateDue
+            // 
+            this.dgvtcDateDue.DataPropertyName = "DueDate";
+            this.dgvtcDateDue.HeaderText = "Date Due";
+            this.dgvtcDateDue.Name = "dgvtcDateDue";
+            this.dgvtcDateDue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.dgvtcDateDue.ToolTipText = "Due Date for the Book";
+            // 
+            // dgvlcAuthor
+            // 
+            this.dgvlcAuthor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvlcAuthor.DataPropertyName = "Authors";
+            this.dgvlcAuthor.HeaderText = "Author/s";
+            this.dgvlcAuthor.Name = "dgvlcAuthor";
+            this.dgvlcAuthor.ToolTipText = "Authors";
             // 
             // LendingsControl
             // 
@@ -163,6 +178,9 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         #endregion
 
         private System.Windows.Forms.DataGridView dgvLendings;
+        private System.Windows.Forms.Button btnAddLending;
+        private CustomControls.DataGridViewPager dgvPager;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcId;
         private System.Windows.Forms.DataGridViewLinkColumn dgvlcTitle;
         private System.Windows.Forms.DataGridViewLinkColumn dgvlcBorrower;
         private System.Windows.Forms.DataGridViewLinkColumn dgvlcEmail;
@@ -171,8 +189,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDuration;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDateDue;
         private System.Windows.Forms.DataGridViewLinkColumn dgvlcAuthor;
-        private System.Windows.Forms.Button btnAddLending;
-        private CustomControls.DataGridViewPager dgvPager;
 
     }
 }
