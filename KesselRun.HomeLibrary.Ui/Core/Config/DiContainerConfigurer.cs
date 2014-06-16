@@ -8,6 +8,7 @@ using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.CommandHandlers.Decorators;
 using KesselRun.HomeLibrary.Service.Commands;
+using KesselRun.HomeLibrary.Service.Converters;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.QueryHandlers.Decorators;
 using KesselRun.HomeLibrary.Service.Validation;
@@ -48,10 +49,11 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
         {
             _container.RegisterType<IUnityContainer, UnityContainer>(new TransientLifetimeManager());
             _container.RegisterType<INavigator, Navigator>(new TransientLifetimeManager());
+            _container.RegisterType<ILendingsConverters, LendingsConverters>(new TransientLifetimeManager());
 
             _container.RegisterInstance<IMappingEngine>(AutoMapper.Mapper.Engine)
                 .RegisterType<IUniversalMapper, UniversalMapper>(new TransientLifetimeManager());
-            
+
             _container.RegisterType<IRepositoryProvider, RepositoryProvider>(
                 new TransientLifetimeManager(),
                 new InjectionMember[] { new InjectionConstructor(new RepositoryFactories()) }

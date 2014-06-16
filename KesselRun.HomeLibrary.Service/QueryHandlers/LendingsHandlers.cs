@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.Converters;
 using KesselRun.HomeLibrary.Service.Infrastructure;
@@ -20,13 +19,13 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
     {
         private readonly IUnitOfWorkAsync _unitOfWork;
         private readonly IUniversalMapper _mapper;
-        private readonly Converter<string, Expression<Func<Model.Lending, string>>> _keySelector;
+        private readonly ILendingsConverters _keySelectors;
 
-        public LendingsHandlers(IUnitOfWorkAsync unitOfWork, IUniversalMapper mapper, LendingsConverters keySelector)
+        public LendingsHandlers(IUnitOfWorkAsync unitOfWork, IUniversalMapper mapper, ILendingsConverters keySelectors)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _keySelector = keySelector.StringToPersonProperty;
+            _keySelectors = keySelectors;
         }
 
         public LendingsViewModel Handle(GetLendingsPagedSortedQuery query)
@@ -56,12 +55,44 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         private Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> GetOrderByFunc(
             GetLendingsPagedSortedQuery query)
         {
+            switch (query.SortBy)
+            {
+                case Constants.DateLent:
+                case Constants.DueDate:
+                case Constants.ReturnDate:
+                    return GetOrderByFuncForDates(query);
+                case Constants.Borrower:
+                case Constants.Email:
+                case Constants.Title:
+                    return GetOrderByFuncForStrings(query);
+            }
+
+            return null;
+        }
+
+        private Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> GetOrderByFuncForStrings (
+            GetLendingsPagedSortedQuery query)
+        {
             switch (query.OrderByDirection)
             {
                 case ListSortDirection.Ascending:
-                    return l => l.OrderBy(_keySelector(query.SortBy));
+                    return l => l.OrderBy(_keySelectors.StringToStringProperty(query.SortBy));
                 case ListSortDirection.Descending:
-                    return l => l.OrderByDescending(_keySelector(query.SortBy));
+                    return l => l.OrderByDescending(_keySelectors.StringToStringProperty(query.SortBy));
+            }
+
+            return null;
+        }
+
+        private Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> GetOrderByFuncForDates(
+            GetLendingsPagedSortedQuery query)
+        {
+            switch (query.OrderByDirection)
+            {
+                case ListSortDirection.Ascending:
+                    return l => l.OrderBy(_keySelectors.StringToDateTimeProperty(query.SortBy));
+                case ListSortDirection.Descending:
+                    return l => l.OrderByDescending(_keySelectors.StringToDateTimeProperty(query.SortBy));
             }
 
             return null;
