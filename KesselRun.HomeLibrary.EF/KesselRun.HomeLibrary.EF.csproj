@@ -69,7 +69,7 @@
       <Name>KesselRun.HomeLibrary.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
-      <Project>{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}</Project>
+      <Project>{f68a1d19-93fb-47c1-a22b-42bea3e4fd8c}</Project>
       <Name>Repository.Pattern.Ef6</Name>
     </ProjectReference>
     <ProjectReference Include="..\Repository.Pattern\Repository.Pattern.csproj">

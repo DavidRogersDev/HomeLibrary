@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using KesselRun.HomeLibrary.Model;
 using KesselRun.HomeLibrary.Model.Enums;
- using Repository.Pattern.Infrastructure;
+using Repository.Pattern.Infrastructure;
 
 namespace KesselRun.HomeLibrary.EF.Db
 {
@@ -25,11 +25,21 @@ namespace KesselRun.HomeLibrary.EF.Db
                 ObjectState = ObjectState.Added,
                 Sobriquet = "Troubled Genius"
             };
+            
+            var  barryMiles = new Person
+            {
+                FirstName = "Barry",
+                LastName = "Miles",
+                Email = "barry@bazzer.com",
+                IsAuthor = true,
+                ObjectState = ObjectState.Added,
+                Sobriquet = "Bazzer"
+            };
 
-            var hunterSTompson = new Person
+            var hunterSThompson = new Person
             {
                 FirstName = "Hunter",
-                LastName = "S. Tompson",
+                LastName = "S. Thompson",
                 Email = string.Empty,
                 IsAuthor = true,
                 ObjectState = ObjectState.Added,
@@ -184,10 +194,32 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Sobriquet = "Mutton cheeks"
             };
 
+            var gerardJones = new Person
+            {
+                FirstName = "Gerard",
+                LastName = "Jones",
+                Email = "gerard@yahoo.com",
+                IsAuthor = false,
+                ObjectState = ObjectState.Added,
+                Sobriquet = "Flakeman"
+            };
+
+
+            var markPilgrim = new Person
+            {
+                FirstName = "Mark",
+                LastName = "Pilgrim",
+                Email = "mark@pilgrim.com",
+                IsAuthor = true,
+                ObjectState = ObjectState.Added,
+            };
+
+
+
             context.People.AddRange(new List<Person>
             {
                 johnKennedyToole,
-                hunterSTompson,
+                hunterSThompson,
                 terryHalpin,
                 tonyMorgan,
                 alanTuring,
@@ -202,7 +234,10 @@ namespace KesselRun.HomeLibrary.EF.Db
                 tomWolfe,
                 richardRhodes,
                 douglasAdams,
-                frankSweeney
+                frankSweeney,
+                gerardJones,
+                markPilgrim,
+                barryMiles
             });
             //context.SaveChanges();
 
@@ -213,8 +248,10 @@ namespace KesselRun.HomeLibrary.EF.Db
             var simonAndSchuster = new Publisher { Name = "Simon and Schuster", ObjectState = ObjectState.Added};
             var harperCollins = new Publisher { Name = "Harper Collins", ObjectState = ObjectState.Added };
             var picador = new Publisher { Name = "Picador", ObjectState = ObjectState.Added };
+            var holtPaperbacks = new Publisher { Name = "Holt Paperbacks", ObjectState = ObjectState.Added };
+            var self = new Publisher {Name = "Self-published", ObjectState = ObjectState.Added};
 
-            context.Publishers.AddRange(new List<Publisher> {penguin, morganKaufmann, simonAndSchuster, harperCollins, picador, delRay});
+            context.Publishers.AddRange(new List<Publisher> {penguin, morganKaufmann, simonAndSchuster, harperCollins, picador, delRay, self, holtPaperbacks });
             //context.SaveChanges();
 
             /****************************** Books ******************************/
@@ -235,7 +272,17 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Title = "Hells Angels",
                 TypeOfBook = BookType.Novel,
                 ObjectState = ObjectState.Added,
-                Authors = new List<Person> {hunterSTompson}
+                Authors = new List<Person> {hunterSThompson}
+            };
+            
+            var fearAndLoathing = new Book
+            {
+                Edition = Edition.First,
+                Publisher = penguin,
+                Title = "Fear and Loathing in Las Vegas: A Savage Journey to the Heart of the American Dream",
+                TypeOfBook = BookType.Novel,
+                ObjectState = ObjectState.Added,
+                Authors = new List<Person> {hunterSThompson}
             };
 
             var informationModelingAndRelationalDatabases = new Book
@@ -299,12 +346,34 @@ namespace KesselRun.HomeLibrary.EF.Db
                 Authors = new List<Person> { douglasAdams }
             };
 
+            var diveIntoHtml5 = new Book
+            {
+                Edition = Edition.First,
+                Publisher = delRay,
+                Title = "Dive Into Html 5",
+                TypeOfBook = BookType.TextBook,
+                ObjectState = ObjectState.Added,
+                Authors = new List<Person> { markPilgrim }
+            };
+            
+            var mcartney = new Book
+            {
+                Edition = Edition.Third,
+                Publisher = holtPaperbacks,
+                Title = "Paul McCartney: Many Years From Now",
+                TypeOfBook = BookType.Novel,
+                ObjectState = ObjectState.Added,
+                Authors = new List<Person> { barryMiles }
+            };
+
             context.Books.AddRange(new List<Book>
             {
                 aConfederacyOfDunces,
                 hellsAngels,
+                fearAndLoathing,
                 informationModelingAndRelationalDatabases,
                 killingPablo,
+                mcartney,
                 theMakingOfTheAtomBomb,
                 theMagician,
                 theElectricKoolAidAcidTest,
@@ -362,6 +431,13 @@ namespace KesselRun.HomeLibrary.EF.Db
                 ObjectState = ObjectState.Added,
             };
 
+            var lendingToGerard = new Lending
+            {
+                Book = diveIntoHtml5,
+                DateLent = DateTime.Now.Subtract(TimeSpan.FromDays(1)),
+                ObjectState = ObjectState.Added,
+            };
+
             context.Lendings.AddRange(new List<Lending>
             {
                 lendingToTerry,
@@ -369,7 +445,9 @@ namespace KesselRun.HomeLibrary.EF.Db
                 lendingToFred,
                 lendingToLace,
                 lendingToReno,
-                lendingToBob, lendingToDick
+                lendingToBob, 
+                lendingToDick,
+                lendingToGerard
             });
 
             terryHalpin.Lendings = new List<Lending> {lendingToTerry};
@@ -379,7 +457,7 @@ namespace KesselRun.HomeLibrary.EF.Db
             renoRaines.Lendings = new List<Lending> {lendingToReno};
             bobbySixkiller.Lendings = new List<Lending> {lendingToBob};
             richardBarker.Lendings = new List<Lending> {lendingToDick};
-
+            gerardJones.Lendings = new List<Lending> {lendingToGerard};
             //context.SaveChanges();
 
             base.Seed(context);
