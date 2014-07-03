@@ -7,8 +7,8 @@ using Repository.Pattern.Infrastructure;
 
 namespace KesselRun.HomeLibrary.EF.Db
 {
-    public class HomeLibraryInitializer : CreateDatabaseIfNotExists<HomeLibraryContext>
-    //public class HomeLibraryInitializer : DropCreateDatabaseIfModelChanges<HomeLibraryContext>
+    //public class HomeLibraryInitializer : CreateDatabaseIfNotExists<HomeLibraryContext>
+    public class HomeLibraryInitializer : DropCreateDatabaseIfModelChanges<HomeLibraryContext>
     //public class HomeLibraryInitializer : DropCreateDatabaseAlways<HomeLibraryContext>
     {
         protected override void Seed(HomeLibraryContext context)
@@ -215,9 +215,21 @@ namespace KesselRun.HomeLibrary.EF.Db
             };
 
 
+            var daveSmith = new Person
+            {
+                FirstName = "Dave",
+                LastName = "Smith",
+                Email = "dave@yahoo.com",
+                IsAuthor = false,
+                ObjectState = ObjectState.Added,
+                Sobriquet= "Smithy"
+            };
+
+
 
             context.People.AddRange(new List<Person>
             {
+                daveSmith,
                 johnKennedyToole,
                 hunterSThompson,
                 terryHalpin,
