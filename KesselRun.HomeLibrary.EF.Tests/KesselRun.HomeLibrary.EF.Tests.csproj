@@ -71,7 +71,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="HomeLibraryTestInitializer.cs" />
     <Compile Include="TestGobal.cs" />
     <Compile Include="RepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +98,13 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Db\HomeLibrary.mdf" />
+    <EmbeddedResource Include="Db\HomeLibrary.sdf" />
+    <Content Include="Db\HomeLibrary_log.ldf">
+      <DependentUpon>HomeLibrary.mdf</DependentUpon>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

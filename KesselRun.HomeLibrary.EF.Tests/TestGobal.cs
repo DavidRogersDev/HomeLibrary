@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using KesselRun.HomeLibrary.EF.Db;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KesselRun.HomeLibrary.EF.Tests
@@ -9,7 +10,7 @@ namespace KesselRun.HomeLibrary.EF.Tests
         [AssemblyInitialize]
         public static void AssemblyInitialize(TestContext context)
         {
-            Database.SetInitializer(new HomeLibraryTestInitializer());
+            Database.SetInitializer(new HomeLibraryInitializer());
         }
     }
 }
