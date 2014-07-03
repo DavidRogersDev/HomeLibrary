@@ -1,8 +1,6 @@
-﻿using KesselRun.HomeLibrary.EF;
-using KesselRun.HomeLibrary.Model;
+﻿using KesselRun.HomeLibrary.Model;
 using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
-using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
 
 namespace KesselRun.HomeLibrary.Service.CommandHandlers

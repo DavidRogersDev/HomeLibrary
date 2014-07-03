@@ -69,21 +69,20 @@ namespace Repository.Pattern.Ef6
 
         public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IObjectState
         {
-            if (_repositories == null)
-            {
-                _repositories = new Dictionary<string, dynamic>();
-            }
+            //if (_repositories == null)
+            //{
+            //    _repositories = new Dictionary<string, dynamic>();
+            //}
 
-            var type = typeof(TEntity).Name;
+            //var type = typeof(TEntity).Name;
 
-            if (_repositories.ContainsKey(type))
-            {
-                return _repositories[type];
-            }
+            //if (_repositories.ContainsKey(type))
+            //{
+            //    return _repositories[type];
+            //}
 
-            _repositories.Add(type, RepositoryProvider.GetRepositoryForEntityType<TEntity>());
-
-            return _repositories[type];
+            //_repositories.Add(type, RepositoryProvider.GetRepositoryForEntityType<TEntity>());
+            return RepositoryProvider.GetRepositoryForEntityType<TEntity>();
         }
 
         #region Unit of Work Transactions
