@@ -101,7 +101,6 @@ namespace KesselRun.HomeLibrary.EF.Tests
             var unitOfWork = new UnitOfWork(new HomeLibraryContext(), new RepositoryProvider(new RepositoryFactories()));
 
             var personRepo = unitOfWork.Repository<Model.Person>();
-            var ppeop = personRepo.Query().Select().ToList();
 
             personRepo.Insert(new Person
             {
@@ -113,10 +112,10 @@ namespace KesselRun.HomeLibrary.EF.Tests
 
             unitOfWork.SaveChanges();
 
-
+            var result = personRepo.Query().Select().Count();
 
             //Assert.IsTrue(true);
-            Assert.IsTrue(personRepo.Query().Select().Count() == 20);
+            Assert.IsTrue(result == 21);
             Trace.WriteLine(_textContext.DeploymentDirectory);
             Trace.WriteLine(_textContext.ResultsDirectory);
             Trace.WriteLine(_textContext.TestResultsDirectory);
@@ -174,34 +173,6 @@ namespace KesselRun.HomeLibrary.EF.Tests
 
             //Assert.IsTrue(true);
             Assert.IsTrue(personRepo.Query().Select().Count() == 21);
-            Trace.WriteLine(_textContext.DeploymentDirectory);
-            Trace.WriteLine(_textContext.ResultsDirectory);
-            Trace.WriteLine(_textContext.TestResultsDirectory);
-            Trace.WriteLine(_textContext.TestRunResultsDirectory);
-            Trace.WriteLine(_textContext.TestRunDirectory);
-        }
-
-        [TestMethod]
-        public void meth5()
-        {
-            var unitOfWork = new UnitOfWork(new HomeLibraryContext(), new RepositoryProvider(new RepositoryFactories()));
-
-            var personRepo = unitOfWork.Repository<Model.Person>();
-            var ppeop = personRepo.Query().Select().ToList();
-
-            personRepo.Insert(new Person
-            {
-                FirstName = "dave",
-                LastName = "rogers",
-                Email = "Dave@dave.com",
-                IsAuthor = false
-            });
-
-            unitOfWork.SaveChanges();
-
-
-            //Assert.IsTrue(true);
-            Assert.IsTrue(personRepo.Query().Select().Count() == 20);
             Trace.WriteLine(_textContext.DeploymentDirectory);
             Trace.WriteLine(_textContext.ResultsDirectory);
             Trace.WriteLine(_textContext.TestResultsDirectory);
