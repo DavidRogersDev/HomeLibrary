@@ -15,7 +15,7 @@ namespace KesselRun.HomeLibrary.EF.Tests
     public class RepositoryTests
     {
         private static TestContext _textContext;
-        private const string DbExtension = ".mdf";
+        private const string DbExtension = ".sdf";
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext textContext)
