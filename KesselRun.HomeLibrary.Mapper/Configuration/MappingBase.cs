@@ -9,8 +9,13 @@ namespace KesselRun.HomeLibrary.Mapper.Configuration
         protected MappingBase(Profile profile)
         {
             _profile = profile;
-            _profile.SourceMemberNamingConvention = new PascalCaseNamingConvention();
-            _profile.DestinationMemberNamingConvention = new PascalCaseNamingConvention();
+            SetNamingConventions();
+        }
+
+        private void SetNamingConventions()
+        {
+            Profile.SourceMemberNamingConvention = new PascalCaseNamingConvention();
+            Profile.DestinationMemberNamingConvention = new PascalCaseNamingConvention();
         }
 
         public Profile Profile
