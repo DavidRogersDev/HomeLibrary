@@ -31,8 +31,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         private void InitializeComponent()
         {
             this.dgvLendings = new System.Windows.Forms.DataGridView();
-            this.btnAddLending = new System.Windows.Forms.Button();
-            this.dgvPager = new KesselRun.HomeLibrary.Ui.CustomControls.DataGridViewPager();
             this.dgvtcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvlcTitle = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dgvlcBorrower = new System.Windows.Forms.DataGridViewLinkColumn();
@@ -42,6 +40,8 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvtcDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvtcDateDue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvlcAuthor = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.btnAddLending = new System.Windows.Forms.Button();
+            this.dgvPager = new KesselRun.HomeLibrary.Ui.CustomControls.DataGridViewPager();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLendings)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,29 +66,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvLendings.TabIndex = 1;
             this.dgvLendings.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLendings_CellClick);
             this.dgvLendings.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvLendingsCellFormatting);
-            // 
-            // btnAddLending
-            // 
-            this.btnAddLending.Location = new System.Drawing.Point(20, 209);
-            this.btnAddLending.Name = "btnAddLending";
-            this.btnAddLending.Size = new System.Drawing.Size(75, 23);
-            this.btnAddLending.TabIndex = 2;
-            this.btnAddLending.Text = "Add Lending";
-            this.btnAddLending.UseVisualStyleBackColor = true;
-            this.btnAddLending.Click += new System.EventHandler(this.btnAddLending_Click);
-            // 
-            // dgvPager
-            // 
-            this.dgvPager.Location = new System.Drawing.Point(4, 157);
-            this.dgvPager.Name = "dgvPager";
-            this.dgvPager.PageCount = 0;
-            this.dgvPager.PageIndex = 1;
-            this.dgvPager.PageSize = 4;
-            this.dgvPager.Size = new System.Drawing.Size(339, 33);
-            this.dgvPager.SortByColumn = "Email";
-            this.dgvPager.SortOrder = System.ComponentModel.ListSortDirection.Ascending;
-            this.dgvPager.TabIndex = 3;
-            this.dgvPager.NextPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.NextPageEventArgs>(this.dgvPager_NextPageSubmitted);
             // 
             // dgvtcId
             // 
@@ -160,6 +137,30 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvlcAuthor.HeaderText = "Author/s";
             this.dgvlcAuthor.Name = "dgvlcAuthor";
             this.dgvlcAuthor.ToolTipText = "Authors";
+            // 
+            // btnAddLending
+            // 
+            this.btnAddLending.Location = new System.Drawing.Point(20, 209);
+            this.btnAddLending.Name = "btnAddLending";
+            this.btnAddLending.Size = new System.Drawing.Size(75, 23);
+            this.btnAddLending.TabIndex = 2;
+            this.btnAddLending.Text = "Add Lending";
+            this.btnAddLending.UseVisualStyleBackColor = true;
+            this.btnAddLending.Click += new System.EventHandler(this.btnAddLending_Click);
+            // 
+            // dgvPager
+            // 
+            this.dgvPager.Location = new System.Drawing.Point(4, 157);
+            this.dgvPager.Name = "dgvPager";
+            this.dgvPager.PageCount = 0;
+            this.dgvPager.PageIndex = 1;
+            this.dgvPager.PageSize = 4;
+            this.dgvPager.Size = new System.Drawing.Size(339, 33);
+            this.dgvPager.SortByColumn = "Email";
+            this.dgvPager.SortOrder = System.ComponentModel.ListSortDirection.Ascending;
+            this.dgvPager.TabIndex = 3;
+            this.dgvPager.NextPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_NextPageSubmitted);
+            this.dgvPager.PreviousPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PreviousPageSubmitted);
             // 
             // LendingsControl
             // 

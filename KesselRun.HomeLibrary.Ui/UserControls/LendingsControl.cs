@@ -53,8 +53,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         
         public void LoadAddLendingView(Type view)
         {
-            _navigator.Navigate(typeof(ILendingsView), view, Parent);            
-            
+            _navigator.Navigate(typeof(ILendingsView), view, Parent);
         }
 
         private void DgvLendingsCellFormatting(object sender, DataGridViewCellFormattingEventArgs dataGridViewCellFormattingEventArgs)
@@ -99,10 +98,13 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
                 dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
                 dgvPager.SortOrder = LendingsViewModel.PagerData.SortOrder;
+
+                dgvPager.AdjustPreviousNextButtons("StartUp");
             }
         }
 
-        private void dgvPager_NextPageSubmitted(object sender, NextPageEventArgs e)
+
+        private void dgvPager_NextPageSubmitted(object sender, PagedEventArgs e)
         {
             ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, e.NewPageIndex, dgvPager.SortByColumn, dgvPager.SortOrder));
             dgvLendings.DataSource = LendingsViewModel.Lendings;
@@ -111,6 +113,8 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
             dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
             dgvPager.SortOrder = LendingsViewModel.PagerData.SortOrder;
+
+            dgvPager.AdjustPreviousNextButtons("NextPageSubmitted");
         }
 
         private void dgvLendings_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -147,5 +151,19 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 dgvPager.SortOrder = ListSortDirection.Ascending;
             }
         }
+
+        private void dgvPager_PreviousPageSubmitted(object sender, PagedEventArgs e)
+        {
+            ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, e.NewPageIndex, dgvPager.SortByColumn, dgvPager.SortOrder));
+            dgvLendings.DataSource = LendingsViewModel.Lendings;
+
+            dgvPager.PageCount = LendingsViewModel.PagerData.NumberOfPages;
+            dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
+            dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
+            dgvPager.SortOrder = LendingsViewModel.PagerData.SortOrder;
+
+            dgvPager.AdjustPreviousNextButtons("PreviousPageSubmitted");
+        }
+
     }
 }

@@ -18,17 +18,26 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         [Category("Behaviour"), Description("Whether sort order is asc or desc.")]
         public ListSortDirection SortOrder { get; set; }
 
-        public event EventHandler<NextPageEventArgs> NextPageSubmitted;
+        public event EventHandler<PagedEventArgs> NextPageSubmitted;
+        public event EventHandler<PagedEventArgs> PreviousPageSubmitted;
 
-        protected virtual void OnNextPageSubmitted(NextPageEventArgs e)
+        protected virtual void OnNextPageSubmitted(PagedEventArgs e)
         {
-            EventHandler<NextPageEventArgs> handler = NextPageSubmitted;
+            EventHandler<PagedEventArgs> handler = NextPageSubmitted;
+            if (handler != null) handler(this, e);
+        }        
+        
+        protected virtual void OnPreviousPageSubmitted(PagedEventArgs e)
+        {
+            EventHandler<PagedEventArgs> handler = PreviousPageSubmitted;
             if (handler != null) handler(this, e);
         }
 
         public DataGridViewPager()
         {
             InitializeComponent();
+
+            btnPreviousPage.Enabled = false;
         }
 
         public string PageInfoText
@@ -40,25 +49,104 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         {
             var fromPageIndex = PageIndex;
 
-            if (PageIndex < PageCount)
-            {
-                if (PageIndex == 0)
-                {
-                    btnPreviousPage.Enabled = true;
-                }
+            //if (PageIndex < PageCount)
+            //{
+            //    if (PageIndex == 1)
+            //    {
+            //        btnPreviousPage.Enabled = true;
+            //    }
 
-                PageIndex++;
+            //    PageIndex++;
 
-                if (PageIndex == PageCount)
-                    btnNextPage.Enabled = false;
-            }
+            //    if (PageIndex == PageCount)
+            //        btnNextPage.Enabled = false;
+            //}
 
-            OnNextPageSubmitted(new NextPageEventArgs(fromPageIndex, PageIndex));
+            OnNextPageSubmitted(new PagedEventArgs(fromPageIndex, PageIndex, "NextPageSubmitted"));
+        }
+
+        private void btnPreviousPage_Click(object sender, System.EventArgs e)
+        {
+            var fromPageIndex = PageIndex;
+
+            //if (PageIndex > 0)
+            //{
+
+            //    if (PageIndex == PageCount)
+            //        btnNextPage.Enabled = true;
+
+            //    PageIndex--;
+
+            //    if (PageIndex == 1)
+            //    {
+            //        btnPreviousPage.Enabled = false;
+            //    }
+                
+            //}
+
+            OnPreviousPageSubmitted(new PagedEventArgs(fromPageIndex, PageIndex, "PreviousPageSubmitted"));
         }
 
         //private void btnNextPage_Click(object sender, EventArgs e)
         //{
         //    NextPageSubmitted(this, EventArgs.Empty);
         //}
+
+        public void AdjustPreviousNextButtons(string eventRaised)
+        {
+            switch (eventRaised)
+            {
+                case "NextPageSubmitted":
+                    {
+                        if (PageIndex < PageCount)
+                        {
+                            if (PageIndex == 1)
+                                ToggleButton("btnPreviousPage", true);
+
+                            PageIndex++;
+
+                            if (PageIndex == PageCount)
+                                ToggleButton("btnNextPage", false);
+                        }
+                        break;
+                    }
+                case "PreviousPageSubmitted":
+                    {
+                        if (PageIndex > 0)
+                        {
+
+                            if (PageIndex == PageCount)
+                                ToggleButton("btnNextPage", true);
+
+                            PageIndex--;
+
+                            if (PageIndex == 1)
+                                ToggleButton("btnPreviousPage", false);
+
+                        }
+
+                        break;
+                    }
+                default:
+                {
+                    ToggleButton("btnPreviousPage", false);
+                    break;
+                }
+            }
+        }
+
+
+        public void ToggleButton(string buttonName, bool enable)
+        {
+            switch (buttonName)
+            {
+                case "btnNextPage":
+                    btnNextPage.Enabled = enable;
+                    break;
+                case "btnPreviousPage":
+                    btnPreviousPage.Enabled = enable;
+                    break;
+            }
+        }
     }
 }

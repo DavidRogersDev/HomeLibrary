@@ -108,7 +108,7 @@
       <DependentUpon>DataGridViewPager.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Config\DiContainerConfigurer.cs" />
-    <Compile Include="CustomControls\EventArgs\NextPageEventArgs.cs" />
+    <Compile Include="CustomControls\EventArgs\PagedEventArgs.cs" />
     <Compile Include="EventArgs\AddLendingEventArgs.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
