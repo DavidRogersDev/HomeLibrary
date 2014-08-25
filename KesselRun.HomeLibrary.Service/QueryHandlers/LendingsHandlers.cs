@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.Converters;
+using KesselRun.HomeLibrary.Service.Enums;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiModel;
@@ -33,8 +35,9 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             var lendingsViewModel = new LendingsViewModel{ PagerData = new PagerData() };
              IList<Lending> lendings = new List<Lending>();
             int totalSize;
-                 
-            foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query()
+            Expression<Func<Model.Lending, bool>> filterFunc = GetFilterFunc(query);
+
+            foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
                 .Include(l => l.Borrower)
                 .Include(l => l.Book.Authors)
                 .OrderBy(GetOrderByFunc(query))
@@ -50,6 +53,25 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             PopulateOtherPagerInfo(query, lendingsViewModel);
 
             return lendingsViewModel;
+        }
+
+        private Expression<Func<Model.Lending, bool>> GetFilterFunc(GetLendingsPagedSortedQuery query)
+        {
+            if (string.IsNullOrEmpty(query.Filter))
+                return null;
+            else
+            {
+                return _keySelectors.FilterToFuncProperty(query.Filter, GetFilterByFromString(query.FilterBy));
+            }
+        }
+
+        private FilterType GetFilterByFromString(string filterBy)
+        {
+            switch (filterBy)
+            {
+                case "LastName": return FilterType.ByLastName;
+                default: return FilterType.ByEmail;
+            }
         }
 
         private Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> GetOrderByFunc(

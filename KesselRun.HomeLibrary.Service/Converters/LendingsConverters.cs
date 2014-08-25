@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using KesselRun.HomeLibrary.Model;
+using KesselRun.HomeLibrary.Service.Enums;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 
 namespace KesselRun.HomeLibrary.Service.Converters
@@ -36,5 +37,21 @@ namespace KesselRun.HomeLibrary.Service.Converters
 
             return null;
         }
+
+        public Expression<Func<Lending, bool>> FilterToFuncProperty(string filterString, FilterType filterType)
+        {
+            switch (filterType)
+            {
+                case FilterType.ByLastName:
+                {
+                    return l => l.Borrower.LastName.Contains(filterString);
+                }
+                default:
+                    break;
+            }
+
+            return null;
+        }
+
     }
 }

@@ -70,6 +70,7 @@
     <Compile Include="Commands\AddLendingCommand.cs" />
     <Compile Include="Converters\ILendingsConverters.cs" />
     <Compile Include="Converters\LendingsConverters.cs" />
+    <Compile Include="Enums\FilterType.cs" />
     <Compile Include="Infrastructure\CommandProcessor.cs" />
     <Compile Include="Infrastructure\Constants.cs" />
     <Compile Include="Infrastructure\ICommandHandler.cs" />

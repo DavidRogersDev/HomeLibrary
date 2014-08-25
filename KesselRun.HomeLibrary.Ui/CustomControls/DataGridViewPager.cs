@@ -49,18 +49,10 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         {
             var fromPageIndex = PageIndex;
 
-            //if (PageIndex < PageCount)
-            //{
-            //    if (PageIndex == 1)
-            //    {
-            //        btnPreviousPage.Enabled = true;
-            //    }
+            if (PageIndex == 1)
+                ToggleButton("btnPreviousPage", true);
 
-            //    PageIndex++;
-
-            //    if (PageIndex == PageCount)
-            //        btnNextPage.Enabled = false;
-            //}
+            PageIndex++;
 
             OnNextPageSubmitted(new PagedEventArgs(fromPageIndex, PageIndex, "NextPageSubmitted"));
         }
@@ -69,28 +61,13 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         {
             var fromPageIndex = PageIndex;
 
-            //if (PageIndex > 0)
-            //{
+            if (PageIndex == PageCount)
+                ToggleButton("btnNextPage", true);
 
-            //    if (PageIndex == PageCount)
-            //        btnNextPage.Enabled = true;
-
-            //    PageIndex--;
-
-            //    if (PageIndex == 1)
-            //    {
-            //        btnPreviousPage.Enabled = false;
-            //    }
-                
-            //}
+            PageIndex--;
 
             OnPreviousPageSubmitted(new PagedEventArgs(fromPageIndex, PageIndex, "PreviousPageSubmitted"));
         }
-
-        //private void btnNextPage_Click(object sender, EventArgs e)
-        //{
-        //    NextPageSubmitted(this, EventArgs.Empty);
-        //}
 
         public void AdjustPreviousNextButtons(string eventRaised)
         {
@@ -98,13 +75,8 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
             {
                 case "NextPageSubmitted":
                     {
-                        if (PageIndex < PageCount)
+                        if (PageIndex <= PageCount)
                         {
-                            if (PageIndex == 1)
-                                ToggleButton("btnPreviousPage", true);
-
-                            PageIndex++;
-
                             if (PageIndex == PageCount)
                                 ToggleButton("btnNextPage", false);
                         }
@@ -114,15 +86,8 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
                     {
                         if (PageIndex > 0)
                         {
-
-                            if (PageIndex == PageCount)
-                                ToggleButton("btnNextPage", true);
-
-                            PageIndex--;
-
                             if (PageIndex == 1)
                                 ToggleButton("btnPreviousPage", false);
-
                         }
 
                         break;
