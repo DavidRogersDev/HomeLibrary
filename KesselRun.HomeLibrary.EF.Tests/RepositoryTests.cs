@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using KesselRun.HomeLibrary.EF.Db;
+using KesselRun.HomeLibrary.EF.Tests.Infrastructure;
 using KesselRun.HomeLibrary.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Repository.Pattern.Ef6;
@@ -30,7 +31,7 @@ namespace KesselRun.HomeLibrary.EF.Tests
 
             var _assembly = Assembly.GetExecutingAssembly();
             var mdf = _assembly.GetManifestResourceStream(string.Concat("KesselRun.HomeLibrary.EF.Tests.Db.HomeLibrary", DbExtension));
-            var bytes = ReadFully(mdf);
+            var bytes = Utilities.ReadFully(mdf);
             File.WriteAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, string.Concat("HomeLibrary", DbExtension)), bytes);
         }
 
@@ -197,12 +198,5 @@ namespace KesselRun.HomeLibrary.EF.Tests
         //    Trace.WriteLine(_textContext.TestRunDirectory);
         //}
 
-        public static byte[] ReadFully(Stream input)
-        {
-            byte[] buffer = new byte[input.Length];
-            input.Read(buffer, 0, buffer.Length);
-            return buffer;
-
-        }
     }
 }

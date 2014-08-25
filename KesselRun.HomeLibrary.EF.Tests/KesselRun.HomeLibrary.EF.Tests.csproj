@@ -71,6 +71,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Infrastructure\Utilities.cs" />
+    <Compile Include="Integration Tests\LendingsTests.cs" />
     <Compile Include="TestGobal.cs" />
     <Compile Include="RepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
