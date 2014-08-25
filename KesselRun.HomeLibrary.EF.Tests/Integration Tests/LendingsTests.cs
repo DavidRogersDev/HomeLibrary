@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using KesselRun.HomeLibrary.EF.Db;
+﻿using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.EF.Tests.Infrastructure;
 using KesselRun.HomeLibrary.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Repository.Pattern.Ef6;
 using Repository.Pattern.Ef6.Factories;
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace KesselRun.HomeLibrary.EF.Tests.Integration_Tests
 {
@@ -19,7 +16,7 @@ namespace KesselRun.HomeLibrary.EF.Tests.Integration_Tests
     {
         private static TestContext _textContext;
         private UnitOfWork _unitOfWork;
-        private const string DbExtension = ".mdf";
+        private const string DbExtension = ".sdf";
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext textContext)
