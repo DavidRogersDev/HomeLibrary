@@ -1,12 +1,18 @@
-﻿using System;
+﻿using KesselRun.HomeLibrary.Ui.CustomControls.EventArgs;
+using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
-using KesselRun.HomeLibrary.Ui.CustomControls.EventArgs;
 
 namespace KesselRun.HomeLibrary.Ui.CustomControls
 {
     public partial class DataGridViewPager : UserControl
     {
+        const string ButtonNextPage = "btnNextPage";
+        const string ButtonPreviousPage = "btnPreviousPage";
+        const string NextPageSubmittedEvent = "NextPageSubmitted";
+        const string PreviousPageSubmittedEvent = "PreviousPageSubmitted";
+
         [Category("Behaviour"), Description("The page index.")]
         public int PageIndex { get; set; }
         [Category("Behaviour"), Description("The page size.")]
@@ -45,56 +51,60 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
             set { txtPagingInfo.Text = string.Format("{0} of {1}", PageIndex, PageCount); }
         }
 
-        private void btnNextPage_Click(object sender, System.EventArgs e)
+        private void pageChange_Click(object sender, System.EventArgs e)
         {
             var fromPageIndex = PageIndex;
 
-            if (PageIndex == 1)
-                ToggleButton("btnPreviousPage", true);
+            var buttonClicked = sender as Button;
 
-            PageIndex++;
+            Debug.Assert(buttonClicked != null, "buttonClicked != null");
 
-            OnNextPageSubmitted(new PagedEventArgs(fromPageIndex, PageIndex, "NextPageSubmitted"));
-        }
+            if (buttonClicked.Name.Equals(ButtonNextPage, StringComparison.OrdinalIgnoreCase))
+            {
+                if (PageIndex == 1)
+                    ToggleButton(ButtonPreviousPage, true);
 
-        private void btnPreviousPage_Click(object sender, System.EventArgs e)
-        {
-            var fromPageIndex = PageIndex;
+                PageIndex++;
 
-            if (PageIndex == PageCount)
-                ToggleButton("btnNextPage", true);
+                OnNextPageSubmitted(new PagedEventArgs(fromPageIndex, PageIndex, NextPageSubmittedEvent));
+            }
+            else
+            {
+                if (PageIndex == PageCount)
+                    ToggleButton(ButtonNextPage, true);
 
-            PageIndex--;
+                PageIndex--;
 
-            OnPreviousPageSubmitted(new PagedEventArgs(fromPageIndex, PageIndex, "PreviousPageSubmitted"));
+                OnPreviousPageSubmitted(new PagedEventArgs(fromPageIndex, PageIndex, PreviousPageSubmittedEvent));                
+            }
         }
 
         public void AdjustPreviousNextButtons(string eventRaised)
         {
             switch (eventRaised)
             {
-                case "NextPageSubmitted":
+                case NextPageSubmittedEvent:
                     {
                         if (PageIndex <= PageCount)
                         {
                             if (PageIndex == PageCount)
-                                ToggleButton("btnNextPage", false);
+                                ToggleButton(btnNextPage.Name, false);
                         }
                         break;
                     }
-                case "PreviousPageSubmitted":
+                case PreviousPageSubmittedEvent:
                     {
                         if (PageIndex > 0)
                         {
                             if (PageIndex == 1)
-                                ToggleButton("btnPreviousPage", false);
+                                ToggleButton(btnPreviousPage.Name, false);
                         }
 
                         break;
                     }
                 default:
                 {
-                    ToggleButton("btnPreviousPage", false);
+                    ToggleButton(btnPreviousPage.Name, false);
                     break;
                 }
             }
@@ -105,10 +115,10 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         {
             switch (buttonName)
             {
-                case "btnNextPage":
+                case ButtonNextPage:
                     btnNextPage.Enabled = enable;
                     break;
-                case "btnPreviousPage":
+                case ButtonPreviousPage:
                     btnPreviousPage.Enabled = enable;
                     break;
             }

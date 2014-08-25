@@ -41,7 +41,7 @@
             this.btnPreviousPage.TabIndex = 0;
             this.btnPreviousPage.Text = "Previous Page";
             this.btnPreviousPage.UseVisualStyleBackColor = true;
-            this.btnPreviousPage.Click += new System.EventHandler(this.btnPreviousPage_Click);
+            this.btnPreviousPage.Click += new System.EventHandler(this.pageChange_Click);
             // 
             // btnNextPage
             // 
@@ -51,7 +51,7 @@
             this.btnNextPage.TabIndex = 1;
             this.btnNextPage.Text = "Next Page";
             this.btnNextPage.UseVisualStyleBackColor = true;
-            this.btnNextPage.Click += new System.EventHandler(this.btnNextPage_Click);
+            this.btnNextPage.Click += new System.EventHandler(this.pageChange_Click);
             // 
             // txtPagingInfo
             // 

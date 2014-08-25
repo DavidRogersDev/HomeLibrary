@@ -159,8 +159,8 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvPager.SortByColumn = "Email";
             this.dgvPager.SortOrder = System.ComponentModel.ListSortDirection.Ascending;
             this.dgvPager.TabIndex = 3;
-            this.dgvPager.NextPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_NextPageSubmitted);
-            this.dgvPager.PreviousPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PreviousPageSubmitted);
+            this.dgvPager.NextPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PageChanged);
+            this.dgvPager.PreviousPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PageChanged);
             // 
             // LendingsControl
             // 
