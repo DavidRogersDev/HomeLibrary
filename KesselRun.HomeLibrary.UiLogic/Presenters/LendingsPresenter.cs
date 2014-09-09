@@ -26,12 +26,15 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             _queryProcessor = queryProcessor;
         }
 
-        private void View_ReloadView(object sender, LendingsViewEventArgs lendingsViewEventArgs)
+        private void View_ReloadView(object sender, SearchLendingsEventArgs lendingsViewEventArgs)
         {
             AddLendingCommand command;
 
             var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery
             {
+                Filter = lendingsViewEventArgs.Filter,
+                FilterBy = lendingsViewEventArgs.FilterBy,
+                FilterOperation = lendingsViewEventArgs.FilterOperator,
                 OrderByDirection = lendingsViewEventArgs.SortDirection,
                 PageIndex = lendingsViewEventArgs.PageIndex,
                 PageSize = lendingsViewEventArgs.PageSize,

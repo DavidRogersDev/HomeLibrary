@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using KesselRun.HomeLibrary.Service.Infrastructure;
+using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel;
 using KesselRun.HomeLibrary.UiModel.ViewModels;
@@ -11,13 +13,32 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 {
     public class MainPresenter : Presenter<IMainView>, IDisposable
     {
-        public MainPresenter(IMainView view)
+        private IQueryProcessor _queryProcessor;
+
+        public MainPresenter(IMainView view, IQueryProcessor queryProcessor)
             : base(view)
         {
+            _queryProcessor = queryProcessor;
             View.Load += View_Load;
             View.ViewClosing += View_ViewClosing;
             View.CloseControl += ViewCloseControl;
+            //View.SearchLendings += View_SearchLendings;
         }
+
+        //void View_SearchLendings(object sender, EventArgs.SearchLendingsEventArgs e)
+        //{
+        //    var query = new GetLendingsPagedSortedQuery
+        //    {
+        //        Filter = e.Filter,
+        //        FilterBy = e.FilterBy,
+        //        OrderByDirection = ListSortDirection.Ascending,
+        //        PageIndex = 1,
+        //        PageSize = 10,
+        //        SortBy = "Borrower"
+        //    };
+
+        //    View.LendingsViewModel = _queryProcessor.Process(query);
+        //}
 
         void ViewCloseControl(object sender, System.EventArgs e)
         {

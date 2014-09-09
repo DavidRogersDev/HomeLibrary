@@ -17,8 +17,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
             typeof (string).GetMethod("EndsWith", new Type[] {typeof (string)});
 
 
-        public static Expression<Func<T,
-            bool>> GetExpression<T>(IList<Filter> filters)
+        public static Expression<Func<T,bool>> GetExpression<T>(IList<Filter> filters)
         {
             if (filters.Count == 0)
                 return null;

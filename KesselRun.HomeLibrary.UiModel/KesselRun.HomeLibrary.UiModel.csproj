@@ -54,6 +54,7 @@
     <Compile Include="ViewModels\AddLendingViewModel.cs" />
     <Compile Include="ViewModels\LendingsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\SearchLendingsViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

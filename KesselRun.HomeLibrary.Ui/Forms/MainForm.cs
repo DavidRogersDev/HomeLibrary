@@ -1,6 +1,7 @@
 ﻿using System;
 using KesselRun.HomeLibrary.Ui.Core;
 using KesselRun.HomeLibrary.UiLogic;
+using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel;
@@ -8,6 +9,7 @@ using KesselRun.HomeLibrary.UiModel.ViewModels;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
 using WinFormsMvp.Forms;
+using WinFormsMvp.Messaging;
 
 namespace KesselRun.HomeLibrary.Ui.Forms
 {
@@ -29,12 +31,15 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             logDisplayBindingSource.DataSource = MainViewModel;
             logDisplayBindingSource.DataMember = "MainViewLogItems";
             lstMainViewLog.DataSource = logDisplayBindingSource;
+
+
         }
 
         public event EventHandler ViewClosing;
         public event EventHandler CloseControl;
         public string ControlStack { get; set; }
         public MainViewModel MainViewModel { get; set; }
+        public LendingsViewModel LendingsViewModel { get; set; }
 
         public void CloseView()
         {
@@ -62,6 +67,10 @@ namespace KesselRun.HomeLibrary.Ui.Forms
         private void btnClose_Click(object sender, System.EventArgs e)
         {
             CloseControl(this, System.EventArgs.Empty);
+        }
+
+        private void btnSearch_Click(object sender, System.EventArgs e)
+        {
         }
     }
 }

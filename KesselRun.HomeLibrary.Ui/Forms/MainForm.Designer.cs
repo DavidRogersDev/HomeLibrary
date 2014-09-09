@@ -39,8 +39,11 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             this.lstMainViewLog = new System.Windows.Forms.ListBox();
             this.btnClose = new System.Windows.Forms.Button();
             this.logDisplayBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.pnlTopArea = new System.Windows.Forms.Panel();
+            this.lendingsSearchCriteriaControl1 = new KesselRun.HomeLibrary.Ui.UserControls.LendingsSearchCriteriaControl();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logDisplayBindingSource)).BeginInit();
+            this.pnlTopArea.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainContentPanel
@@ -58,14 +61,14 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             this.panel1.Controls.Add(this.btnLendings);
             this.panel1.Location = new System.Drawing.Point(4, 13);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(91, 100);
+            this.panel1.Size = new System.Drawing.Size(134, 100);
             this.panel1.TabIndex = 1;
             // 
             // btnPeople
             // 
             this.btnPeople.Location = new System.Drawing.Point(8, 65);
             this.btnPeople.Name = "btnPeople";
-            this.btnPeople.Size = new System.Drawing.Size(75, 23);
+            this.btnPeople.Size = new System.Drawing.Size(118, 23);
             this.btnPeople.TabIndex = 2;
             this.btnPeople.Text = "People";
             this.btnPeople.UseVisualStyleBackColor = true;
@@ -74,7 +77,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             // 
             this.btnBooks.Location = new System.Drawing.Point(8, 36);
             this.btnBooks.Name = "btnBooks";
-            this.btnBooks.Size = new System.Drawing.Size(75, 23);
+            this.btnBooks.Size = new System.Drawing.Size(118, 23);
             this.btnBooks.TabIndex = 1;
             this.btnBooks.Text = "Books";
             this.btnBooks.UseVisualStyleBackColor = true;
@@ -83,7 +86,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             // 
             this.btnLendings.Location = new System.Drawing.Point(8, 10);
             this.btnLendings.Name = "btnLendings";
-            this.btnLendings.Size = new System.Drawing.Size(75, 23);
+            this.btnLendings.Size = new System.Drawing.Size(118, 23);
             this.btnLendings.TabIndex = 0;
             this.btnLendings.Text = "LendingsViewModel";
             this.btnLendings.UseVisualStyleBackColor = true;
@@ -108,13 +111,30 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             // 
             // logDisplayBindingSource
             // 
-            this.logDisplayBindingSource.DataSource = typeof(MainViewModel);
+            this.logDisplayBindingSource.DataSource = typeof(KesselRun.HomeLibrary.UiModel.ViewModels.MainViewModel);
+            // 
+            // pnlTopArea
+            // 
+            this.pnlTopArea.Controls.Add(this.lendingsSearchCriteriaControl1);
+            this.pnlTopArea.Location = new System.Drawing.Point(144, 13);
+            this.pnlTopArea.Name = "pnlTopArea";
+            this.pnlTopArea.Size = new System.Drawing.Size(931, 100);
+            this.pnlTopArea.TabIndex = 5;
+            // 
+            // lendingsSearchCriteriaControl1
+            // 
+            this.lendingsSearchCriteriaControl1.Location = new System.Drawing.Point(419, 10);
+            this.lendingsSearchCriteriaControl1.Name = "lendingsSearchCriteriaControl1";
+            this.lendingsSearchCriteriaControl1.SearchLendingsViewModel = null;
+            this.lendingsSearchCriteriaControl1.Size = new System.Drawing.Size(500, 85);
+            this.lendingsSearchCriteriaControl1.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 525);
+            this.Controls.Add(this.pnlTopArea);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lstMainViewLog);
             this.Controls.Add(this.panel1);
@@ -123,6 +143,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             this.Text = "Home Library";
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.logDisplayBindingSource)).EndInit();
+            this.pnlTopArea.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -137,6 +158,8 @@ namespace KesselRun.HomeLibrary.Ui.Forms
         private System.Windows.Forms.ListBox lstMainViewLog;
         private System.Windows.Forms.BindingSource logDisplayBindingSource;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Panel pnlTopArea;
+        private UserControls.LendingsSearchCriteriaControl lendingsSearchCriteriaControl1;
     }
 }
 

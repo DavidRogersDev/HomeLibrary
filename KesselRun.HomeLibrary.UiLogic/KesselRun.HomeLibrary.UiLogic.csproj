@@ -57,14 +57,17 @@
     <Compile Include="Enums\FilterType.cs" />
     <Compile Include="EventArgs\AddLendingEventArgs.cs" />
     <Compile Include="EventArgs\LendingsViewEventArgs.cs" />
+    <Compile Include="EventArgs\SearchLendingsEventArgs.cs" />
     <Compile Include="Presenters\AddLendingsPresenter.cs" />
     <Compile Include="Presenters\LendingsPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Presenters\SearchLendingsPresenter.cs" />
     <Compile Include="Views\IClosableView.cs" />
     <Compile Include="Views\ILendingsView.cs" />
     <Compile Include="Views\IMainView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\IAddLendingsView.cs" />
+    <Compile Include="Views\ISearchLendingsView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KesselRun.HomeLibrary.Common\KesselRun.HomeLibrary.Common.csproj">

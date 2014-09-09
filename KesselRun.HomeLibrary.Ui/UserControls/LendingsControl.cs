@@ -6,17 +6,20 @@ using KesselRun.HomeLibrary.Ui.Assets.Resources;
 using KesselRun.HomeLibrary.Ui.Core;
 using KesselRun.HomeLibrary.Ui.CustomControls.EventArgs;
 using KesselRun.HomeLibrary.Ui.Forms;
+using KesselRun.HomeLibrary.Ui.Messaging;
 using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel;
 using KesselRun.HomeLibrary.UiModel.ViewModels;
 using WinFormsMvp;
+using WinFormsMvp.Binder;
 using WinFormsMvp.Forms;
+using WinFormsMvp.Messaging;
 
 namespace KesselRun.HomeLibrary.Ui.UserControls
 {
-    [PresenterBinding(typeof(LendingsPresenter))]
+    [PresenterBinding(typeof (LendingsPresenter))]
     public partial class LendingsControl : MvpUserControl, ILendingsView
     {
         private readonly Navigator _navigator = Navigator.SingleNavigator;
@@ -24,39 +27,57 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
         public LendingsControl()
         {
-            _mainWindow = new Lazy<MainForm>(() => (MainForm)ParentForm, LazyThreadSafetyMode.None);
-            
+            _mainWindow = new Lazy<MainForm>(() => (MainForm) ParentForm, LazyThreadSafetyMode.None);
+
             InitializeComponent();
         }
 
         protected override void OnLoad(System.EventArgs e)
         {
             base.OnLoad(e);
+
+            PresenterBinder.MessageBus.Register(
+                this,
+                MessageIds.SearchLendingsMessage,
+                new Action<GenericMessage<SearchLendingsViewModel>>(GetResultSetWithNewSearchParameters)
+                );
+            PresenterBinder.MessageBus.Register(
+                this,
+                MessageIds.GetFilterParametersResponse,
+                new Action<GenericMessage<SearchLendingsViewModel>>(GetResultSetWithNewSearchParameters)
+                );
         }
+
+        #region ILendingsView
 
         public event EventHandler ViewClosing;
         public event EventHandler CloseControl;
-        public Type NavigationSource { get; set; }
         public LendingsViewModel LendingsViewModel { get; set; }
         public event EventHandler AddLending;
-        public event EventHandler<LendingsViewEventArgs> ReloadView;
+        public event EventHandler<SearchLendingsEventArgs> SearchLendings;
+        public event EventHandler<SearchLendingsEventArgs> ReloadView;
 
         public void CloseView()
         {
             ViewClosing(this, System.EventArgs.Empty);
+            PresenterBinder.MessageBus.Unregister<SearchLendingsViewModel>(this, MessageIds.SearchLendingsMessage);
+            PresenterBinder.MessageBus.Unregister<SearchLendingsViewModel>(this, MessageIds.GetFilterParametersResponse);
         }
 
         public void LogEventToView(LogEvent logEvent)
         {
             _mainWindow.Value.MainViewModel.MainViewLogItems.Add(logEvent);
         }
-        
+
         public void LoadAddLendingView(Type view)
         {
             _navigator.Navigate(typeof(ILendingsView), view, Parent);
-        }
+        } 
 
-        private void DgvLendingsCellFormatting(object sender, DataGridViewCellFormattingEventArgs dataGridViewCellFormattingEventArgs)
+        #endregion
+
+        private void DgvLendingsCellFormatting(object sender,
+            DataGridViewCellFormattingEventArgs dataGridViewCellFormattingEventArgs)
         {
             int rowIndex = dataGridViewCellFormattingEventArgs.RowIndex;
             int columnIndex = dataGridViewCellFormattingEventArgs.ColumnIndex;
@@ -70,15 +91,15 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
                     //if (bool.TryParse(dgvLendings.Rows[dataGridViewCellFormattingEventArgs.RowIndex].Cells["dgvicReturn"].Value.ToString(),
                     //    out isAuthor))
-                    {
-                        dataGridViewCellFormattingEventArgs.Value = ImageResources.Return;
-                    }
+                {
+                    dataGridViewCellFormattingEventArgs.Value = ImageResources.Return;
+                }
                     //else
-                    {
-                        //todo: bad
-                    }
+                {
+                    //todo: bad
+                }
                     break;
-            }            
+            }
         }
 
         private void btnAddLending_Click(object sender, System.EventArgs e)
@@ -92,27 +113,57 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
             if (Parent != null)
             {
-                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex, dgvPager.SortByColumn, dgvPager.SortOrder));
-                dgvLendings.DataSource = LendingsViewModel.Lendings;
-                dgvPager.PageCount = LendingsViewModel.PagerData.NumberOfPages;
-                dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
-                dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
-                dgvPager.SortOrder = LendingsViewModel.PagerData.SortOrder;
+                var searchLendingsViewModel = GetSearchParameters();
+
+                ReloadView(this, new SearchLendingsEventArgs(
+                    searchLendingsViewModel.Filter,
+                    searchLendingsViewModel.FilterBy,
+                    searchLendingsViewModel.Operation,
+                    dgvPager.PageSize,
+                    dgvPager.PageIndex,
+                    dgvPager.SortByColumn,
+                    dgvPager.SortOrder)
+                    );
+
+                ReSyncGridAndPager();
+
 
                 dgvPager.AdjustPreviousNextButtons("StartUp");
             }
         }
 
+        private static SearchLendingsViewModel GetSearchParameters()
+        {
+            var searchLendingsViewModel = new SearchLendingsViewModel
+            {
+                Filter = string.Empty,
+                FilterBy = string.Empty,
+                Operation = string.Empty
+            };
+
+            PresenterBinder.MessageBus.Send(
+                new GenericMessage<SearchLendingsViewModel>(searchLendingsViewModel),
+                MessageIds.GetFilterParametersRequest
+                );
+            return searchLendingsViewModel;
+        }
+
 
         private void dgvPager_PageChanged(object sender, PagedEventArgs e)
         {
-            ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, e.NewPageIndex, dgvPager.SortByColumn, dgvPager.SortOrder));
-            dgvLendings.DataSource = LendingsViewModel.Lendings;
+            var searchLendingsViewModel = GetSearchParameters();
 
-            dgvPager.PageCount = LendingsViewModel.PagerData.NumberOfPages;
-            dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
-            dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
-            dgvPager.SortOrder = LendingsViewModel.PagerData.SortOrder;
+            ReloadView(this, new SearchLendingsEventArgs(
+                    searchLendingsViewModel.Filter,
+                    searchLendingsViewModel.FilterBy,
+                    searchLendingsViewModel.Operation,
+                dgvPager.PageSize,
+                e.NewPageIndex,
+                dgvPager.SortByColumn,
+                dgvPager.SortOrder)
+                );
+
+            ReSyncGridAndPager();
 
             dgvPager.AdjustPreviousNextButtons(e.EventRaised);
         }
@@ -127,14 +178,29 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             {
                 SortOutSorting(columnClicked);
 
-                ReloadView(this, new LendingsViewEventArgs(dgvPager.PageSize, dgvPager.PageIndex, dgvPager.SortByColumn, dgvPager.SortOrder));
-                dgvLendings.DataSource = LendingsViewModel.Lendings;
+                var searchLendingsViewModel = GetSearchParameters();
 
-                dgvPager.PageCount = LendingsViewModel.PagerData.NumberOfPages;
-                dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
-                dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
-                dgvPager.SortOrder = LendingsViewModel.PagerData.SortOrder;
+                ReloadView(this, new SearchLendingsEventArgs(
+                    searchLendingsViewModel.Filter,
+                    searchLendingsViewModel.FilterBy,
+                    searchLendingsViewModel.Operation,
+                    dgvPager.PageSize,
+                    dgvPager.PageIndex,
+                    dgvPager.SortByColumn,
+                    dgvPager.SortOrder)
+                    );
+                ReSyncGridAndPager();
             }
+        }
+
+        private void ReSyncGridAndPager()
+        {
+            dgvLendings.DataSource = LendingsViewModel.Lendings;
+
+            dgvPager.PageCount = LendingsViewModel.PagerData.NumberOfPages;
+            dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
+            dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
+            dgvPager.SortOrder = LendingsViewModel.PagerData.SortOrder;
         }
 
         private void SortOutSorting(DataGridViewColumn columnClicked)
@@ -150,6 +216,21 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 dgvPager.SortByColumn = columnClicked.DataPropertyName;
                 dgvPager.SortOrder = ListSortDirection.Ascending;
             }
+        }
+
+        private void GetResultSetWithNewSearchParameters(GenericMessage<SearchLendingsViewModel> message)
+        {
+            ReloadView(this, new SearchLendingsEventArgs(
+                message.Content.Filter,
+                message.Content.FilterBy,
+                message.Content.Operation,
+                dgvPager.PageSize,
+                dgvPager.PageIndex,
+                dgvPager.SortByColumn,
+                dgvPager.SortOrder)
+                );
+
+            ReSyncGridAndPager();
         }
 
     }

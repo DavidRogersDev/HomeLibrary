@@ -13,6 +13,7 @@ namespace KesselRun.HomeLibrary.Service.Queries
         public ListSortDirection OrderByDirection { get; set; }
         public string Filter { get; set; }
         public string FilterBy { get; set; }
+        public string FilterOperation { get; set; }
 
         public int PageIndex { get; set; }
         public int PageSize { get; set; }

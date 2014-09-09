@@ -15,7 +15,7 @@ using Repository.Pattern.UnitOfWork;
 
 namespace KesselRun.HomeLibrary.Service.QueryHandlers
 {
-    public class LendingsHandlers : 
+    public class LendingsQueryHandlers : 
         IQueryHandler<GetLendingsPagedSortedQuery, LendingsViewModel>,
         IQueryHandler<GetLendingByPkQuery, Lending>
     {
@@ -23,7 +23,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         private readonly IUniversalMapper _mapper;
         private readonly ILendingsConverters _keySelectors;
 
-        public LendingsHandlers(IUnitOfWorkAsync unitOfWork, IUniversalMapper mapper, ILendingsConverters keySelectors)
+        public LendingsQueryHandlers(IUnitOfWorkAsync unitOfWork, IUniversalMapper mapper, ILendingsConverters keySelectors)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -59,19 +59,13 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         {
             if (string.IsNullOrEmpty(query.Filter))
                 return null;
-            else
-            {
-                return _keySelectors.FilterToFuncProperty(query.Filter, GetFilterByFromString(query.FilterBy));
-            }
-        }
 
-        private FilterType GetFilterByFromString(string filterBy)
-        {
-            switch (filterBy)
+            var filters = new List<Filter>
             {
-                case "LastName": return FilterType.ByLastName;
-                default: return FilterType.ByEmail;
-            }
+                new Filter {Operation = Op.Contains, PropertyName = query.FilterBy, Value = query.Filter}
+            };
+            
+            return ExpressionBuilder.GetExpression<Model.Lending>(filters);
         }
 
         private Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> GetOrderByFunc(
