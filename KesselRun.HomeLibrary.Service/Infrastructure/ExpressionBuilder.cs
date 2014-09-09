@@ -61,7 +61,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
             MemberExpression member = GetMember(param, filter);
 
             if (typeof(IEnumerable<T>).IsAssignableFrom(member.Type))
-                throw new Exception("bad");
+                throw new NotSupportedException("The Property which is the attempted target of the filtering is an IEnumerable<T> and not supported by this API. Only reference Navigation Properties are supported i.e. non-collection.");
 
             ConstantExpression constant = Expression.Constant(filter.Value);
 
