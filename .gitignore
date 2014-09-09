@@ -37,3 +37,4 @@ BuildDb.sln
 packages/*
 !packages/repositories.config
 !NuGet.exe
+WIP.md

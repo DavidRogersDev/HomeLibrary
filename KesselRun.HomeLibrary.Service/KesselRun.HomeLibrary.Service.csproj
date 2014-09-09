@@ -73,6 +73,7 @@
     <Compile Include="Enums\FilterType.cs" />
     <Compile Include="Infrastructure\CommandProcessor.cs" />
     <Compile Include="Infrastructure\Constants.cs" />
+    <Compile Include="Infrastructure\ExpressionBuilder.cs" />
     <Compile Include="Infrastructure\ICommandHandler.cs" />
     <Compile Include="Infrastructure\ICommandProcessor.cs" />
     <Compile Include="Infrastructure\IQueryHandler.cs" />
