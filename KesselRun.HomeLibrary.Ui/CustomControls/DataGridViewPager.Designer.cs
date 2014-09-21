@@ -103,6 +103,7 @@
             this.Controls.Add(this.btnPreviousPage);
             this.Name = "DataGridViewPager";
             this.Size = new System.Drawing.Size(339, 33);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPageNumber_KeyPress);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

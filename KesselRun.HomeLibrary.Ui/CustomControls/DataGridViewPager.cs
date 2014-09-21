@@ -42,18 +42,6 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         public event EventHandler<PagedEventArgs> NextPageSubmitted;
         public event EventHandler<PagedEventArgs> PreviousPageSubmitted;
 
-        protected virtual void OnNextPageSubmitted(PagedEventArgs e)
-        {
-            EventHandler<PagedEventArgs> handler = NextPageSubmitted;
-            if (handler != null) handler(this, e);
-        }        
-        
-        protected virtual void OnPreviousPageSubmitted(PagedEventArgs e)
-        {
-            EventHandler<PagedEventArgs> handler = PreviousPageSubmitted;
-            if (handler != null) handler(this, e);
-        }
-
         public DataGridViewPager()
         {
             InitializeComponent();
@@ -98,7 +86,7 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
 
                 PageIndex++;
 
-                OnNextPageSubmitted(new PagedEventArgs(fromPageIndex, PageIndex, NextPageSubmittedEvent));
+                NextPageSubmitted(this, new PagedEventArgs(fromPageIndex, PageIndex, NextPageSubmittedEvent));
             }
             else
             {
@@ -107,7 +95,7 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
 
                 PageIndex--;
 
-                OnPreviousPageSubmitted(new PagedEventArgs(fromPageIndex, PageIndex, PreviousPageSubmittedEvent));                
+                PreviousPageSubmitted(this, new PagedEventArgs(fromPageIndex, PageIndex, PreviousPageSubmittedEvent));                
             }
         }
 
@@ -166,6 +154,27 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
 
         private void cboPageSize_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == (char)13)
+            {
+                int fromPageNumber = PageIndex;
+                int pageNumber;
+
+                if (int.TryParse(txtPageNumber.Text,
+                    NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
+                    null, out pageNumber))
+                {
+                    int pageSize;
+                    int.TryParse(
+                        cboPageSize.Text, 
+                        NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
+                        null, out pageSize);
+                    PageSize = pageSize;
+                    NextPageSubmitted(this, new PagedEventArgs(fromPageNumber, 1, NextPageSubmittedEvent));
+                }
+                e.Handled = true;
+            }
+            
+
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
@@ -185,13 +194,13 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
                 {
                     if (fromPageNumber < pageNumber)
                     {
-                        OnNextPageSubmitted(new PagedEventArgs(fromPageNumber, pageNumber, NextPageSubmittedEvent));
+                        NextPageSubmitted(this, new PagedEventArgs(fromPageNumber, pageNumber, NextPageSubmittedEvent));
                         
                         ToggleButton(ButtonPreviousPage, true);
                     }
                     else if (fromPageNumber > pageNumber)
                     {
-                        OnPreviousPageSubmitted(new PagedEventArgs(fromPageNumber, pageNumber, PreviousPageSubmittedEvent));
+                        PreviousPageSubmitted(this, new PagedEventArgs(fromPageNumber, pageNumber, PreviousPageSubmittedEvent));
                         ToggleButton(ButtonNextPage, true);
                     }
                 }
@@ -202,6 +211,54 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
             {
                 e.Handled = true;
             }
+        }
+
+        private void cboPageSize_KeyUp(object sender, KeyEventArgs e)
+        {
+            //char keyEntered = (char) e.KeyValue;
+
+            //if (char.IsControl(keyEntered) && !char.IsDigit(keyEntered))
+            //{
+            //    e.Handled = true;
+            //    return;
+            //}
+
+            //int fromPageNumber = PageIndex;
+            //int pageNumber;
+
+            //if (int.TryParse(txtPageNumber.Text,
+            //    NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
+            //    null, out pageNumber))
+            //{
+            //    PageSize = int.Parse(cboPageSize.Text);
+            //    NextPageSubmitted(this, new PagedEventArgs(fromPageNumber, 1, NextPageSubmittedEvent));
+            //}
+        }
+
+        private void cboPageSize_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+            //char keyEntered = (char) e.KeyValue;
+
+            //if (keyEntered == (char) 13)
+            //{
+            //    int fromPageNumber = PageIndex;
+            //    int pageNumber;
+
+            //    if (int.TryParse(txtPageNumber.Text,
+            //        NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
+            //        null, out pageNumber))
+            //    {
+            //        PageSize = int.Parse(cboPageSize.Text);
+            //        NextPageSubmitted(this, new PagedEventArgs(fromPageNumber, 1, NextPageSubmittedEvent));
+            //    }
+            //}
+            
+            //if (!char.IsControl(keyEntered) && !char.IsDigit(keyEntered))
+            //{
+            //    e.SuppressKeyPress = true;
+            //    e.Handled = true;
+            //}
         }
     }
 }
