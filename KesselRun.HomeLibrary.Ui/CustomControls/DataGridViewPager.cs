@@ -30,7 +30,7 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
                 OnPropertyChanged();
             }
         }
-        [Category(BehaviourCategory), Description("The page size.")]
+        [Category(BehaviourCategory), Description("The page size. This can be configured using the dropdown list.")]
         public int PageSize { get; set; }
         [Category(BehaviourCategory), Description("The page count.")]
         public int PageCount { get; set; }
@@ -164,12 +164,14 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
                     null, out pageNumber))
                 {
                     int pageSize;
-                    int.TryParse(
-                        cboPageSize.Text, 
+
+                    if (int.TryParse(cboPageSize.Text,
                         NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
-                        null, out pageSize);
-                    PageSize = pageSize;
-                    NextPageSubmitted(this, new PagedEventArgs(fromPageNumber, 1, NextPageSubmittedEvent));
+                        null, out pageSize))
+                    {
+                        PageSize = pageSize;
+                        NextPageSubmitted(this, new PagedEventArgs(fromPageNumber, 1, NextPageSubmittedEvent));
+                    }
                 }
                 e.Handled = true;
             }
@@ -259,6 +261,11 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
             //    e.SuppressKeyPress = true;
             //    e.Handled = true;
             //}
+        }
+
+        public void SetTotalNumberOfPages(int numberOfPages)
+        {
+            lblTotalNumberPages.Text = numberOfPages.ToString();
         }
     }
 }

@@ -201,6 +201,8 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             dgvPager.PageIndex = LendingsViewModel.PagerData.PageNumber;
             dgvPager.PageSize = LendingsViewModel.PagerData.PageSize;
             dgvPager.SortOrder = LendingsViewModel.PagerData.SortOrder;
+
+            dgvPager.SetTotalNumberOfPages(LendingsViewModel.PagerData.NumberOfPages);
         }
 
         private void SortOutSorting(DataGridViewColumn columnClicked)

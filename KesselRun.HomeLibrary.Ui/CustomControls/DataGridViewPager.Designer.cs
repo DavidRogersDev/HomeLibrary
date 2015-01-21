@@ -34,6 +34,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.cboPageSize = new System.Windows.Forms.ComboBox();
             this.lblOf = new System.Windows.Forms.Label();
+            this.lblTotalNumberPages = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             // 
             // btnNextPage
             // 
-            this.btnNextPage.Location = new System.Drawing.Point(224, 4);
+            this.btnNextPage.Location = new System.Drawing.Point(269, 4);
             this.btnNextPage.Name = "btnNextPage";
             this.btnNextPage.Size = new System.Drawing.Size(107, 23);
             this.btnNextPage.TabIndex = 1;
@@ -68,18 +69,19 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Window;
+            this.panel1.Controls.Add(this.lblTotalNumberPages);
             this.panel1.Controls.Add(this.cboPageSize);
             this.panel1.Controls.Add(this.lblOf);
             this.panel1.Controls.Add(this.txtPageNumber);
             this.panel1.Location = new System.Drawing.Point(114, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(107, 26);
+            this.panel1.Size = new System.Drawing.Size(148, 26);
             this.panel1.TabIndex = 3;
             // 
             // cboPageSize
             // 
             this.cboPageSize.FormattingEnabled = true;
-            this.cboPageSize.Location = new System.Drawing.Point(60, 2);
+            this.cboPageSize.Location = new System.Drawing.Point(98, 2);
             this.cboPageSize.Name = "cboPageSize";
             this.cboPageSize.Size = new System.Drawing.Size(44, 21);
             this.cboPageSize.TabIndex = 4;
@@ -94,6 +96,15 @@
             this.lblOf.TabIndex = 3;
             this.lblOf.Text = "of";
             // 
+            // lblTotalNumberPages
+            // 
+            this.lblTotalNumberPages.AutoSize = true;
+            this.lblTotalNumberPages.Location = new System.Drawing.Point(66, 7);
+            this.lblTotalNumberPages.Name = "lblTotalNumberPages";
+            this.lblTotalNumberPages.Size = new System.Drawing.Size(27, 13);
+            this.lblTotalNumberPages.TabIndex = 5;
+            this.lblTotalNumberPages.Text = "total";
+            // 
             // DataGridViewPager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -102,7 +113,7 @@
             this.Controls.Add(this.btnNextPage);
             this.Controls.Add(this.btnPreviousPage);
             this.Name = "DataGridViewPager";
-            this.Size = new System.Drawing.Size(339, 33);
+            this.Size = new System.Drawing.Size(380, 33);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPageNumber_KeyPress);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -118,5 +129,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox cboPageSize;
         private System.Windows.Forms.Label lblOf;
+        private System.Windows.Forms.Label lblTotalNumberPages;
     }
 }
