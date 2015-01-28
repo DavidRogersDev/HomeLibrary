@@ -32,9 +32,9 @@
             this.btnNextPage = new System.Windows.Forms.Button();
             this.txtPageNumber = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblTotalNumberPages = new System.Windows.Forms.Label();
             this.cboPageSize = new System.Windows.Forms.ComboBox();
             this.lblOf = new System.Windows.Forms.Label();
-            this.lblTotalNumberPages = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,6 +78,15 @@
             this.panel1.Size = new System.Drawing.Size(148, 26);
             this.panel1.TabIndex = 3;
             // 
+            // lblTotalNumberPages
+            // 
+            this.lblTotalNumberPages.AutoSize = true;
+            this.lblTotalNumberPages.Location = new System.Drawing.Point(66, 7);
+            this.lblTotalNumberPages.Name = "lblTotalNumberPages";
+            this.lblTotalNumberPages.Size = new System.Drawing.Size(27, 13);
+            this.lblTotalNumberPages.TabIndex = 5;
+            this.lblTotalNumberPages.Text = "total";
+            // 
             // cboPageSize
             // 
             this.cboPageSize.FormattingEnabled = true;
@@ -85,6 +94,7 @@
             this.cboPageSize.Name = "cboPageSize";
             this.cboPageSize.Size = new System.Drawing.Size(44, 21);
             this.cboPageSize.TabIndex = 4;
+            this.cboPageSize.SelectionChangeCommitted += new System.EventHandler(this.cboPageSize_SelectionChangeCommitted);
             this.cboPageSize.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cboPageSize_KeyPress);
             // 
             // lblOf
@@ -95,15 +105,6 @@
             this.lblOf.Size = new System.Drawing.Size(16, 13);
             this.lblOf.TabIndex = 3;
             this.lblOf.Text = "of";
-            // 
-            // lblTotalNumberPages
-            // 
-            this.lblTotalNumberPages.AutoSize = true;
-            this.lblTotalNumberPages.Location = new System.Drawing.Point(66, 7);
-            this.lblTotalNumberPages.Name = "lblTotalNumberPages";
-            this.lblTotalNumberPages.Size = new System.Drawing.Size(27, 13);
-            this.lblTotalNumberPages.TabIndex = 5;
-            this.lblTotalNumberPages.Text = "total";
             // 
             // DataGridViewPager
             // 

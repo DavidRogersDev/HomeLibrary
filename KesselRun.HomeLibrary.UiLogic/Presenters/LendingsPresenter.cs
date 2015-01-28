@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel;
+using KesselRun.HomeLibrary.UiModel.Models;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
 using SCMDA = System.ComponentModel.DataAnnotations;
@@ -38,7 +40,8 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
                 OrderByDirection = lendingsViewEventArgs.SortDirection,
                 PageIndex = lendingsViewEventArgs.PageIndex,
                 PageSize = lendingsViewEventArgs.PageSize,
-                SortBy = lendingsViewEventArgs.SortBy
+                SortBy = lendingsViewEventArgs.SortBy,
+                SelectedLendingId = lendingsViewEventArgs.SelectedLendingId
             };
             LoadLendings(getLendingsPagedSortedQuery);
         }
@@ -62,9 +65,22 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
         {
             try
             {
-                var lendingsViewModel = _queryProcessor.Process(getLendingsPagedSortedQuery);
-                View.LendingsViewModel = lendingsViewModel;
+                Lending selectedGridLending = default(Lending);
 
+                //var selectedLendingId = getLendingsPagedSortedQuery.SelectedLendingId;
+
+                var lendingsViewModel = _queryProcessor.Process(getLendingsPagedSortedQuery);
+
+                //if (selectedLendingId > -1)
+                //    selectedGridLending = lendingsViewModel.Lendings.SingleOrDefault(gridLending => gridLending.Id == selectedLendingId);
+
+                //if (!ReferenceEquals(selectedGridLending, null))
+                //    lendingsViewModel.SelectedGridLendingId = selectedGridLending.Id;
+
+                //if (lendingsViewModel.PagerData.PageNumber > lendingsViewModel.PagerData.NumberOfPages)
+                //    lendingsViewModel.PagerData.PageNumber = lendingsViewModel.PagerData.NumberOfPages;
+
+                View.LendingsViewModel = lendingsViewModel;
             }
             catch (SCMDA.ValidationException validationException)
             {

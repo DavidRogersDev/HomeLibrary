@@ -37,6 +37,13 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             int totalSize;
             Expression<Func<Model.Lending, bool>> filterFunc = GetFilterFunc(query);
 
+            //var cnt = _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
+            //    .Include(l => l.Borrower)
+            //    .Include(l => l.Book.Authors)
+            //    .OrderBy(GetOrderByFunc(query))
+            //    .Select().Count();
+            //var oi = cnt;
+
             foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
                 .Include(l => l.Borrower)
                 .Include(l => l.Book.Authors)
@@ -47,8 +54,35 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
                  lendings.Add(_mapper.Map(lending, uiLending));
              }
 
+            var pageCount = totalSize/query.PageSize;
+            var remainder = totalSize % query.PageSize;
+
+
+            if (query.PageIndex > pageCount && remainder > 0)
+            {
+                if (remainder < totalSize)
+                {
+                    lendings.Clear();
+                    query.PageIndex = ++pageCount;
+
+                    foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
+                        .Include(l => l.Borrower)
+                        .Include(l => l.Book.Authors)
+                        .OrderBy(GetOrderByFunc(query))
+                        .SelectPage(query.PageIndex, query.PageSize, out totalSize))
+                    {
+                        var uiLending = new Lending();
+                        lendings.Add(_mapper.Map(lending, uiLending));
+                    }                    
+                }
+            }
+
             lendingsViewModel.Lendings = new BindingList<Lending>(lendings);
-            lendingsViewModel.PagerData.NumberOfPages = (totalSize / query.PageSize) + 1;
+
+            if(query.PageSize == 1)
+                lendingsViewModel.PagerData.NumberOfPages = totalSize / query.PageSize;
+            else
+                lendingsViewModel.PagerData.NumberOfPages = (totalSize / query.PageSize) + 1;
             
             PopulateOtherPagerInfo(query, lendingsViewModel);
 

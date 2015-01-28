@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="Core\Config\DatabaseConfigurer.cs" />
     <Compile Include="Core\Config\MapperBootstrapper.cs" />
+    <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\Navigator.cs" />
     <Compile Include="CustomControls\DataGridViewPager.cs">
       <SubType>UserControl</SubType>

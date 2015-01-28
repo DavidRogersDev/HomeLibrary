@@ -6,5 +6,6 @@ namespace KesselRun.HomeLibrary.UiModel.ViewModels
         public string Filter { get; set; }
         public string FilterBy { get; set; }
         public string Operation { get; set; }
+        public int SelectedGridLendingId { get; set; }
     }
 }

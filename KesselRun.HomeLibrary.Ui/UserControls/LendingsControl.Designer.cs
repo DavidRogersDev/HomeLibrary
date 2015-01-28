@@ -161,6 +161,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvPager.SortOrder = System.ComponentModel.ListSortDirection.Ascending;
             this.dgvPager.TabIndex = 3;
             this.dgvPager.NextPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PageChanged);
+            this.dgvPager.PageSizeChangeSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PageSizeChanged);
             this.dgvPager.PreviousPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PageChanged);
             // 
             // LendingsControl

@@ -16,6 +16,7 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         const string ButtonNextPage = "btnNextPage";
         const string ButtonPreviousPage = "btnPreviousPage";
         const string NextPageSubmittedEvent = "NextPageSubmitted";
+        const string PageSizeChangeSubmittedEvent = "PageSizeChangeSubmitted";
         const string PreviousPageSubmittedEvent = "PreviousPageSubmitted";
 
         [Category(BehaviourCategory), Description("The amount .")]
@@ -40,6 +41,7 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         public ListSortDirection SortOrder { get; set; }
 
         public event EventHandler<PagedEventArgs> NextPageSubmitted;
+        public event EventHandler<PagedEventArgs> PageSizeChangeSubmitted;
         public event EventHandler<PagedEventArgs> PreviousPageSubmitted;
 
         public DataGridViewPager()
@@ -57,13 +59,14 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
             InitializePageSizeDropdown();
 
             txtPageNumber.DataBindings.Add("Text", this, "PageIndex");
+            lblTotalNumberPages.DataBindings.Add("Text", this, "PageCount");
         }
 
         private void InitializePageSizeDropdown()
         {
             for (int i = 1; i <= PageCount; i++)
             {
-                if (i%PagerIncrement == 0)
+                if (i % PagerIncrement == 0)
                     cboPageSize.Items.Add(i);
             }
 
@@ -109,6 +112,7 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
                         {
                             if (PageIndex == PageCount)
                                 ToggleButton(btnNextPage.Name, false);
+
                         }
                         break;
                     }
@@ -122,6 +126,26 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
 
                         break;
                     }
+                case PageSizeChangeSubmittedEvent:
+                {
+                    if (PageIndex <= PageCount)
+                    {
+                        if (PageIndex == PageCount)
+                            ToggleButton(btnNextPage.Name, false);
+                        else
+                            ToggleButton(btnNextPage.Name, true);
+                    }
+
+                    if (PageIndex > 0)
+                    {
+                        if (PageIndex == 1)
+                            ToggleButton(btnPreviousPage.Name, false);
+                        else    
+                            ToggleButton(btnPreviousPage.Name, true);
+                    }
+
+                    break;
+                }
                 default:
                 {
                     ToggleButton(btnPreviousPage.Name, false);
@@ -170,7 +194,7 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
                         null, out pageSize))
                     {
                         PageSize = pageSize;
-                        NextPageSubmitted(this, new PagedEventArgs(fromPageNumber, 1, NextPageSubmittedEvent));
+                        PageSizeChangeSubmitted(this, new PagedEventArgs(fromPageNumber, -1, NextPageSubmittedEvent));
                     }
                 }
                 e.Handled = true;
@@ -205,6 +229,7 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
                         PreviousPageSubmitted(this, new PagedEventArgs(fromPageNumber, pageNumber, PreviousPageSubmittedEvent));
                         ToggleButton(ButtonNextPage, true);
                     }
+                    e.Handled = true;
                 }
                 
             }
@@ -215,57 +240,19 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
             }
         }
 
-        private void cboPageSize_KeyUp(object sender, KeyEventArgs e)
+        private void cboPageSize_SelectionChangeCommitted(object sender, System.EventArgs e)
         {
-            //char keyEntered = (char) e.KeyValue;
+            int fromPageNumber = PageIndex;
+            int pageNumber;
 
-            //if (char.IsControl(keyEntered) && !char.IsDigit(keyEntered))
-            //{
-            //    e.Handled = true;
-            //    return;
-            //}
-
-            //int fromPageNumber = PageIndex;
-            //int pageNumber;
-
-            //if (int.TryParse(txtPageNumber.Text,
-            //    NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
-            //    null, out pageNumber))
-            //{
-            //    PageSize = int.Parse(cboPageSize.Text);
-            //    NextPageSubmitted(this, new PagedEventArgs(fromPageNumber, 1, NextPageSubmittedEvent));
-            //}
+            if (int.TryParse(txtPageNumber.Text,
+                NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
+                null, out pageNumber))
+            {
+                PageSize = int.Parse(cboPageSize.SelectedItem.ToString());
+                PageSizeChangeSubmitted(this, new PagedEventArgs(fromPageNumber, -1, PageSizeChangeSubmittedEvent));
+            }
         }
 
-        private void cboPageSize_KeyDown(object sender, KeyEventArgs e)
-        {
-            
-            //char keyEntered = (char) e.KeyValue;
-
-            //if (keyEntered == (char) 13)
-            //{
-            //    int fromPageNumber = PageIndex;
-            //    int pageNumber;
-
-            //    if (int.TryParse(txtPageNumber.Text,
-            //        NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
-            //        null, out pageNumber))
-            //    {
-            //        PageSize = int.Parse(cboPageSize.Text);
-            //        NextPageSubmitted(this, new PagedEventArgs(fromPageNumber, 1, NextPageSubmittedEvent));
-            //    }
-            //}
-            
-            //if (!char.IsControl(keyEntered) && !char.IsDigit(keyEntered))
-            //{
-            //    e.SuppressKeyPress = true;
-            //    e.Handled = true;
-            //}
-        }
-
-        public void SetTotalNumberOfPages(int numberOfPages)
-        {
-            lblTotalNumberPages.Text = numberOfPages.ToString();
-        }
     }
 }
