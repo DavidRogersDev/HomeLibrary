@@ -194,7 +194,7 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
                         null, out pageSize))
                     {
                         PageSize = pageSize;
-                        PageSizeChangeSubmitted(this, new PagedEventArgs(fromPageNumber, -1, NextPageSubmittedEvent));
+                        PageSizeChangeSubmitted(this, new PagedEventArgs(fromPageNumber, -1, PageSizeChangeSubmittedEvent));
                     }
                 }
                 e.Handled = true;

@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Linq.Expressions;
-using KesselRun.HomeLibrary.Mapper.Mappers;
+﻿using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.Converters;
-using KesselRun.HomeLibrary.Service.Enums;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiModel;
 using KesselRun.HomeLibrary.UiModel.Models;
 using KesselRun.HomeLibrary.UiModel.ViewModels;
 using Repository.Pattern.UnitOfWork;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace KesselRun.HomeLibrary.Service.QueryHandlers
 {
@@ -37,13 +36,6 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             int totalSize;
             Expression<Func<Model.Lending, bool>> filterFunc = GetFilterFunc(query);
 
-            //var cnt = _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
-            //    .Include(l => l.Borrower)
-            //    .Include(l => l.Book.Authors)
-            //    .OrderBy(GetOrderByFunc(query))
-            //    .Select().Count();
-            //var oi = cnt;
-
             foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
                 .Include(l => l.Borrower)
                 .Include(l => l.Book.Authors)
@@ -57,23 +49,25 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             var pageCount = totalSize/query.PageSize;
             var remainder = totalSize % query.PageSize;
 
-
-            if (query.PageIndex > pageCount && remainder > 0)
+            if (query.PageIndex > pageCount)
             {
-                if (remainder < totalSize)
+                if (remainder > 0)
                 {
-                    lendings.Clear();
-                    query.PageIndex = ++pageCount;
-
-                    foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
-                        .Include(l => l.Borrower)
-                        .Include(l => l.Book.Authors)
-                        .OrderBy(GetOrderByFunc(query))
-                        .SelectPage(query.PageIndex, query.PageSize, out totalSize))
+                    if (remainder <= totalSize)
                     {
-                        var uiLending = new Lending();
-                        lendings.Add(_mapper.Map(lending, uiLending));
-                    }                    
+                        lendings.Clear();
+                        query.PageIndex = ++pageCount;
+
+                        foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
+                            .Include(l => l.Borrower)
+                            .Include(l => l.Book.Authors)
+                            .OrderBy(GetOrderByFunc(query))
+                            .SelectPage(query.PageIndex, query.PageSize, out totalSize))
+                        {
+                            var uiLending = new Lending();
+                            lendings.Add(_mapper.Map(lending, uiLending));
+                        }
+                    }
                 }
             }
 
