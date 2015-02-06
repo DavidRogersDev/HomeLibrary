@@ -218,6 +218,8 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
                     NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
                     null, out pageNumber))
                 {
+                    PageIndex = pageNumber;
+
                     if (fromPageNumber < pageNumber)
                     {
                         NextPageSubmitted(this, new PagedEventArgs(fromPageNumber, pageNumber, NextPageSubmittedEvent));

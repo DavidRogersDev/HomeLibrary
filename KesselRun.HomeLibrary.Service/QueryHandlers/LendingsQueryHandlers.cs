@@ -69,11 +69,27 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
                         }
                     }
                 }
+                else if (remainder == 0)
+                {
+                    lendings.Clear();
+                    query.PageIndex = pageCount;
+
+                    foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
+                        .Include(l => l.Borrower)
+                        .Include(l => l.Book.Authors)
+                        .OrderBy(GetOrderByFunc(query))
+                        .SelectPage(query.PageIndex, query.PageSize, out totalSize))
+                    {
+                        var uiLending = new Lending();
+                        lendings.Add(_mapper.Map(lending, uiLending));
+                    }
+                    
+                }
             }
 
             lendingsViewModel.Lendings = new BindingList<Lending>(lendings);
 
-            if(query.PageSize == 1)
+            if(query.PageSize == 1 || remainder == 0)
                 lendingsViewModel.PagerData.NumberOfPages = totalSize / query.PageSize;
             else
                 lendingsViewModel.PagerData.NumberOfPages = (totalSize / query.PageSize) + 1;
