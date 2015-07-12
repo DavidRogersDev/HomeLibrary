@@ -94,8 +94,6 @@
             this.cboPageSize.Name = "cboPageSize";
             this.cboPageSize.Size = new System.Drawing.Size(44, 21);
             this.cboPageSize.TabIndex = 4;
-            this.cboPageSize.SelectionChangeCommitted += new System.EventHandler(this.cboPageSize_SelectionChangeCommitted);
-            this.cboPageSize.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cboPageSize_KeyPress);
             // 
             // lblOf
             // 

@@ -30,8 +30,6 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         private void View_ReloadView(object sender, SearchLendingsEventArgs lendingsViewEventArgs)
         {
-            AddLendingCommand command;
-
             var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery
             {
                 Filter = lendingsViewEventArgs.Filter,

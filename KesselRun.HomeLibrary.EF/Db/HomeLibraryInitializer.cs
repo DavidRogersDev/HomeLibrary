@@ -7,8 +7,8 @@ using Repository.Pattern.Infrastructure;
 
 namespace KesselRun.HomeLibrary.EF.Db
 {
-    //public class HomeLibraryInitializer : CreateDatabaseIfNotExists<HomeLibraryContext>
-    public class HomeLibraryInitializer : DropCreateDatabaseIfModelChanges<HomeLibraryContext>
+    public class HomeLibraryInitializer : CreateDatabaseIfNotExists<HomeLibraryContext>
+    //public class HomeLibraryInitializer : DropCreateDatabaseIfModelChanges<HomeLibraryContext>
     //public class HomeLibraryInitializer : DropCreateDatabaseAlways<HomeLibraryContext>
     {
         protected override void Seed(HomeLibraryContext context)
@@ -391,6 +391,8 @@ namespace KesselRun.HomeLibrary.EF.Db
                 theElectricKoolAidAcidTest,
                 soLongandThanksforAlltheFish
             });
+
+            context.SaveChanges();
 
             /****************************** Lendings ******************************/
 

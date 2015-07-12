@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using KesselRun.HomeLibrary.Ui.Assets.Resources;
 using KesselRun.HomeLibrary.Ui.Core;
+using KesselRun.HomeLibrary.Ui.CustomControls;
 using KesselRun.HomeLibrary.Ui.CustomControls.EventArgs;
 using KesselRun.HomeLibrary.Ui.Forms;
 using KesselRun.HomeLibrary.Ui.Messaging;
@@ -48,6 +49,8 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 MessageIds.GetFilterParametersResponse,
                 new Action<GenericMessage<SearchLendingsViewModel>>(GetResultSetWithNewSearchParameters)
                 );
+
+            dgvPager.PageSize = 4;
         }
 
         #region ILendingsView
@@ -130,7 +133,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 ReSyncGridAndPager();
 
 
-                dgvPager.AdjustPreviousNextButtons("StartUp");
+                dgvPager.AdjustPreviousNextButtons(Constants.StartUp);
             }
         }
 
@@ -148,6 +151,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 new GenericMessage<SearchLendingsViewModel>(searchLendingsViewModel),
                 MessageIds.GetFilterParametersRequest
                 );
+
             return searchLendingsViewModel;
         }
 
@@ -263,8 +267,10 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 dgvPager.SortOrder,
                 message.Content.SelectedGridLendingId)
                 );
+            
+            ReSyncGridAndPager();
 
-            //ReSyncGridAndPager();
+            dgvPager.AdjustPreviousNextButtons(DataGridViewPager.PageSizeChangeSubmittedEvent);
         }
 
         private void dgvPager_PageSizeChanged(object sender, PagedEventArgs e)

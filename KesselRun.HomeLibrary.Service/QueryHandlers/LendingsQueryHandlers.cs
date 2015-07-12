@@ -14,7 +14,7 @@ using System.Linq.Expressions;
 
 namespace KesselRun.HomeLibrary.Service.QueryHandlers
 {
-    public class LendingsQueryHandlers : 
+    public class LendingsQueryHandlers :
         IQueryHandler<GetLendingsPagedSortedQuery, LendingsViewModel>,
         IQueryHandler<GetLendingByPkQuery, Lending>
     {
@@ -22,7 +22,8 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         private readonly IUniversalMapper _mapper;
         private readonly ILendingsConverters _keySelectors;
 
-        public LendingsQueryHandlers(IUnitOfWorkAsync unitOfWork, IUniversalMapper mapper, ILendingsConverters keySelectors)
+        public LendingsQueryHandlers(IUnitOfWorkAsync unitOfWork, IUniversalMapper mapper,
+            ILendingsConverters keySelectors)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -31,23 +32,15 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
 
         public LendingsViewModel Handle(GetLendingsPagedSortedQuery query)
         {
-            var lendingsViewModel = new LendingsViewModel{ PagerData = new PagerData() };
-             IList<Lending> lendings = new List<Lending>();
-            int totalSize;
+            var lendingsViewModel = new LendingsViewModel {PagerData = new PagerData()};
+            IList<Lending> lendings = new List<Lending>();
             Expression<Func<Model.Lending, bool>> filterFunc = GetFilterFunc(query);
+            var lendsingsRepository = _unitOfWork.Repository<Model.Lending>();
 
-            foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
-                .Include(l => l.Borrower)
-                .Include(l => l.Book.Authors)
-                .OrderBy(GetOrderByFunc(query))
-                .SelectPage(query.PageIndex, query.PageSize, out totalSize))
-             {
-                 var uiLending = new Lending();
-                 lendings.Add(_mapper.Map(lending, uiLending));
-             }
+            int totalSize = lendsingsRepository.Query().Select().Count();
 
             var pageCount = totalSize/query.PageSize;
-            var remainder = totalSize % query.PageSize;
+            var remainder = totalSize%query.PageSize;
 
             if (query.PageIndex > pageCount)
             {
@@ -55,45 +48,32 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
                 {
                     if (remainder <= totalSize)
                     {
-                        lendings.Clear();
                         query.PageIndex = ++pageCount;
-
-                        foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
-                            .Include(l => l.Borrower)
-                            .Include(l => l.Book.Authors)
-                            .OrderBy(GetOrderByFunc(query))
-                            .SelectPage(query.PageIndex, query.PageSize, out totalSize))
-                        {
-                            var uiLending = new Lending();
-                            lendings.Add(_mapper.Map(lending, uiLending));
-                        }
                     }
                 }
                 else if (remainder == 0)
                 {
-                    lendings.Clear();
                     query.PageIndex = pageCount;
-
-                    foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
-                        .Include(l => l.Borrower)
-                        .Include(l => l.Book.Authors)
-                        .OrderBy(GetOrderByFunc(query))
-                        .SelectPage(query.PageIndex, query.PageSize, out totalSize))
-                    {
-                        var uiLending = new Lending();
-                        lendings.Add(_mapper.Map(lending, uiLending));
-                    }
-                    
                 }
+            }
+
+            foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
+                .Include(l => l.Borrower)
+                .Include(l => l.Book.Authors)
+                .OrderBy(GetOrderByFunc(query))
+                .SelectPage(query.PageIndex, query.PageSize, out totalSize))
+            {
+                var uiLending = new Lending();
+                lendings.Add(_mapper.Map(lending, uiLending));
             }
 
             lendingsViewModel.Lendings = new BindingList<Lending>(lendings);
 
-            if(query.PageSize == 1 || remainder == 0)
-                lendingsViewModel.PagerData.NumberOfPages = totalSize / query.PageSize;
+            if (query.PageSize == 1 || remainder == 0)
+                lendingsViewModel.PagerData.NumberOfPages = totalSize/query.PageSize;
             else
-                lendingsViewModel.PagerData.NumberOfPages = (totalSize / query.PageSize) + 1;
-            
+                lendingsViewModel.PagerData.NumberOfPages = (totalSize/query.PageSize) + 1;
+
             PopulateOtherPagerInfo(query, lendingsViewModel);
 
             return lendingsViewModel;
@@ -108,7 +88,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             {
                 new Filter {Operation = Op.Contains, PropertyName = query.FilterBy, Value = query.Filter}
             };
-            
+
             return ExpressionBuilder.GetExpression<Model.Lending>(filters);
         }
 
@@ -130,7 +110,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             return null;
         }
 
-        private Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> GetOrderByFuncForStrings (
+        private Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> GetOrderByFuncForStrings(
             GetLendingsPagedSortedQuery query)
         {
             switch (query.OrderByDirection)
@@ -158,7 +138,8 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             return null;
         }
 
-        private static void PopulateOtherPagerInfo(GetLendingsPagedSortedQuery query, LendingsViewModel lendingsViewModel)
+        private static void PopulateOtherPagerInfo(GetLendingsPagedSortedQuery query,
+            LendingsViewModel lendingsViewModel)
         {
             lendingsViewModel.PagerData.PageNumber = query.PageIndex;
             lendingsViewModel.PagerData.PageSize = query.PageSize;
@@ -177,4 +158,5 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             _unitOfWork.Dispose();
         }
     }
+
 }

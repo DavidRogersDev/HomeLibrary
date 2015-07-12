@@ -10,33 +10,47 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
 {
     public partial class DataGridViewPager : UserControl, INotifyPropertyChanged
     {
-        private int _pageIndex;
+        private int _pageCount;
+        private int _pageSize;
 
         const string BehaviourCategory = "Behaviour";
         const string ButtonNextPage = "btnNextPage";
         const string ButtonPreviousPage = "btnPreviousPage";
-        const string NextPageSubmittedEvent = "NextPageSubmitted";
-        const string PageSizeChangeSubmittedEvent = "PageSizeChangeSubmitted";
-        const string PreviousPageSubmittedEvent = "PreviousPageSubmitted";
+        public const string NextPageSubmittedEvent = "NextPageSubmitted";
+        public const string PageSizeChangeSubmittedEvent = "PageSizeChangeSubmitted";
+        public const string PreviousPageSubmittedEvent = "PreviousPageSubmitted";
 
         [Category(BehaviourCategory), Description("The amount .")]
         public int PagerIncrement { get; set; }
+
         [Category(BehaviourCategory), Description("The page index.")]
-        public int PageIndex
+        public int PageIndex { get; set; }
+
+        [Category(BehaviourCategory), Description("The page size. This can be configured using the dropdown list.")]
+        public int PageSize
         {
-            get { return _pageIndex; }
+            get { return _pageSize; }
             set
             {
-                _pageIndex = value;
+                _pageSize = value;
                 OnPropertyChanged();
             }
         }
-        [Category(BehaviourCategory), Description("The page size. This can be configured using the dropdown list.")]
-        public int PageSize { get; set; }
+
         [Category(BehaviourCategory), Description("The page count.")]
-        public int PageCount { get; set; }
+        public int PageCount
+        {
+            get { return _pageCount; }
+            set
+            {
+                _pageCount = value;
+                OnPropertyChanged();
+            }
+        }
+
         [Category(BehaviourCategory), Description("The column on which the grid's data is sorted.")]
         public string SortByColumn { get; set; }
+
         [Category(BehaviourCategory), Description("Whether sort order is asc or desc.")]
         public ListSortDirection SortOrder { get; set; }
 
@@ -55,22 +69,30 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         {
             base.OnLoad(e);
 
-
-            InitializePageSizeDropdown();
-
             txtPageNumber.DataBindings.Add("Text", this, "PageIndex");
             lblTotalNumberPages.DataBindings.Add("Text", this, "PageCount");
+
+            InitializePageSizeDropdown();
         }
 
         private void InitializePageSizeDropdown()
         {
-            for (int i = 1; i <= PageCount; i++)
+            int indexToSelect = 0;
+
+            for (int i = 1; i <= PageSize; i++)
             {
                 if (i % PagerIncrement == 0)
+                {
                     cboPageSize.Items.Add(i);
+                    if (i == PageSize)
+                        indexToSelect = cboPageSize.Items.Count - 1;
+                }
             }
 
-            cboPageSize.SelectedIndex = 0;
+            cboPageSize.SelectedIndex = indexToSelect;
+
+            cboPageSize.SelectionChangeCommitted += cboPageSize_SelectionChangeCommitted;
+            cboPageSize.KeyPress += cboPageSize_KeyPress;
         }
 
 
@@ -100,6 +122,25 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
 
                 PreviousPageSubmitted(this, new PagedEventArgs(fromPageIndex, PageIndex, PreviousPageSubmittedEvent));                
             }
+        }
+
+        public void AdjustPreviousNextButtons(int oldPageCount, int newPageCount)
+        {
+            if (PageIndex <= PageCount)
+            {
+                if (PageIndex == PageCount)
+                    ToggleButton(btnNextPage.Name, false);
+                else
+                    ToggleButton(btnNextPage.Name, true);
+            }
+
+            if (PageIndex > 0)
+            {
+                if (PageIndex == 1)
+                    ToggleButton(btnPreviousPage.Name, false);
+                else
+                    ToggleButton(btnPreviousPage.Name, true);
+            }           
         }
 
         public void AdjustPreviousNextButtons(string eventRaised)
@@ -153,7 +194,6 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
                 }
             }
         }
-
 
         public void ToggleButton(string buttonName, bool enable)
         {

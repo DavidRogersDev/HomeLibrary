@@ -3,5 +3,6 @@
     public sealed class Constants
     {
         public const string SelectedGridLending = "SelectedGridLending";
+        public const string StartUp = "StartUp";
     }
 }

@@ -154,8 +154,8 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvPager.Name = "dgvPager";
             this.dgvPager.PageCount = 0;
             this.dgvPager.PageIndex = 1;
-            this.dgvPager.PageSize = 2;
             this.dgvPager.PagerIncrement = 2;
+            this.dgvPager.PageSize = 4;
             this.dgvPager.Size = new System.Drawing.Size(400, 33);
             this.dgvPager.SortByColumn = "Email";
             this.dgvPager.SortOrder = System.ComponentModel.ListSortDirection.Ascending;
