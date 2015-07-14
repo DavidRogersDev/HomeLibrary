@@ -42,6 +42,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvlcAuthor = new System.Windows.Forms.DataGridViewLinkColumn();
             this.btnAddLending = new System.Windows.Forms.Button();
             this.dgvPager = new KesselRun.HomeLibrary.Ui.CustomControls.DataGridViewPager();
+            this.btnAddPerson = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLendings)).BeginInit();
             this.SuspendLayout();
             // 
@@ -164,10 +165,21 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvPager.PageSizeChangeSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PageSizeChanged);
             this.dgvPager.PreviousPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PageChanged);
             // 
+            // btnAddPerson
+            // 
+            this.btnAddPerson.Location = new System.Drawing.Point(115, 209);
+            this.btnAddPerson.Name = "btnAddPerson";
+            this.btnAddPerson.Size = new System.Drawing.Size(75, 23);
+            this.btnAddPerson.TabIndex = 4;
+            this.btnAddPerson.Text = "Add Person";
+            this.btnAddPerson.UseVisualStyleBackColor = true;
+            this.btnAddPerson.Click += new System.EventHandler(this.btnAddPerson_Click);
+            // 
             // LendingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnAddPerson);
             this.Controls.Add(this.dgvPager);
             this.Controls.Add(this.btnAddLending);
             this.Controls.Add(this.dgvLendings);
@@ -192,6 +204,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDuration;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcDateDue;
         private System.Windows.Forms.DataGridViewLinkColumn dgvlcAuthor;
+        private System.Windows.Forms.Button btnAddPerson;
 
     }
 }

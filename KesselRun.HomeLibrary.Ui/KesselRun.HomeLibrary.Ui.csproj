@@ -124,6 +124,12 @@
     <Compile Include="UserControls\AddLendingControl.Designer.cs">
       <DependentUpon>AddLendingControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\AddPersonControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\AddPersonControl.Designer.cs">
+      <DependentUpon>AddPersonControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\LendingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -159,6 +165,9 @@
     </Compile>
     <EmbeddedResource Include="UserControls\AddLendingControl.resx">
       <DependentUpon>AddLendingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\AddPersonControl.resx">
+      <DependentUpon>AddPersonControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\LendingsControl.resx">
       <DependentUpon>LendingsControl.cs</DependentUpon>

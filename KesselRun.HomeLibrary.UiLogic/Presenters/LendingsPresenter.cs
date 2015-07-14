@@ -24,9 +24,11 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             _queryProcessor = queryProcessor;
             View.ViewClosing += View_ViewClosing;
             View.AddLending += View_AddLending;
+            View.AddPerson += View_AddPerson;
             View.ReloadView += View_ReloadView;
             _queryProcessor = queryProcessor;
         }
+
 
         private void View_ReloadView(object sender, SearchLendingsEventArgs lendingsViewEventArgs)
         {
@@ -59,6 +61,12 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             View.LoadAddLendingView(typeof (IAddLendingsView));
         }
 
+
+        void View_AddPerson(object sender, System.EventArgs e)
+        {
+            View.LoadAddPersonView(typeof(IAddPersonView));
+        }
+        
         private void LoadLendings(GetLendingsPagedSortedQuery getLendingsPagedSortedQuery)
         {
             try

@@ -123,10 +123,10 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             // 
             // lendingsSearchCriteriaControl1
             // 
-            this.lendingsSearchCriteriaControl1.Location = new System.Drawing.Point(419, 10);
+            this.lendingsSearchCriteriaControl1.Location = new System.Drawing.Point(419, 5);
             this.lendingsSearchCriteriaControl1.Name = "lendingsSearchCriteriaControl1";
             this.lendingsSearchCriteriaControl1.SearchLendingsViewModel = null;
-            this.lendingsSearchCriteriaControl1.Size = new System.Drawing.Size(500, 85);
+            this.lendingsSearchCriteriaControl1.Size = new System.Drawing.Size(500, 90);
             this.lendingsSearchCriteriaControl1.TabIndex = 0;
             // 
             // MainForm

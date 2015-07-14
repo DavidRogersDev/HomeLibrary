@@ -59,6 +59,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public event EventHandler CloseControl;
         public LendingsViewModel LendingsViewModel { get; set; }
         public event EventHandler AddLending;
+        public event EventHandler AddPerson;
         public event EventHandler<SearchLendingsEventArgs> SearchLendings;
         public event EventHandler<SearchLendingsEventArgs> ReloadView;
 
@@ -77,7 +78,12 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public void LoadAddLendingView(Type view)
         {
             _navigator.Navigate(typeof(ILendingsView), view, Parent);
-        } 
+        }
+
+        public void LoadAddPersonView(Type view)
+        {
+            _navigator.Navigate(typeof(IAddPersonView), view, Parent);
+        }
 
         #endregion
 
@@ -305,6 +311,11 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 }
             }
             return selectedLending;
+        }
+
+        private void btnAddPerson_Click(object sender, System.EventArgs e)
+        {
+            AddPerson(this, System.EventArgs.Empty);
         }
     }
 }

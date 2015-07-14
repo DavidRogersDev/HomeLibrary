@@ -9,9 +9,11 @@ namespace KesselRun.HomeLibrary.UiLogic.Views
         LendingsViewModel LendingsViewModel { get; set; }
 
         event EventHandler AddLending;
+        event EventHandler AddPerson;
         event EventHandler<SearchLendingsEventArgs> ReloadView;
 
 
         void LoadAddLendingView(Type view);
+        void LoadAddPersonView(Type view);
     }
 }

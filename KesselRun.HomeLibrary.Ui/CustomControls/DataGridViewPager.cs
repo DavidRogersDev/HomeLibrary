@@ -106,8 +106,8 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
 
             if (buttonClicked.Name.Equals(ButtonNextPage, StringComparison.OrdinalIgnoreCase))
             {
-                if (PageIndex == 1)
-                    ToggleButton(ButtonPreviousPage, true);
+                //if (PageIndex == 1)
+                    //ToggleButton(ButtonPreviousPage, true);
 
                 PageIndex++;
 
@@ -115,32 +115,13 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
             }
             else
             {
-                if (PageIndex == PageCount)
-                    ToggleButton(ButtonNextPage, true);
+                //if (PageIndex == PageCount)
+                //    ToggleButton(ButtonNextPage, true);
 
                 PageIndex--;
 
                 PreviousPageSubmitted(this, new PagedEventArgs(fromPageIndex, PageIndex, PreviousPageSubmittedEvent));                
             }
-        }
-
-        public void AdjustPreviousNextButtons(int oldPageCount, int newPageCount)
-        {
-            if (PageIndex <= PageCount)
-            {
-                if (PageIndex == PageCount)
-                    ToggleButton(btnNextPage.Name, false);
-                else
-                    ToggleButton(btnNextPage.Name, true);
-            }
-
-            if (PageIndex > 0)
-            {
-                if (PageIndex == 1)
-                    ToggleButton(btnPreviousPage.Name, false);
-                else
-                    ToggleButton(btnPreviousPage.Name, true);
-            }           
         }
 
         public void AdjustPreviousNextButtons(string eventRaised)

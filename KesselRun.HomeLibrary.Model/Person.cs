@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using KesselRun.HomeLibrary.Model.Enums;
-using Repository.Pattern.Ef6;
+﻿using Repository.Pattern.Ef6;
+using System.Collections.Generic;
 
 namespace KesselRun.HomeLibrary.Model
 {

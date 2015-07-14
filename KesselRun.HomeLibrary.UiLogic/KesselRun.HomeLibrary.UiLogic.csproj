@@ -56,12 +56,15 @@
   <ItemGroup>
     <Compile Include="Enums\FilterType.cs" />
     <Compile Include="EventArgs\AddLendingEventArgs.cs" />
+    <Compile Include="EventArgs\AddPersonEventArgs.cs" />
     <Compile Include="EventArgs\LendingsViewEventArgs.cs" />
     <Compile Include="EventArgs\SearchLendingsEventArgs.cs" />
     <Compile Include="Presenters\AddLendingsPresenter.cs" />
+    <Compile Include="Presenters\AddPersonPresenter.cs" />
     <Compile Include="Presenters\LendingsPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\SearchLendingsPresenter.cs" />
+    <Compile Include="Views\IAddPersonView.cs" />
     <Compile Include="Views\IClosableView.cs" />
     <Compile Include="Views\ILendingsView.cs" />
     <Compile Include="Views\IMainView.cs" />
