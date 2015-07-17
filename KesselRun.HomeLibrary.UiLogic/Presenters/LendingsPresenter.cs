@@ -96,7 +96,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            ((IDisposable)_queryProcessor).Dispose();
         }
     }
 }

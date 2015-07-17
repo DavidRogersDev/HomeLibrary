@@ -144,6 +144,12 @@
     <Compile Include="UserControls\LendingsSearchCriteriaControl.Designer.cs">
       <DependentUpon>LendingsSearchCriteriaControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PersonControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\PersonControl.Designer.cs">
+      <DependentUpon>PersonControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Assets\Resources\ImageResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ImageResources.Designer.cs</LastGenOutput>

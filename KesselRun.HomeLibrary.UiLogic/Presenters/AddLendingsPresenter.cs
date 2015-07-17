@@ -81,7 +81,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
         public void Dispose()
         {
             //  to implement
-            //  TODO: Dispose of all UOW in various entities
+            ((IDisposable)_queryProcessor).Dispose();
         }
     }
 }

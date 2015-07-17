@@ -4,9 +4,9 @@ using KesselRun.HomeLibrary.UiModel.ViewModels;
 
 namespace KesselRun.HomeLibrary.UiLogic.Views
 {
-    public interface IMainView : IClosableView
+    public interface IMainView : IClosableView, IBaseView
     {
-        //event EventHandler<SearchLendingsEventArgs> SearchLendings;
+        event EventHandler NavigateToPeopleView;
 
         MainViewModel MainViewModel { get; set; }
         LendingsViewModel LendingsViewModel { get; set; }

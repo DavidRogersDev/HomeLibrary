@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using KesselRun.HomeLibrary.Common.Contracts;
+using KesselRun.HomeLibrary.UiLogic.Views;
 
 namespace KesselRun.HomeLibrary.Ui.Core
 {
@@ -113,7 +114,20 @@ namespace KesselRun.HomeLibrary.Ui.Core
             {
                 containerControl.Controls.Clear();
                 var control = _controlStacks[containerControl.Name].Peek() as UserControl;
-                containerControl.Controls.Add(_controlStacks[containerControl.Name].Peek());
+                if (control != null)
+                {
+                    containerControl.Controls.Add(control
+);
+                }
+            }
+        }
+
+        public void ClearNavigationBase(Control containerControl)
+        {
+            if (_controlStacks.ContainsKey(containerControl.Name))
+            {
+                var controlToDestroy = _controlStacks[containerControl.Name].Pop();
+                ((IClosableView)controlToDestroy).CloseView();
             }
         }
 
@@ -124,7 +138,7 @@ namespace KesselRun.HomeLibrary.Ui.Core
                 while (_controlStacks[containerControl.Name].Any())
                 {
                     var controlToDestroy = _controlStacks[containerControl.Name].Pop();
-                    controlToDestroy.Dispose();
+                    controlToDestroy.Dispose();                    
                 }
 
                 containerControl.Controls.Clear();

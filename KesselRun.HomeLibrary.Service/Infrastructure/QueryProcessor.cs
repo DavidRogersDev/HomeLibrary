@@ -1,11 +1,13 @@
 ﻿using System.Diagnostics;
 using Microsoft.Practices.Unity;
+using System;
 
 namespace KesselRun.HomeLibrary.Service.Infrastructure
 {
-    public sealed class QueryProcessor : IQueryProcessor
+    public sealed class QueryProcessor : IQueryProcessor, IDisposable
     {
         private readonly IUnityContainer _container;
+        private bool _disposed;
 
         public QueryProcessor(IUnityContainer container)
         {
@@ -20,6 +22,20 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
             dynamic handler = _container.Resolve(handlerType, "Queryor");
 
             return handler.Handle((dynamic)query);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                _container.Dispose();
+                _disposed = true;
+            }            
         }
     }
 }
