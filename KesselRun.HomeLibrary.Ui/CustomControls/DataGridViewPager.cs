@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
+using KesselRun.HomeLibrary.Ui.Core;
 
 namespace KesselRun.HomeLibrary.Ui.CustomControls
 {
@@ -20,7 +21,7 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         public const string PageSizeChangeSubmittedEvent = "PageSizeChangeSubmitted";
         public const string PreviousPageSubmittedEvent = "PreviousPageSubmitted";
 
-        [Category(BehaviourCategory), Description("The amount .")]
+        [Category(BehaviourCategory), Description("The amount by which the PageSizes in the ComboBox increases.")]
         public int PagerIncrement { get; set; }
 
         [Category(BehaviourCategory), Description("The page index.")]
@@ -69,8 +70,8 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
         {
             base.OnLoad(e);
 
-            txtPageNumber.DataBindings.Add("Text", this, "PageIndex");
-            lblTotalNumberPages.DataBindings.Add("Text", this, "PageCount");
+            txtPageNumber.DataBindings.Add(Constants.TextProperty, this, "PageIndex");
+            lblTotalNumberPages.DataBindings.Add(Constants.TextProperty, this, "PageCount");
 
             InitializePageSizeDropdown();
         }
@@ -276,6 +277,5 @@ namespace KesselRun.HomeLibrary.Ui.CustomControls
                 PageSizeChangeSubmitted(this, new PagedEventArgs(fromPageNumber, -1, PageSizeChangeSubmittedEvent));
             }
         }
-
     }
 }
