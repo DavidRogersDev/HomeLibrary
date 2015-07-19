@@ -40,6 +40,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
 
         public event EventHandler ViewClosing;
         public event EventHandler CloseControl;
+        public event EventHandler NavigateToLendingsView;
         public event EventHandler NavigateToPeopleView;
         public string ControlStack { get; set; }
         public MainViewModel MainViewModel { get; set; }
@@ -55,7 +56,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
 
         public void LogEventToView(LogEvent logEvent)
         {
-            throw new NotImplementedException();
+            MainViewModel.MainViewLogItems.Add(logEvent);
         }   
 
         public void ShowChildView(Type view)
@@ -102,6 +103,11 @@ namespace KesselRun.HomeLibrary.Ui.Forms
         private void btnPeople_Click(object sender, System.EventArgs e)
         {
             NavigateToPeopleView(this, System.EventArgs.Empty);
+        }
+
+        private void btnLendings_Click(object sender, System.EventArgs e)
+        {
+            NavigateToLendingsView(this, System.EventArgs.Empty);
         }
 
     }

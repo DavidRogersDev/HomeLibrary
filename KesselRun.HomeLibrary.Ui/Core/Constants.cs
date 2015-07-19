@@ -4,5 +4,6 @@
     {
         public const string SelectedGridLending = "SelectedGridLending";
         public const string StartUp = "StartUp";
+        public const string TextProperty = "Text";
     }
 }

@@ -181,6 +181,9 @@
     <EmbeddedResource Include="UserControls\LendingsSearchCriteriaControl.resx">
       <DependentUpon>LendingsSearchCriteriaControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\PersonControl.resx">
+      <DependentUpon>PersonControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

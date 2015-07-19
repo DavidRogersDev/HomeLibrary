@@ -22,7 +22,13 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             View.Load += View_Load;
             View.ViewClosing += View_ViewClosing;
             View.CloseControl += ViewCloseControl;
+            View.NavigateToLendingsView += View_NavigateToLendingsView;
             View.NavigateToPeopleView += View_NavigateToPeopleView;
+        }
+
+        void View_NavigateToLendingsView(object sender, System.EventArgs e)
+        {
+            View.ShowChildView(typeof(ILendingsView));
         }
 
         void View_NavigateToPeopleView(object sender, System.EventArgs e)

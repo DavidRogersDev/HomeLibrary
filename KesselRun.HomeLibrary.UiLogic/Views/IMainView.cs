@@ -6,6 +6,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Views
 {
     public interface IMainView : IClosableView, IBaseView
     {
+        event EventHandler NavigateToLendingsView;
         event EventHandler NavigateToPeopleView;
 
         MainViewModel MainViewModel { get; set; }

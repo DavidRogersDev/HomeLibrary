@@ -9,6 +9,20 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+
         #region Component Designer generated code
 
         /// <summary> 
@@ -49,8 +63,9 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             this.dgvtcDateDue,
             this.dgvlcAuthor});
             this.dgvLendings.Location = new System.Drawing.Point(0, 0);
+            this.dgvLendings.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.dgvLendings.Name = "dgvLendings";
-            this.dgvLendings.Size = new System.Drawing.Size(1040, 150);
+            this.dgvLendings.Size = new System.Drawing.Size(2080, 288);
             this.dgvLendings.TabIndex = 1;
             this.dgvLendings.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLendings_CellClick);
             this.dgvLendings.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvLendingsCellFormatting);
@@ -128,9 +143,10 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             // 
             // btnAddLending
             // 
-            this.btnAddLending.Location = new System.Drawing.Point(20, 209);
+            this.btnAddLending.Location = new System.Drawing.Point(40, 402);
+            this.btnAddLending.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnAddLending.Name = "btnAddLending";
-            this.btnAddLending.Size = new System.Drawing.Size(75, 23);
+            this.btnAddLending.Size = new System.Drawing.Size(150, 44);
             this.btnAddLending.TabIndex = 2;
             this.btnAddLending.Text = "Add Lending";
             this.btnAddLending.UseVisualStyleBackColor = true;
@@ -138,13 +154,14 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             // 
             // dgvPager
             // 
-            this.dgvPager.Location = new System.Drawing.Point(4, 157);
+            this.dgvPager.Location = new System.Drawing.Point(8, 303);
+            this.dgvPager.Margin = new System.Windows.Forms.Padding(12, 12, 12, 12);
             this.dgvPager.Name = "dgvPager";
             this.dgvPager.PageCount = 0;
             this.dgvPager.PageIndex = 1;
             this.dgvPager.PagerIncrement = 2;
-            this.dgvPager.PageSize = 4;
-            this.dgvPager.Size = new System.Drawing.Size(400, 33);
+            this.dgvPager.PageSize = 10;
+            this.dgvPager.Size = new System.Drawing.Size(800, 63);
             this.dgvPager.SortByColumn = "Email";
             this.dgvPager.SortOrder = System.ComponentModel.ListSortDirection.Ascending;
             this.dgvPager.TabIndex = 3;
@@ -154,9 +171,10 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             // 
             // btnAddPerson
             // 
-            this.btnAddPerson.Location = new System.Drawing.Point(115, 209);
+            this.btnAddPerson.Location = new System.Drawing.Point(230, 402);
+            this.btnAddPerson.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnAddPerson.Name = "btnAddPerson";
-            this.btnAddPerson.Size = new System.Drawing.Size(75, 23);
+            this.btnAddPerson.Size = new System.Drawing.Size(150, 44);
             this.btnAddPerson.TabIndex = 4;
             this.btnAddPerson.Text = "Add Person";
             this.btnAddPerson.UseVisualStyleBackColor = true;
@@ -164,14 +182,15 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             // 
             // LendingsControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnAddPerson);
             this.Controls.Add(this.dgvPager);
             this.Controls.Add(this.btnAddLending);
             this.Controls.Add(this.dgvLendings);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "LendingsControl";
-            this.Size = new System.Drawing.Size(1050, 248);
+            this.Size = new System.Drawing.Size(2100, 477);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLendings)).EndInit();
             this.ResumeLayout(false);
 

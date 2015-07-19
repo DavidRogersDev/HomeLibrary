@@ -7,7 +7,7 @@ namespace KesselRun.HomeLibrary.Common.Contracts
     {
         void ClearAll();
         void ClearContainer(Control containerControl);
-        void Navigate(Type fromView, Type toView, Control containerControl);
+        void Navigate(Type toView, Control containerControl);
         void NavigateTo(Type view, Control containerControl);
         Control NavigationRootControl { get; set; }
         void Return(Control containerControl);

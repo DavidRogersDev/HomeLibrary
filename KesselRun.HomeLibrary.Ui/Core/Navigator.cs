@@ -41,7 +41,7 @@ namespace KesselRun.HomeLibrary.Ui.Core
             }
         }
 
-        public void Navigate(Type fromView, Type toView, Control containerControl)
+        public void Navigate(Type toView, Control containerControl)
         {
             containerControl.Controls.Clear();
 
