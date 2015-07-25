@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -94,9 +96,14 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
             return null;
         }
 
-        private static MemberExpression GetMember(ParameterExpression parameterExpression, Filter filter)
+        public static MemberExpression GetMember(ParameterExpression parameterExpression, Filter filter)
         {
             return GetMemberHelper(parameterExpression, filter.PropertyName);
+        }
+
+        public static MemberExpression GetMember(ParameterExpression parameterExpression, string propertyName)
+        {
+            return GetMemberHelper(parameterExpression, propertyName);
         }
 
         private static MemberExpression GetMemberHelper(ParameterExpression parameterExpression, string propertyName)
@@ -110,6 +117,24 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
             }
 
             return Expression.Property(parameterExpression, propertyName);
+        }
+
+        public static Func<IQueryable<T>, IOrderedQueryable<T>> GetExpressionSortFunc<T>(
+            ParameterExpression parameterExpression, 
+            MemberExpression memberExpression,
+            ListSortDirection listSortDirection)
+        {
+            var lambda = Expression.Lambda<Func<T, object>>(memberExpression, parameterExpression);
+
+            switch (listSortDirection)
+            {
+                case ListSortDirection.Ascending:
+                    return l => l.OrderBy(lambda);
+                case ListSortDirection.Descending:
+                    return l => l.OrderByDescending(lambda);
+                default:
+                    throw new NotSupportedException(string.Format("{0} is not a suppoted ListSortDirection", listSortDirection));
+            }
         }
 
         private static BinaryExpression GetExpression<T>

@@ -13,7 +13,7 @@ using WinFormsMvp.Forms;
 namespace KesselRun.HomeLibrary.Ui.UserControls
 {
     [PresenterBinding(typeof(AddPersonPresenter))]
-    public partial class AddPersonControl : MvpUserControl, IAddPersonView
+    public partial class AddPersonControl : MvpUserControl, IAddPersonView, IHydrateOnFocus
     {
         private readonly Lazy<MainForm> _mainWindow;
         private readonly Navigator _navigator = Navigator.SingleNavigator;
@@ -60,6 +60,11 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         private void btnClose_Click(object sender, System.EventArgs e)
         {
             CloseControl(this, System.EventArgs.Empty);
+        }
+
+        public void HydrateWithDataOnFocus()
+        {
+            ;
         }
     }
 }

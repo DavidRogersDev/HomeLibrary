@@ -1,13 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using KesselRun.HomeLibrary.Service.Commands;
-using KesselRun.HomeLibrary.Service.Infrastructure;
+﻿using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel;
 using KesselRun.HomeLibrary.UiModel.Models;
+using System;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
 using SCMDA = System.ComponentModel.DataAnnotations;
@@ -44,11 +41,6 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
                 SelectedLendingId = lendingsViewEventArgs.SelectedLendingId
             };
             LoadLendings(getLendingsPagedSortedQuery);
-        }
-
-        private void ActionMethod(Service.Commands.AddLendingCommand bla)
-        {
-            Trace.WriteLine(bla.DateDue.Value.ToString());
         }
 
         private void View_ViewClosing(object sender, System.EventArgs e)

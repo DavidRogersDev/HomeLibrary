@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using KesselRun.HomeLibrary.EF;
-using KesselRun.HomeLibrary.Mapper.Mappers;
+﻿using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiModel.Models;
 using Repository.Pattern.UnitOfWork;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace KesselRun.HomeLibrary.Service.QueryHandlers
 {
@@ -13,6 +13,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
     {
         private readonly IUnitOfWorkAsync _unitOfWork;
         private readonly IUniversalMapper _mapper;
+        private bool _disposed = false;
 
         public PeopleHandlers(IUnitOfWorkAsync unitOfWork, IUniversalMapper mapper)
         {
@@ -35,7 +36,19 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _unitOfWork.Dispose();
+                _mapper.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }

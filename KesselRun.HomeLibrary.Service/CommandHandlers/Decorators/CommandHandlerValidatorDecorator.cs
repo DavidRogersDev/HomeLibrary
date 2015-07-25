@@ -10,6 +10,7 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers.Decorators
     {
         private readonly ICommandHandler<TCommand> _commandHandler;
         private readonly IUnityContainer _container;
+        private bool _disposed = false;
 
         public CommandHandlerValidatorDecorator(ICommandHandler<TCommand> commandHandler, IUnityContainer container)
         {
@@ -37,8 +38,19 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers.Decorators
 
         public void Dispose()
         {
-            _commandHandler.Dispose();
-            _container.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _commandHandler.Dispose();
+                _container.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }

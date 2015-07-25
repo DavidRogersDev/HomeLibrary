@@ -9,6 +9,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers.Decorators
         where TQuery : IQuery<TResult>
     {
         private readonly IQueryHandler<TQuery, TResult> _queryHandler;
+        private bool _disposed = false;
 
         //[DebuggerStepThrough]
         public QueryHandlerValidatorDecorator(IQueryHandler<TQuery, TResult> queryHandler)
@@ -38,7 +39,18 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers.Decorators
 
         public void Dispose()
         {
-            _queryHandler.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _queryHandler.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }

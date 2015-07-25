@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using WinFormsMvp.Forms;
-using KesselRun.HomeLibrary.UiLogic.Views;
-using WinFormsMvp;
-using KesselRun.HomeLibrary.UiLogic.Presenters;
-using KesselRun.HomeLibrary.Ui.Core;
+﻿using KesselRun.HomeLibrary.Ui.Core;
 using KesselRun.HomeLibrary.Ui.Forms;
+using KesselRun.HomeLibrary.UiLogic.Presenters;
+using KesselRun.HomeLibrary.UiLogic.Views;
+using System;
+using WinFormsMvp;
+using WinFormsMvp.Forms;
 
 namespace KesselRun.HomeLibrary.Ui.UserControls
 {
     [PresenterBinding(typeof(PeoplePresenter))]
-    public partial class PersonControl : MvpUserControl, IPeopleView
+    public partial class PersonControl : MvpUserControl, IPeopleView, IHydrateOnFocus
     {
         private readonly Navigator _navigator = Navigator.SingleNavigator;
         private readonly Lazy<MainForm> _mainWindow;
@@ -39,6 +31,11 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public void LogEventToView(UiModel.LogEvent logEvent)
         {
             _mainWindow.Value.MainViewModel.MainViewLogItems.Add(logEvent);
+        }
+
+        public void HydrateWithDataOnFocus()
+        {
+            // TODO: Implement duh.
         }
     }
 }

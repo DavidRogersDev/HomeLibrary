@@ -51,6 +51,12 @@ namespace KesselRun.HomeLibrary.Ui.Core
             var destinationViewControl = (Control)destinationView;
 
             containerControl.Controls.Add(destinationViewControl);
+            
+            if (destinationViewControl is IHydrateOnFocus)
+            {
+                ((IHydrateOnFocus)destinationView).HydrateWithDataOnFocus();
+            }
+
             _controlStacks[containerControl.Name].Push(destinationViewControl);
             
         }
@@ -66,6 +72,11 @@ namespace KesselRun.HomeLibrary.Ui.Core
             var destinationViewControl = (Control)destinationView;
 
             containerControl.Controls.Add(destinationViewControl);
+
+            if (destinationViewControl is IHydrateOnFocus)
+            {
+                ((IHydrateOnFocus)destinationView).HydrateWithDataOnFocus();
+            }
 
             ManageStack(destinationViewControl, containerControl);
         }
@@ -116,8 +127,11 @@ namespace KesselRun.HomeLibrary.Ui.Core
                 var control = _controlStacks[containerControl.Name].Peek() as UserControl;
                 if (control != null)
                 {
-                    containerControl.Controls.Add(control
-);
+                    containerControl.Controls.Add(control);
+                    if (control is IHydrateOnFocus)
+                    {
+                        ((IHydrateOnFocus) control).HydrateWithDataOnFocus();
+                    }
                 }
             }
         }

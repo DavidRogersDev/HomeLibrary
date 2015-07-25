@@ -14,8 +14,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
     [PresenterBinding(typeof(SearchLendingsPresenter))]
     public partial class LendingsSearchCriteriaControl : MvpUserControl, ISearchLendingsView
     {
-        
-
         public LendingsSearchCriteriaControl()
         {
             InitializeComponent();
@@ -79,6 +77,22 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public void LogEventToView(LogEvent logEvent)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+
+            PresenterBinder.MessageBus.Unregister<GenericMessage<SearchLendingsViewModel>>(this, MessageIds.GetFilterParametersRequest);
+
+            base.Dispose(disposing);
         }
 
     }

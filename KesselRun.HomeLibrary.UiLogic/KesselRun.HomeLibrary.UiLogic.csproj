@@ -68,6 +68,7 @@
     <Compile Include="Views\IAddPersonView.cs" />
     <Compile Include="Views\IBaseView.cs" />
     <Compile Include="Views\IClosableView.cs" />
+    <Compile Include="Views\IHydrateOnFocus.cs" />
     <Compile Include="Views\ILendingsView.cs" />
     <Compile Include="Views\IMainView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

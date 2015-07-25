@@ -22,7 +22,7 @@ using WinFormsMvp.Messaging;
 namespace KesselRun.HomeLibrary.Ui.UserControls
 {
 	[PresenterBinding(typeof (LendingsPresenter))]
-	public partial class LendingsControl : MvpUserControl, ILendingsView
+	public partial class LendingsControl : MvpUserControl, ILendingsView, IHydrateOnFocus
 	{
 		private readonly Navigator _navigator = Navigator.SingleNavigator;
 		private readonly Lazy<MainForm> _mainWindow;
@@ -48,11 +48,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 		public void CloseView()
 		{
 			ViewClosing(this, System.EventArgs.Empty);
-			PresenterBinder.MessageBus.Unregister<SearchLendingsViewModel>(this, MessageIds.SearchLendingsMessage);
-			PresenterBinder.MessageBus.Unregister<SearchLendingsViewModel>(this, MessageIds.GetFilterParametersResponse);
-		}
-
-
+        }
 
 		public void LogEventToView(LogEvent logEvent)
 		{
@@ -102,7 +98,9 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
 		private void SortOutSorting(DataGridViewColumn columnClicked)
 		{
-			if (dgvPager.SortByColumn == columnClicked.DataPropertyName)
+		    
+            if(dgvLendings.Tag == columnClicked.DataPropertyName)
+			//if (dgvPager.SortByColumn == columnClicked.DataPropertyName)
 			{
 				dgvPager.SortOrder = dgvPager.SortOrder == ListSortDirection.Ascending
 					? ListSortDirection.Descending
@@ -110,10 +108,26 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 			}
 			else
 			{
-				dgvPager.SortByColumn = columnClicked.DataPropertyName;
+				dgvPager.SortByColumn = GetSortByParameter(columnClicked.DataPropertyName);
 				dgvPager.SortOrder = ListSortDirection.Ascending;
 			}
+
+            dgvLendings.Tag = columnClicked.DataPropertyName;
 		}
+
+	    private string GetSortByParameter(string dataPropertyName)
+	    {
+	        switch (dataPropertyName)
+	        {
+                case "Email":
+	                return "Borrower.Email";
+                case "Borrower":
+	                return "Borrower.Email";
+                case "Title":
+	                return "Book.Title";
+	        }
+            return null;
+	    }
 
 		private void GetResultSetWithNewSearchParameters(GenericMessage<SearchLendingsViewModel> message)
 		{
@@ -203,17 +217,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
 			var searchLendingsViewModel = GetSearchParameters(selectedLendingId);
 
-			//ReloadView(this, new SearchLendingsEventArgs(
-			//        searchLendingsViewModel.Filter,
-			//        searchLendingsViewModel.FilterBy,
-			//        searchLendingsViewModel.Operation,
-			//    dgvPager.PageSize,
-			//    e.NewPageIndex,
-			//    dgvPager.SortByColumn,
-			//    dgvPager.SortOrder,
-			//    selectedLendingId)
-			//    );
-
 			ReSyncGridAndPager();
 
 			dgvPager.AdjustPreviousNextButtons(e.EventRaised);
@@ -241,16 +244,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
 						var searchLendingsViewModel = GetSearchParameters(selectedLendingId);
 
-						ReloadView(this, new SearchLendingsEventArgs(
-							searchLendingsViewModel.Filter,
-							searchLendingsViewModel.FilterBy,
-							searchLendingsViewModel.Operation,
-							dgvPager.PageSize,
-							dgvPager.PageIndex,
-							dgvPager.SortByColumn,
-							dgvPager.SortOrder,
-							searchLendingsViewModel.SelectedGridLendingId)
-							);
 						ReSyncGridAndPager();
 					}
 				}
@@ -297,31 +290,32 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 			AddLending(this, System.EventArgs.Empty);
 		}
 
-		protected override void OnParentChanged(System.EventArgs e)
-		{
-			base.OnParentChanged(e);
+	#endregion
 
-			if (Parent != null)
-			{
-				var searchLendingsViewModel = GetSearchParameters(NoSelectedItem);
+	    public void HydrateWithDataOnFocus()
+	    {
+            var searchLendingsViewModel = GetSearchParameters(NoSelectedItem);
 
-				ReloadView(this, new SearchLendingsEventArgs(
-					searchLendingsViewModel.Filter,
-					searchLendingsViewModel.FilterBy,
-					searchLendingsViewModel.Operation,
-					dgvPager.PageSize,
-					dgvPager.PageIndex,
-					dgvPager.SortByColumn,
-					dgvPager.SortOrder,
-					searchLendingsViewModel.SelectedGridLendingId)
-					);
+            ReSyncGridAndPager();
 
-				ReSyncGridAndPager();
+            dgvPager.AdjustPreviousNextButtons(Constants.StartUp);
+	    }
 
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
 
-				dgvPager.AdjustPreviousNextButtons(Constants.StartUp);
-			}
-		}
-	#endregion    
+            PresenterBinder.MessageBus.Unregister<GenericMessage<SearchLendingsViewModel>>(this, MessageIds.SearchLendingsMessage);
+            PresenterBinder.MessageBus.Unregister<GenericMessage<SearchLendingsViewModel>>(this, MessageIds.GetFilterParametersResponse);
+
+            base.Dispose(disposing);
+        }
 	}
 }

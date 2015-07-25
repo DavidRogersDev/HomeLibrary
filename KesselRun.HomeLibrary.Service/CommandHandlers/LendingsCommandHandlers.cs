@@ -1,4 +1,5 @@
-﻿using KesselRun.HomeLibrary.Model;
+﻿using System;
+using KesselRun.HomeLibrary.Model;
 using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using Repository.Pattern.UnitOfWork;
@@ -8,6 +9,7 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
     public class LendingsCommandHandlers : ICommandHandler<AddLendingCommand>
     {
         private readonly IUnitOfWorkAsync _unitOfWork;
+        private bool _disposed = false;
 
         public LendingsCommandHandlers(IUnitOfWorkAsync unitOfWork)
         {
@@ -29,7 +31,18 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _unitOfWork.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }
