@@ -16,7 +16,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
         public void Execute(dynamic command)
         {
             Type commandHandlerType = typeof (ICommandHandler<>).MakeGenericType(command.GetType());
-            dynamic commandHandler = _container.Resolve(commandHandlerType, "Commander");
+            dynamic commandHandler = _container.Resolve(commandHandlerType, Constants.Commander);
             commandHandler.Handle(command);
         }
 

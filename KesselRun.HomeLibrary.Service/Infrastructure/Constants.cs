@@ -9,5 +9,10 @@
         public const string Email = "Email";
         public const string ReturnDate = "ReturnDate";
         public const string Title = "Title";
+
+        // Di Decorator-related
+        public const string Commander = "Commander";
+        public const string Queryor = "Queryor";
+        public const string QueryProfiler = "QueryProfiler";
     }
 }

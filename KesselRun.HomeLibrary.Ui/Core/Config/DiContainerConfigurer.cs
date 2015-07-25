@@ -108,9 +108,16 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                 _container.RegisterType(
                     type,
                     typeof(QueryHandlerValidatorDecorator<,>),
-                    "Queryor",
+                    Service.Infrastructure.Constants.Queryor,
                     new InjectionMember[] { new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration)) }
                     );
+                _container.RegisterType(
+                    type,
+                    typeof(QueryHandlerProfilerDecorator<,>),
+                    Service.Infrastructure.Constants.QueryProfiler,
+                    new InjectionMember[] { new InjectionConstructor(
+                        new ResolvedParameter(typeof(IQueryHandler<,>), Service.Infrastructure.Constants.Queryor)) 
+                    });
             }
             else if (type == typeof(ICommandHandler<>))
             {
@@ -119,7 +126,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                 _container.RegisterType(
                     type,
                     typeof(CommandHandlerValidatorDecorator<>),
-                    "Commander",
+                    Service.Infrastructure.Constants.Commander,
                     new InjectionMember[]
                     {
                         new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), _container)

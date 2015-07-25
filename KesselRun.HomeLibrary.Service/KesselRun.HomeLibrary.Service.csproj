@@ -85,6 +85,7 @@
     <Compile Include="Queries\GetLendingByPkQuery.cs" />
     <Compile Include="Queries\GetLendingsPagedSortedQuery.cs" />
     <Compile Include="QueryHandlers\BookHandlers.cs" />
+    <Compile Include="QueryHandlers\Decorators\QueryHandlerProfilerDecorator.cs" />
     <Compile Include="QueryHandlers\LendingsQueryHandlers.cs" />
     <Compile Include="Queries\GetPeopleSortedQuery.cs" />
     <Compile Include="Infrastructure\QueryProcessor.cs" />
