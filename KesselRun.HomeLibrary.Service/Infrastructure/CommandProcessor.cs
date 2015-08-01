@@ -25,6 +25,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
         {
             Trace.TraceInformation("Unity obj in CP " + _container.GetHashCode().ToString());
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool disposing)

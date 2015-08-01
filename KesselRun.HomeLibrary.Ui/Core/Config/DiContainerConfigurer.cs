@@ -30,6 +30,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
         public DiContainerConfigurer()
         {
+            
         }
 
         public void Configure()
@@ -49,7 +50,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
         private void ManualRegistrations()
         {
-            _container.RegisterType<IUnityContainer, UnityContainer>(new TransientLifetimeManager());
+            //_container.RegisterType<IUnityContainer, UnityContainer>(new TransientLifetimeManager());
             _container.RegisterType<INavigator, Navigator>(new TransientLifetimeManager());
             _container.RegisterType<ILendingsConverters, LendingsConverters>(new TransientLifetimeManager());
 
@@ -64,16 +65,18 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             _container.RegisterType<IDataContextAsync, HomeLibraryContext>(new TransientLifetimeManager());
             _container.RegisterType<IUnitOfWorkAsync, UnitOfWork>(new TransientLifetimeManager());
 
-            _container.RegisterType<IQueryProcessor, QueryProcessor>(new TransientLifetimeManager());
-            _container.RegisterType<ICommandProcessor, CommandProcessor>(new TransientLifetimeManager());
+            _container.RegisterType<IQueryProcessor, QueryProcessor>(new TransientLifetimeManager(), new InjectionMember[]{ new InjectionConstructor( _container.CreateChildContainer())});
+            _container.RegisterType<ICommandProcessor, CommandProcessor>(new TransientLifetimeManager(), new InjectionMember[] { new InjectionConstructor(_container.CreateChildContainer()) });
             
             RegisterValidators();
 
         }
 
-        private void RegisterValidators()
+        private IUnityContainer RegisterValidators()
         {
-            _container.RegisterType<IValidator<AddLendingCommand>, AddLendingValidator>(new TransientLifetimeManager());
+            var commandDecoratorContainer = _container.CreateChildContainer();
+            commandDecoratorContainer.RegisterType<IValidator<AddLendingCommand>, AddLendingValidator>(new TransientLifetimeManager());
+            return commandDecoratorContainer;
         }
 
 
@@ -111,27 +114,31 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                     type,
                     typeof(QueryHandlerValidatorDecorator<,>),
                     Service.Infrastructure.Constants.Queryor,
+                    new ContainerControlledLifetimeManager(),
                     new InjectionMember[] { new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration)) }
                     );
                 _container.RegisterType(
                     type,
                     typeof(QueryHandlerProfilerDecorator<,>),
                     Service.Infrastructure.Constants.QueryProfiler,
+                    new ContainerControlledLifetimeManager(),
                     new InjectionMember[] { new InjectionConstructor(
                         new ResolvedParameter(typeof(IQueryHandler<,>), Service.Infrastructure.Constants.Queryor)) 
                     });
             }
             else if (type == typeof(ICommandHandler<>))
             {
+                var containerToInject = RegisterValidators();
                 // Decorate each returned ICommandHandler<T> object with an
                 // CommandHandlerValidatorDecorator<T>.
                 _container.RegisterType(
                     type,
                     typeof(CommandHandlerValidatorDecorator<>),
                     Service.Infrastructure.Constants.Commander,
+                    new ContainerControlledLifetimeManager(),
                     new InjectionMember[]
                     {
-                        new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), _container.CreateChildContainer())
+                        new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), containerToInject)
                     });
 
             }
