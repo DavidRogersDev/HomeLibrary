@@ -9,7 +9,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers.Decorators
         where TQuery : IQuery<TResult>
     {
         private readonly IQueryHandler<TQuery, TResult> _queryHandler;
-        private bool _disposed = false;
+        private bool _disposed;
 
         //[DebuggerStepThrough]
         public QueryHandlerValidatorDecorator(IQueryHandler<TQuery, TResult> queryHandler)

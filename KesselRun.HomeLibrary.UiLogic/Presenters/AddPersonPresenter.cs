@@ -12,6 +12,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
     public class AddPersonPresenter : Presenter<IAddPersonView>, IDisposable
     {
         private readonly ICommandProcessor _commandProcessor;
+        private bool _disposed;
 
         public AddPersonPresenter(IAddPersonView view, ICommandProcessor commandProcessor) : base(view)
         {
@@ -54,8 +55,17 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         public void Dispose()
         {
-            //  to implement
-            ((IDisposable)_commandProcessor).Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                ((IDisposable)_commandProcessor).Dispose();
+                _disposed = true;
+            }
         }
     }
 }

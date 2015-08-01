@@ -1,10 +1,5 @@
 ﻿using KesselRun.HomeLibrary.UiLogic.Views;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WinFormsMvp;
 using WinFormsMvp.Binder;
 
@@ -12,6 +7,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 {
     public class PeoplePresenter : Presenter<IPeopleView>, IDisposable 
     {
+        private bool _disposed;
 
         public PeoplePresenter(IPeopleView view)
             : base(view)
@@ -26,7 +22,16 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         public void Dispose()
         {
-            Debug.WriteLine("HIT");
+            Dispose(true);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                //((IDisposable)_queryProcessor).Dispose();
+                _disposed = true;
+            }
         }
     }
 }

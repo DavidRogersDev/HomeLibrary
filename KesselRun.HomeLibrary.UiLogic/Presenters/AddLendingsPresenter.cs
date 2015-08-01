@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using FluentValidation;
 using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
@@ -17,6 +18,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
     {
         private readonly ICommandProcessor _commandProcessor;
         private readonly IQueryProcessor _queryProcessor;
+        private bool _disposed;
 
         public AddLendingsPresenter(IAddLendingsView view, ICommandProcessor commandProcessor, IQueryProcessor queryProcessor) : base(view)
         {
@@ -80,8 +82,19 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         public void Dispose()
         {
-            //  to implement
-            ((IDisposable)_queryProcessor).Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                ((IDisposable)_queryProcessor).Dispose();
+                ((IDisposable)_commandProcessor).Dispose();
+                _disposed = true;
+            }
+        }
+
     }
 }

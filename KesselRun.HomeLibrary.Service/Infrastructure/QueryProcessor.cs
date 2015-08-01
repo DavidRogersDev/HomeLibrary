@@ -26,6 +26,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
 
         public void Dispose()
         {
+            Trace.TraceInformation("Unity obj in QP " + _container.GetHashCode().ToString());
             Dispose(true);
         }
 

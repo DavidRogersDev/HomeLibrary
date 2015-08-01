@@ -14,6 +14,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
     public class MainPresenter : Presenter<IMainView>, IDisposable
     {
         private IQueryProcessor _queryProcessor;
+        private bool _disposed;
 
         public MainPresenter(IMainView view, IQueryProcessor queryProcessor)
             : base(view)
@@ -76,7 +77,16 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         public void Dispose()
         {
-            //throw new NotImplementedException();
+            Dispose(true);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                ((IDisposable)_queryProcessor).Dispose();
+                _disposed = true;
+            }
         }
     }
 }

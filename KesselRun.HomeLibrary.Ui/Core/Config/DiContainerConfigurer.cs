@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using AutoMapper;
@@ -33,6 +34,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
         public void Configure()
         {
+            Trace.TraceInformation("Root Di :" + _container.GetHashCode());
             PresenterBinder.Factory = new UnityPresenterFactory(_container);
 
             AssemblyScanner.FindValidatorsInAssembly(_serviceAssembly).ForEach(
@@ -129,7 +131,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                     Service.Infrastructure.Constants.Commander,
                     new InjectionMember[]
                     {
-                        new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), _container)
+                        new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), _container.CreateChildContainer())
                     });
 
             }

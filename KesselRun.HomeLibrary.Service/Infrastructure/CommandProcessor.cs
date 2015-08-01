@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Practices.Unity;
 
 namespace KesselRun.HomeLibrary.Service.Infrastructure
@@ -22,6 +23,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
 
         public void Dispose()
         {
+            Trace.TraceInformation("Unity obj in CP " + _container.GetHashCode().ToString());
             Dispose(true);
         }
 

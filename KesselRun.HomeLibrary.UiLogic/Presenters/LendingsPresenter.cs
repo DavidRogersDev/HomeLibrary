@@ -14,6 +14,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
     public class LendingsPresenter : Presenter<ILendingsView>, IDisposable
     {
         private readonly IQueryProcessor _queryProcessor;
+        private bool _disposed;
 
         public LendingsPresenter(ILendingsView view, IQueryProcessor queryProcessor)
             : base(view)
@@ -88,7 +89,16 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         public void Dispose()
         {
-            ((IDisposable)_queryProcessor).Dispose();
+            Dispose(true);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                ((IDisposable)_queryProcessor).Dispose();
+                _disposed = true;
+            }
         }
     }
 }
