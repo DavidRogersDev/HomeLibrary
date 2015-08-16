@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using KesselRun.HomeLibrary.Service.Infrastructure;
-using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel;
 using KesselRun.HomeLibrary.UiModel.ViewModels;
@@ -13,13 +11,11 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 {
     public class MainPresenter : Presenter<IMainView>, IDisposable
     {
-        private IQueryProcessor _queryProcessor;
         private bool _disposed;
 
-        public MainPresenter(IMainView view, IQueryProcessor queryProcessor)
+        public MainPresenter(IMainView view)
             : base(view)
         {
-            _queryProcessor = queryProcessor;
             View.Load += View_Load;
             View.ViewClosing += View_ViewClosing;
             View.CloseControl += ViewCloseControl;
@@ -55,11 +51,12 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
         void ViewCloseControl(object sender, System.EventArgs e)
         {
             View.CloseView();
+            PresenterBinder.Factory.Release(this);
         }
 
         void View_ViewClosing(object sender, System.EventArgs e)
         {
-            PresenterBinder.Factory.Release(this);
+            //PresenterBinder.Factory.Release(this);
         }
 
         void View_Load(object sender, System.EventArgs e)
@@ -84,7 +81,6 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
         {
             if (disposing && !_disposed)
             {
-                ((IDisposable)_queryProcessor).Dispose();
                 _disposed = true;
             }
         }

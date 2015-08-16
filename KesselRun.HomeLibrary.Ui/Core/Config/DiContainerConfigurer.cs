@@ -25,7 +25,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 {
     public class DiContainerConfigurer : IBootstrapper
     {
-        private readonly IUnityContainer _container = new UnityContainer();
+        private static readonly IUnityContainer Container = new UnityContainer();
         private readonly Assembly _serviceAssembly = Assembly.Load("KesselRun.HomeLibrary.Service");
 
         public DiContainerConfigurer()
@@ -35,11 +35,11 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
         public void Configure()
         {
-            Trace.TraceInformation("Root Di :" + _container.GetHashCode());
-            PresenterBinder.Factory = new UnityPresenterFactory(_container);
+            Trace.TraceInformation("Root Di :" + Container.GetHashCode());
+            PresenterBinder.Factory = new UnityPresenterFactory(Container);
 
             AssemblyScanner.FindValidatorsInAssembly(_serviceAssembly).ForEach(
-                    result => _container.RegisterType(result.InterfaceType, result.ValidatorType, new TransientLifetimeManager())
+                    result => Container.RegisterType(result.InterfaceType, result.ValidatorType, new TransientLifetimeManager())
                 );
 
             ManualRegistrations();
@@ -50,23 +50,23 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
         private void ManualRegistrations()
         {
-            //_container.RegisterType<IUnityContainer, UnityContainer>(new TransientLifetimeManager());
-            _container.RegisterType<INavigator, Navigator>(new TransientLifetimeManager());
-            _container.RegisterType<ILendingsConverters, LendingsConverters>(new TransientLifetimeManager());
+            Container.RegisterType<IUnityContainer, UnityContainer>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<INavigator, Navigator>(new TransientLifetimeManager());
+            Container.RegisterType<ILendingsConverters, LendingsConverters>(new TransientLifetimeManager());
 
-            _container.RegisterInstance<IMappingEngine>(AutoMapper.Mapper.Engine)
+            Container.RegisterInstance<IMappingEngine>(AutoMapper.Mapper.Engine)
                 .RegisterType<IUniversalMapper, UniversalMapper>(new TransientLifetimeManager());
 
-            _container.RegisterType<IRepositoryProvider, RepositoryProvider>(
+            Container.RegisterType<IRepositoryProvider, RepositoryProvider>(
                 new TransientLifetimeManager(),
                 new InjectionMember[] { new InjectionConstructor(new RepositoryFactories()) }
                 );
 
-            _container.RegisterType<IDataContextAsync, HomeLibraryContext>(new TransientLifetimeManager());
-            _container.RegisterType<IUnitOfWorkAsync, UnitOfWork>(new TransientLifetimeManager());
+            Container.RegisterType<IDataContextAsync, HomeLibraryContext>(new TransientLifetimeManager());
+            Container.RegisterType<IUnitOfWorkAsync, UnitOfWork>(new TransientLifetimeManager());
 
-            _container.RegisterType<IQueryProcessor, QueryProcessor>(new TransientLifetimeManager(), new InjectionMember[]{ new InjectionConstructor( _container.CreateChildContainer())});
-            _container.RegisterType<ICommandProcessor, CommandProcessor>(new TransientLifetimeManager(), new InjectionMember[] { new InjectionConstructor(_container.CreateChildContainer()) });
+            Container.RegisterType<IQueryProcessor, QueryProcessor>(new TransientLifetimeManager());
+            Container.RegisterType<ICommandProcessor, CommandProcessor>(new TransientLifetimeManager());
             
             RegisterValidators();
 
@@ -74,9 +74,10 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
         private IUnityContainer RegisterValidators()
         {
-            var commandDecoratorContainer = _container.CreateChildContainer();
-            commandDecoratorContainer.RegisterType<IValidator<AddLendingCommand>, AddLendingValidator>(new TransientLifetimeManager());
-            return commandDecoratorContainer;
+            //var commandDecoratorContainer = Container.CreateChildContainer();
+            //commandDecoratorContainer.RegisterType<IValidator<AddLendingCommand>, AddLendingValidator>(new ContainerControlledLifetimeManager());
+            //Container.RegisterType<IValidator<AddLendingCommand>, AddLendingValidator>(new ContainerControlledLifetimeManager());
+            return Container;
         }
 
 
@@ -99,7 +100,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
             foreach (var registration in handlerRegistrations)
             {
-                _container.RegisterType(
+                Container.RegisterType(
                     registration.service,
                     registration.implementation,
                     type.Name + Registration,
@@ -110,14 +111,14 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             {
                 // Decorate each returned IQueryHandler<T> object with an
                 // QueryHandlerValidatorDecorator<T>.
-                _container.RegisterType(
+                Container.RegisterType(
                     type,
                     typeof(QueryHandlerValidatorDecorator<,>),
                     Service.Infrastructure.Constants.Queryor,
                     new ContainerControlledLifetimeManager(),
                     new InjectionMember[] { new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration)) }
                     );
-                _container.RegisterType(
+                Container.RegisterType(
                     type,
                     typeof(QueryHandlerProfilerDecorator<,>),
                     Service.Infrastructure.Constants.QueryProfiler,
@@ -128,17 +129,17 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             }
             else if (type == typeof(ICommandHandler<>))
             {
-                var containerToInject = RegisterValidators();
+                RegisterValidators();
                 // Decorate each returned ICommandHandler<T> object with an
                 // CommandHandlerValidatorDecorator<T>.
-                _container.RegisterType(
+                Container.RegisterType(
                     type,
                     typeof(CommandHandlerValidatorDecorator<>),
                     Service.Infrastructure.Constants.Commander,
                     new ContainerControlledLifetimeManager(),
                     new InjectionMember[]
                     {
-                        new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), containerToInject)
+                        new InjectionConstructor(new ResolvedParameter(type, type.Name + Registration), new ResolvedParameter(typeof(IUnityContainer)))
                     });
 
             }
