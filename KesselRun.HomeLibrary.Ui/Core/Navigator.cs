@@ -142,6 +142,7 @@ namespace KesselRun.HomeLibrary.Ui.Core
             {
                 var controlToDestroy = _controlStacks[containerControl.Name].Pop();
                 ((IClosableView)controlToDestroy).CloseView();
+                controlToDestroy.Dispose();
             }
         }
 

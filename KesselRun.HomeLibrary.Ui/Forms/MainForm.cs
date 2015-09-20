@@ -51,7 +51,7 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             _navigator.ClearNavigationBase(MainContentPanel);
             ViewClosing(this, System.EventArgs.Empty);
             OnFormClosing(new System.Windows.Forms.FormClosingEventArgs(System.Windows.Forms.CloseReason.UserClosing, false));
-            //Close();
+            Close();
         }
 
         public void LogEventToView(LogEvent logEvent)

@@ -29,9 +29,8 @@ namespace KesselRun.HomeLibrary.Mapper.Mappers
             if (!_disposed && disposing)
             {
                 _mappingEngine.Dispose();
+                _disposed = true;
             }
-
-            _disposed = true;
         }
     }
 }

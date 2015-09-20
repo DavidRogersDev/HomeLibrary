@@ -1,17 +1,17 @@
-﻿using System.Diagnostics;
-using Microsoft.Practices.Unity;
-using System;
+﻿using System;
+using Ninject;
 
 namespace KesselRun.HomeLibrary.Service.Infrastructure
 {
     public sealed class QueryProcessor : IQueryProcessor, IDisposable
     {
-        private readonly IUnityContainer _container;
+        private readonly IKernel _kernel;
         private bool _disposed;
+        private dynamic _queryHandler;
 
-        public QueryProcessor(IUnityContainer container)
+        public QueryProcessor(IKernel kernel)
         {
-            _container = container;
+            _kernel = kernel;
         }
 
         //[DebuggerStepThrough]
@@ -19,14 +19,14 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
         {
             var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
 
-            dynamic handler = _container.Resolve(handlerType, Constants.QueryProfiler);
+            _queryHandler = _kernel.Get(handlerType);
 
-            return handler.Handle((dynamic)query);
+            return _queryHandler.Handle((dynamic)query);
         }
 
         public void Dispose()
         {
-            Trace.TraceInformation("Unity obj in QP " + _container.GetHashCode().ToString());
+            //Trace.TraceInformation("Unity obj in QP " + _container.GetHashCode().ToString());
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -35,9 +35,14 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
         {
             if (disposing && !_disposed)
             {
-                _container.Dispose();
+                _queryHandler.Dispose();
                 _disposed = true;
             }            
         }
+    }
+
+    public interface IKernelFactory
+    {
+        IKernel RetrieveKernel();
     }
 }
