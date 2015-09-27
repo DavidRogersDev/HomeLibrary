@@ -34,7 +34,8 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
         {
             if (disposing && !_disposed)
             {
-                _commandHandler.Dispose();
+                if (!ReferenceEquals(_commandHandler, null))
+                    _commandHandler.Dispose();
                 _disposed = true;
             }
         }
