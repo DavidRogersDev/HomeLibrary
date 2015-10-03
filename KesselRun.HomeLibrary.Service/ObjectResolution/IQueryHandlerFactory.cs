@@ -6,4 +6,12 @@ namespace KesselRun.HomeLibrary.Service.ObjectResolution
     {
         dynamic Create(Type type);
     }
+
+    public class QueryHandlerFactory : IQueryHandlerFactory
+    {
+        public dynamic Create(Type type)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

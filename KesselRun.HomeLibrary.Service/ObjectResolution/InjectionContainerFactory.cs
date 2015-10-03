@@ -9,43 +9,43 @@ using Ninject.Modules;
 
 namespace KesselRun.HomeLibrary.Service.ObjectResolution
 {
-    public class InjectionContainerFactory : IDisposable
-    {
-        private IKernel _kernel;
-        private readonly Assembly _serviceAssembly;
-        private bool _disposed;
+    //public class InjectionContainerFactory : IDisposable
+    //{
+    //    private IKernel _kernel;
+    //    private readonly Assembly _serviceAssembly;
+    //    private bool _disposed;
 
-        public InjectionContainerFactory(Assembly serviceAssembly)
-        {
-            _serviceAssembly = serviceAssembly;
-        }
+    //    public InjectionContainerFactory(Assembly serviceAssembly)
+    //    {
+    //        _serviceAssembly = serviceAssembly;
+    //    }
 
-        public IKernel GetKernel()
-        {
-            if (ReferenceEquals(null, _kernel))
-            {
-                INinjectModule module = new ProcessorModule(_serviceAssembly);
-                _kernel = new StandardKernel(module);
-            }
+    //    public IKernel GetKernel()
+    //    {
+    //        if (ReferenceEquals(null, _kernel))
+    //        {
+    //            INinjectModule module = new ProcessorModule(_serviceAssembly);
+    //            _kernel = new StandardKernel(module);
+    //        }
 
-            return _kernel;
-        }
+    //        return _kernel;
+    //    }
 
-        public void Dispose()
-        {
-            //Trace.TraceInformation("Unity obj in QP " + _container.GetHashCode().ToString());
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+    //    public void Dispose()
+    //    {
+    //        //Trace.TraceInformation("Unity obj in QP " + _container.GetHashCode().ToString());
+    //        Dispose(true);
+    //        GC.SuppressFinalize(this);
+    //    }
 
-        private void Dispose(bool disposing)
-        {
-            if (disposing && !_disposed)
-            {
-                _kernel.Dispose();
-                _disposed = true;
-            }
-        }
+    //    private void Dispose(bool disposing)
+    //    {
+    //        if (disposing && !_disposed)
+    //        {
+    //            _kernel.Dispose();
+    //            _disposed = true;
+    //        }
+    //    }
 
-    }
+    //}
 }

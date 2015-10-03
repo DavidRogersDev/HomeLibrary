@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
 using KesselRun.HomeLibrary.Service.Infrastructure;
+using KesselRun.HomeLibrary.Service.ObjectResolution;
 using Ninject;
 
 namespace KesselRun.HomeLibrary.Service.CommandHandlers.Decorators
@@ -9,22 +11,23 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers.Decorators
     public class CommandHandlerValidatorDecorator<TCommand> : ICommandHandler<TCommand>
     {
         private readonly ICommandHandler<TCommand> _commandHandler;
-        private readonly IKernel _container;
+        private readonly IKernel _kernel;
         private bool _disposed = false;
+        private dynamic _validator;
 
-        public CommandHandlerValidatorDecorator(ICommandHandler<TCommand> commandHandler, IKernel container)
+        public CommandHandlerValidatorDecorator(ICommandHandler<TCommand> commandHandler, IKernel kernel)
         {
             _commandHandler = commandHandler;
-            _container = container;
+            _kernel = kernel;
         }
 
 
         public void Handle(TCommand command)
         {
             Type validatorType = typeof(IValidator<>).MakeGenericType(command.GetType());
-            dynamic validator = _container.Get(validatorType);
+            _validator = _kernel.Get(validatorType);
 
-            ValidationResult validateResult = validator.Validate(command);
+            ValidationResult validateResult = _validator.Validate(command);
 
             if (validateResult.IsValid)
             {
@@ -46,8 +49,10 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers.Decorators
         {
             if (!_disposed && disposing)
             {
+                var disposable = _validator as IDisposable;
+                if(!ReferenceEquals(disposable, null))
+                    disposable.Dispose();
                 _commandHandler.Dispose();
-                _container.Dispose();
             }
 
             _disposed = true;

@@ -1,15 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentValidation;
-using KesselRun.HomeLibrary.EF;
 using KesselRun.HomeLibrary.Model;
 using KesselRun.HomeLibrary.Service.Commands;
 using Repository.Pattern.UnitOfWork;
 
 namespace KesselRun.HomeLibrary.Service.Validation
 {
-    public class AddLendingValidator : AbstractValidator<AddLendingCommand>
+    public class AddLendingValidator : AbstractValidator<AddLendingCommand>, IDisposable
     {
         private readonly IUnitOfWorkAsync _unitOfWork;
+        private bool _disposed;
 
         public AddLendingValidator(IUnitOfWorkAsync unitOfWork)
         {
@@ -33,5 +34,20 @@ namespace KesselRun.HomeLibrary.Service.Validation
             return ReferenceEquals(null, loanNotReturned);
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _unitOfWork.Dispose();
+            }
+
+            _disposed = true;
+        }
     }
 }

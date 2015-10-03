@@ -1,17 +1,19 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using KesselRun.HomeLibrary.Service.Commands;
 using Repository.Pattern.UnitOfWork;
 
 namespace KesselRun.HomeLibrary.Service.Validation
 {
     
-    public class AddPersonValidator : AbstractValidator<AddPersonCommand>
+    public class AddPersonValidator : AbstractValidator<AddPersonCommand>, IDisposable
     {
         private readonly IUnitOfWorkAsync _unitOfWork;
+        private bool _disposed;
 
         public AddPersonValidator(IUnitOfWorkAsync unitOfWork)
         {
-            _unitOfWork = unitOfWork;
+            //_unitOfWork = unitOfWork;
 
 
             //RuleFor(c => c.DateDue).NotNull().WithMessage("The Due Date cannot be null.");
@@ -31,5 +33,20 @@ namespace KesselRun.HomeLibrary.Service.Validation
             return true;
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _unitOfWork.Dispose();
+            }
+
+            _disposed = true;
+        }
     }
 }
