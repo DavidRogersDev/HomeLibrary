@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Ninject;
-using Ninject.Modules;
-
-namespace KesselRun.HomeLibrary.Service.ObjectResolution
+﻿namespace KesselRun.HomeLibrary.Service.ObjectResolution
 {
     //public class InjectionContainerFactory : IDisposable
     //{

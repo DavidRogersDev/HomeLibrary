@@ -13,7 +13,7 @@ namespace KesselRun.HomeLibrary.Service.Validation
 
         public AddPersonValidator(IUnitOfWorkAsync unitOfWork)
         {
-            //_unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
 
 
             //RuleFor(c => c.DateDue).NotNull().WithMessage("The Due Date cannot be null.");

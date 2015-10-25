@@ -7,7 +7,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
     {
         private IKernel _kernel;
 
-        public IKernel GetKernel()
+        public IKernel CreateKernel()
         {
             if (ReferenceEquals(null, _kernel))
             {

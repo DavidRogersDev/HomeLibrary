@@ -1,4 +1,6 @@
-﻿using KesselRun.HomeLibrary.Ui.Messaging;
+﻿using System.Linq;
+using System.Windows.Forms;
+using KesselRun.HomeLibrary.Ui.Messaging;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel;
@@ -18,16 +20,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         {
             InitializeComponent();
 
-            PresenterBinder.MessageBus.Register(this, MessageIds.GetFilterParametersRequest,
-                new Action<GenericMessage<SearchLendingsViewModel>>((m) =>
-                {
-                    m.Content.Filter = txtSearchFilter.Text.Trim();
-                    m.Content.FilterBy = GetFilterByParameter();
-                    m.Content.Operation = string.Empty;
-
-                    PresenterBinder.MessageBus.Send(new GenericMessage<SearchLendingsViewModel>(m.Content), MessageIds.GetFilterParametersResponse);
-                }));
-
+            PresenterBinder.MessageBus.Register(this, MessageIds.GetFilterParametersRequest, new Action<GenericMessage<SearchLendingsViewModel>>(GetFilterCriteria));
         }
 
         #region ISearchLendingsView Members
@@ -42,31 +35,11 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
         private void btnExecuteSearch_Click(object sender, System.EventArgs e)
         {
-            var filterBy = GetFilterByParameter();
+            SearchLendingsViewModel = new SearchLendingsViewModel();
 
-            SearchLendingsViewModel = new SearchLendingsViewModel
-            {
-                Filter = txtSearchFilter.Text.Trim(),
-                FilterBy = filterBy,
-                Operation = string.Empty
-            };
+            GetFiltersFromControls(SearchLendingsViewModel);
 
             PresenterBinder.MessageBus.Send(new GenericMessage<SearchLendingsViewModel>(SearchLendingsViewModel), MessageIds.SearchLendingsMessage);
-        }
-
-        private string GetFilterByParameter()
-        {
-            string filterBy = string.Empty;
-
-            if (radByBorrower.Checked)
-            {
-                filterBy = "Borrower.FirstName";
-            }
-            else
-            {
-                filterBy = "Book.Title";
-            }
-            return filterBy;
         }
 
         public void CloseView()
@@ -77,6 +50,29 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public void LogEventToView(LogEvent logEvent)
         {
             throw new NotImplementedException();
+        }
+
+        private void GetFilterCriteria(GenericMessage<SearchLendingsViewModel> message)
+        {
+            GetFiltersFromControls(message.Content);
+
+            PresenterBinder.MessageBus.Send(new GenericMessage<SearchLendingsViewModel>(message.Content), MessageIds.GetFilterParametersResponse);
+        }
+
+        private void GetFiltersFromControls(SearchLendingsViewModel viewModel)
+        {
+            grpSearchGroup.Controls.OfType<CheckBox>().ToList().ForEach(
+                chk =>
+                {
+                    if (chk.Checked)
+                    {
+                        viewModel.FilterMetaDataList.Add(new FilterMetaData
+                        {
+                            FilterBy = chk.Tag.ToString(),
+                            FilterValue = txtSearchFilter.Text.Trim()
+                        });
+                    }
+                });
         }
 
         /// <summary> 

@@ -1,20 +1,27 @@
 ﻿
+using System.Collections.Generic;
 using System.ComponentModel;
+using KesselRun.HomeLibrary.UiModel.ViewModels;
 
 namespace KesselRun.HomeLibrary.UiLogic.EventArgs
 {
     public class SearchLendingsEventArgs : LendingsViewEventArgs
     {
-        public readonly string Filter;
-        public readonly string FilterBy;
+        public readonly IList<FilterMetaData> FilterMetaDataList;
         public readonly string FilterOperator;
         public readonly int SelectedLendingId;
 
-        public SearchLendingsEventArgs(string filter, string filterBy, string filterOperator, int pageSize, int pageIndex, string sortBy, ListSortDirection sortDirection, int selectedLendingId) 
+        public SearchLendingsEventArgs(
+            IList<FilterMetaData> filterMetaDataList, 
+            string filterOperator, 
+            int pageSize, 
+            int pageIndex, 
+            string sortBy, 
+            ListSortDirection sortDirection, 
+            int selectedLendingId) 
             : base(pageSize, pageIndex, sortBy, sortDirection)
         {
-            Filter = filter;
-            FilterBy = filterBy;
+            FilterMetaDataList = filterMetaDataList;
             FilterOperator = filterOperator;
             SelectedLendingId = selectedLendingId;
         }

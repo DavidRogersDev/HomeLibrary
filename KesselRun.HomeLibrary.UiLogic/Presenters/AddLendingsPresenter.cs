@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using FluentValidation;
 using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
@@ -32,7 +31,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         void View_Load(object sender, System.EventArgs e)
         {
-            var getPeopleSortedQuery = new GetPeopleSortedQuery {SortBy = "id"};
+            var getPeopleSortedQuery = new GetPeopleSortedQuery {SortBy = "Id"};
             var getBooksSorted = new GetBooksSorted {SortBy = "id"};
 
             var addLendingViewModel = new AddLendingViewModel

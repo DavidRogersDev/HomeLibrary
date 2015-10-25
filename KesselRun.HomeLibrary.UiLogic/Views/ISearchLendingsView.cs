@@ -1,5 +1,4 @@
-﻿using KesselRun.HomeLibrary.UiLogic.EventArgs;
-using System;
+﻿using System;
 using KesselRun.HomeLibrary.UiModel.ViewModels;
 
 namespace KesselRun.HomeLibrary.UiLogic.Views

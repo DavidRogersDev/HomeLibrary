@@ -124,7 +124,34 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
             MemberExpression memberExpression,
             ListSortDirection listSortDirection)
         {
-            var lambda = Expression.Lambda<Func<T, object>>(memberExpression, parameterExpression);
+            if (memberExpression.Type.IsValueType)
+            {
+                if(memberExpression.Type == typeof(int))
+                {
+                    return IntSortFunc<T>(memberExpression, parameterExpression, listSortDirection);
+                }
+                if(memberExpression.Type == typeof(DateTime))
+                {
+                    return DateSortFunc<T>(memberExpression, parameterExpression, listSortDirection);
+                }
+            }
+
+            return ObjectSortFunc<T>(parameterExpression, memberExpression, listSortDirection);
+        }
+
+
+        private static BinaryExpression GetExpression<T>
+            (ParameterExpression param, Filter filter1, Filter filter2)
+        {
+            Expression bin1 = GetExpression<T>(param, filter1);
+            Expression bin2 = GetExpression<T>(param, filter2);
+
+            return Expression.AndAlso(bin1, bin2);
+        }
+
+        private static Func<IQueryable<T>, IOrderedQueryable<T>> DateSortFunc<T>(MemberExpression memberExpression, ParameterExpression parameterExpression, ListSortDirection listSortDirection)
+        {
+            var lambda = Expression.Lambda<Func<T, DateTime>>(memberExpression, parameterExpression);
 
             switch (listSortDirection)
             {
@@ -137,13 +164,37 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
             }
         }
 
-        private static BinaryExpression GetExpression<T>
-            (ParameterExpression param, Filter filter1, Filter filter2)
+        private static Func<IQueryable<T>, IOrderedQueryable<T>> IntSortFunc<T>(MemberExpression memberExpression, ParameterExpression parameterExpression, ListSortDirection listSortDirection)
         {
-            Expression bin1 = GetExpression<T>(param, filter1);
-            Expression bin2 = GetExpression<T>(param, filter2);
+            var lambda = Expression.Lambda<Func<T, int>>(memberExpression, parameterExpression);
 
-            return Expression.AndAlso(bin1, bin2);
+            switch (listSortDirection)
+            {
+                case ListSortDirection.Ascending:
+                    return l => l.OrderBy(lambda);
+                case ListSortDirection.Descending:
+                    return l => l.OrderByDescending(lambda);
+                default:
+                    throw new NotSupportedException(string.Format("{0} is not a suppoted ListSortDirection", listSortDirection));
+            }
+        }
+
+        private static Func<IQueryable<T>, IOrderedQueryable<T>> ObjectSortFunc<T>(
+            ParameterExpression parameterExpression,
+            MemberExpression memberExpression,
+            ListSortDirection listSortDirection)
+        {
+            var lambda = Expression.Lambda<Func<T, object>>(memberExpression, parameterExpression);
+
+            switch (listSortDirection)
+            {
+                case ListSortDirection.Ascending:
+                    return l => l.OrderBy(lambda);
+                case ListSortDirection.Descending:
+                    return l => l.OrderByDescending(lambda);
+                default:
+                    throw new NotSupportedException(string.Format("{0} is not a suppoted ListSortDirection", listSortDirection));
+            }
         }
     }
 

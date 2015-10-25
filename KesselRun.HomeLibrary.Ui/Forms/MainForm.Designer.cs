@@ -1,6 +1,4 @@
-﻿using KesselRun.HomeLibrary.UiModel.ViewModels;
-
-namespace KesselRun.HomeLibrary.Ui.Forms
+﻿namespace KesselRun.HomeLibrary.Ui.Forms
 {
     partial class MainForm
     {

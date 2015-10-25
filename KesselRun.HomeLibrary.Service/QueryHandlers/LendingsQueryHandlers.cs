@@ -1,4 +1,5 @@
-﻿using KesselRun.HomeLibrary.Mapper.Mappers;
+﻿using Castle.Core.Internal;
+using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiModel;
@@ -32,7 +33,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             var lendingsViewModel = new LendingsViewModel {PagerData = new PagerData()};
             IList<Lending> lendings = new List<Lending>();
             Expression<Func<Model.Lending, bool>> filterFunc = GetFilterFunc(query);
-            Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> orderByFunc = GetOrderByFunc<Model.Lending>(query);
+            Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> orderByFunc =     GetOrderByFunc<Model.Lending>(query);
             var lendsingsRepository = _unitOfWork.Repository<Model.Lending>();
 
             int totalSize = lendsingsRepository.Query().Select().Count();
@@ -79,15 +80,10 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
 
         private Expression<Func<Model.Lending, bool>> GetFilterFunc(GetLendingsPagedSortedQuery query)
         {
-            if (string.IsNullOrEmpty(query.Filter))
+            if (!query.Filters.Any())
                 return null;
-
-            var filters = new List<Filter>
-            {
-                new Filter {Operation = Op.Contains, PropertyName = query.FilterBy, Value = query.Filter}
-            };
-
-            return ExpressionBuilder.GetExpression<Model.Lending>(filters);
+            
+            return ExpressionBuilder.GetExpression<Model.Lending>(query.Filters);
         }
 
         private Func<IQueryable<T>, IOrderedQueryable<T>> GetOrderByFunc<T>(

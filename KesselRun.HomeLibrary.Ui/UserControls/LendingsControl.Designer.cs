@@ -1,6 +1,4 @@
-﻿using KesselRun.HomeLibrary.Ui.CustomControls.EventArgs;
-
-namespace KesselRun.HomeLibrary.Ui.UserControls
+﻿namespace KesselRun.HomeLibrary.Ui.UserControls
 {
     partial class LendingsControl
     {

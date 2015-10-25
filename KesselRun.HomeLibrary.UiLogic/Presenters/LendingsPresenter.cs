@@ -1,4 +1,5 @@
-﻿using KesselRun.HomeLibrary.Service.Infrastructure;
+﻿using System.Collections.Generic;
+using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Views;
@@ -30,17 +31,28 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         private void View_ReloadView(object sender, SearchLendingsEventArgs lendingsViewEventArgs)
         {
+            IList<Filter> filters = new List<Filter>(lendingsViewEventArgs.FilterMetaDataList.Count);
+
+            foreach (var filterMetaData in lendingsViewEventArgs.FilterMetaDataList)
+            {
+                filters.Add(new Filter
+                {
+                    PropertyName = filterMetaData.FilterBy,
+                    Operation = Op.Contains,
+                    Value = filterMetaData.FilterValue
+                });
+            }
+
             var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery
             {
-                Filter = lendingsViewEventArgs.Filter,
-                FilterBy = lendingsViewEventArgs.FilterBy,
-                FilterOperation = lendingsViewEventArgs.FilterOperator,
+                Filters = filters,
                 OrderByDirection = lendingsViewEventArgs.SortDirection,
                 PageIndex = lendingsViewEventArgs.PageIndex,
                 PageSize = lendingsViewEventArgs.PageSize,
                 SortBy = lendingsViewEventArgs.SortBy,
                 SelectedLendingId = lendingsViewEventArgs.SelectedLendingId
             };
+
             LoadLendings(getLendingsPagedSortedQuery);
         }
 
@@ -64,7 +76,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
         {
             try
             {
-                Lending selectedGridLending = default(Lending);
+                 Lending selectedGridLending = default(Lending);
 
                 //var selectedLendingId = getLendingsPagedSortedQuery.SelectedLendingId;
 

@@ -1,4 +1,6 @@
-﻿using KesselRun.HomeLibrary.Mapper.Mappers;
+﻿using System.ComponentModel;
+using System.Linq.Expressions;
+using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiModel.Models;
@@ -21,17 +23,28 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             _mapper = mapper;
         }
 
+        private Func<IQueryable<T>, IOrderedQueryable<T>> GetOrderByFunc<T>(GetPeopleSortedQuery query)
+        {
+            ParameterExpression param = Expression.Parameter(typeof(T), "t");
+
+            var memberExpression = ExpressionBuilder.GetMember(param, query.SortBy);
+
+            return ExpressionBuilder.GetExpressionSortFunc<T>(param, memberExpression, query.OrderByDirection);
+        }
+
         public IList<Person> Handle(GetPeopleSortedQuery query)
         {
             IList<Person> people = new List<Person>();
+            query.OrderByDirection = ListSortDirection.Descending;
+            var oi = GetOrderByFunc<Model.Person>(query);
 
-            foreach (var person in _unitOfWork.Repository<Model.Person>().Query().Select())
+            foreach (var person in _unitOfWork.Repository<Model.Person>().Query().OrderBy(oi).Select())
             {
                 var uiPerson = new Person();
                 people.Add(_mapper.Map(person, uiPerson));
             }
 
-            return people.OrderBy(o => o.Id).ToList();
+            return people;
         }
 
         public void Dispose()

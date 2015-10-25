@@ -1,17 +1,3 @@
-using System;
-using System.Linq;
-using System.Reflection;
-using AutoMapper;
-using KesselRun.HomeLibrary.EF.Db;
-using KesselRun.HomeLibrary.Mapper.Mappers;
-using KesselRun.HomeLibrary.Service.Infrastructure;
-using Ninject;
-using Ninject.Modules;
-using Repository.Pattern.DataContext;
-using Repository.Pattern.Ef6;
-using Repository.Pattern.Ef6.Factories;
-using Repository.Pattern.UnitOfWork;
-
 namespace KesselRun.HomeLibrary.Service.ObjectResolution
 {
     //public class ProcessorModule : INinjectModule

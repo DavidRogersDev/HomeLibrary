@@ -72,9 +72,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 		{
 			var searchLendingsViewModel = new SearchLendingsViewModel
 			{
-				Filter = string.Empty,
-				FilterBy = string.Empty,
-				Operation = string.Empty,
 				SelectedGridLendingId = selectedGridLendingId
 			};
 
@@ -125,15 +122,17 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 	                return "Borrower.Email";
                 case "Title":
 	                return "Book.Title";
+                case "DateLent":
+                    return "DateLent";
+                default:
+                    throw new NotImplementedException("Column not added yet. WIP.");
 	        }
-            return null;
 	    }
 
 		private void GetResultSetWithNewSearchParameters(GenericMessage<SearchLendingsViewModel> message)
 		{
 			ReloadView(this, new SearchLendingsEventArgs(
-				message.Content.Filter,
-				message.Content.FilterBy,
+				message.Content.FilterMetaDataList,
 				message.Content.Operation,
 				dgvPager.PageSize,
 				dgvPager.PageIndex,

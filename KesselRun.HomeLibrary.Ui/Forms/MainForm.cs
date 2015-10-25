@@ -1,15 +1,11 @@
 ﻿using System;
 using KesselRun.HomeLibrary.Ui.Core;
-using KesselRun.HomeLibrary.UiLogic;
-using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using KesselRun.HomeLibrary.UiModel;
 using KesselRun.HomeLibrary.UiModel.ViewModels;
 using WinFormsMvp;
-using WinFormsMvp.Binder;
 using WinFormsMvp.Forms;
-using WinFormsMvp.Messaging;
 
 namespace KesselRun.HomeLibrary.Ui.Forms
 {

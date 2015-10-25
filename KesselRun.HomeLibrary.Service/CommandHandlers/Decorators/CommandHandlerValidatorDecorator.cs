@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
 using KesselRun.HomeLibrary.Service.Infrastructure;
-using KesselRun.HomeLibrary.Service.ObjectResolution;
 using Ninject;
 
 namespace KesselRun.HomeLibrary.Service.CommandHandlers.Decorators
