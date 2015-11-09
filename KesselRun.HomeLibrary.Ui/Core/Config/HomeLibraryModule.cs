@@ -7,6 +7,7 @@ using KesselRun.HomeLibrary.Service.CommandHandlers.Decorators;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.QueryHandlers.Decorators;
 using Ninject;
+using Ninject.Extensions.Interception.Infrastructure.Language;
 using Ninject.Modules;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
@@ -47,7 +48,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
         {
             //Kernel.Bind<INavigator, Navigator>().;
             //Kernel.Bind<ILendingsConverters>().To <LendingsConverters>();
-
+            
             kernel.Bind<StandardKernel>().ToSelf().InSingletonScope();
             kernel.Bind<RepositoryFactories>().ToSelf().InTransientScope();
 
@@ -56,13 +57,16 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             kernel.Bind<IUniversalMapper>().To<UniversalMapper>().InTransientScope();
             kernel.Bind<IRepositoryProvider>().To<RepositoryProvider>().InTransientScope();
 
-            kernel.Bind<IDataContextAsync>().To<HomeLibraryContext>().InTransientScope();
-            kernel.Bind<IUnitOfWorkAsync>().To<UnitOfWork>().InTransientScope();
+            kernel.Bind<IDataContextAsync>().To<HomeLibraryContext>().InSingletonScope();
+            kernel.Bind<IUnitOfWorkAsync>().To<UnitOfWork>().InSingletonScope();
+
+            kernel.Bind<TransactionAspectInterceptor>().ToSelf();
+
 
             //kernel.Bind<IQueryHandlerFactory>().ToFactory();
 
-            kernel.Bind<IQueryProcessor>().To<QueryProcessor>().InTransientScope();
-            kernel.Bind<ICommandProcessor>().To<CommandProcessor>().InTransientScope();
+            kernel.Bind<IQueryProcessor>().To<QueryProcessor>().InSingletonScope();
+            kernel.Bind<ICommandProcessor>().To<CommandProcessor>().InSingletonScope();
         }
 
 

@@ -24,15 +24,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
 
         public IList<Book> Handle(GetBooksSorted query)
         {
-            IList<Book> books = new List<Book>();
-
-            foreach (var book in _unitOfWork.Repository<Model.Book>().Query().Select().ToList())
-            {
-                var uiBook = new Book();
-                books.Add(_mapper.Map(book, uiBook));
-            }
-
-            return books;
+            return (from book in _unitOfWork.Repository<Model.Book>().Query().Select().ToList() let uiBook = new Book() select _mapper.Map(book, uiBook)).ToList();
         }
 
         public void Dispose()
@@ -45,7 +37,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         {
             if (!_disposed && disposing)
             {
-                _unitOfWork.Dispose();
+                //_unitOfWork.Dispose();
                 _mapper.Dispose();
             }
 

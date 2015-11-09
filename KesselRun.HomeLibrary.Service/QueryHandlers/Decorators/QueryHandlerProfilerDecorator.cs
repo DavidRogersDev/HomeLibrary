@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 
 namespace KesselRun.HomeLibrary.Service.QueryHandlers.Decorators
@@ -9,6 +10,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers.Decorators
     {
         private readonly IQueryHandler<TQuery, TResult> _queryHandler;
         private bool _disposed;
+        private Stopwatch _watch = new Stopwatch();
 
         //[DebuggerStepThrough]
         public QueryHandlerProfilerDecorator(IQueryHandler<TQuery, TResult> queryHandler)
@@ -24,7 +26,17 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers.Decorators
             try
             {
                 // do something
-                return _queryHandler.Handle(query);
+                _watch.Start();
+                var result = _queryHandler.Handle(query);
+                _watch.Stop();
+
+                var elapsedTime = _watch.Elapsed;
+
+                // do something with timespan then reset watch
+
+                _watch.Reset();
+
+                return result;
             }
             //catch (ValidationException validationException)
             //{

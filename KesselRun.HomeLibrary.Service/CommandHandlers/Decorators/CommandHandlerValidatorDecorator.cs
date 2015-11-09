@@ -18,8 +18,7 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers.Decorators
             _commandHandler = commandHandler;
             _kernel = kernel;
         }
-
-
+        
         public void Handle(TCommand command)
         {
             Type validatorType = typeof(IValidator<>).MakeGenericType(command.GetType());

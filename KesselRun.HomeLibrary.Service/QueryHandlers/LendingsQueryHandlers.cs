@@ -33,28 +33,12 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             var lendingsViewModel = new LendingsViewModel {PagerData = new PagerData()};
             IList<Lending> lendings = new List<Lending>();
             Expression<Func<Model.Lending, bool>> filterFunc = GetFilterFunc(query);
-            Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> orderByFunc =     GetOrderByFunc<Model.Lending>(query);
+            Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> orderByFunc = GetOrderByFunc<Model.Lending>(query);
             var lendsingsRepository = _unitOfWork.Repository<Model.Lending>();
 
             int totalSize = lendsingsRepository.Query().Select().Count();
 
-            var pageCount = totalSize/query.PageSize;
-            var remainder = totalSize%query.PageSize;
-
-            if (query.PageIndex > pageCount)
-            {
-                if (remainder > 0)
-                {
-                    if (remainder <= totalSize)
-                    {
-                        query.PageIndex = ++pageCount;
-                    }
-                }
-                else if (remainder == 0)
-                {
-                    query.PageIndex = pageCount;
-                }
-            }
+            PagerHelper.ProcessPagingData(query, lendingsViewModel.PagerData, totalSize);
 
             foreach (var lending in _unitOfWork.Repository<Model.Lending>().Query(filterFunc)
                 .Include(l => l.Borrower)
@@ -67,14 +51,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             }
 
             lendingsViewModel.Lendings = new BindingList<Lending>(lendings);
-
-            if (query.PageSize == 1 || remainder == 0)
-                lendingsViewModel.PagerData.NumberOfPages = totalSize/query.PageSize;
-            else
-                lendingsViewModel.PagerData.NumberOfPages = (totalSize/query.PageSize) + 1;
-
-            PopulateOtherPagerInfo(query, lendingsViewModel);
-
+            
             return lendingsViewModel;
         }
 
@@ -124,15 +101,6 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         //    return null;
         //}
 
-        private static void PopulateOtherPagerInfo(GetLendingsPagedSortedQuery query,
-            LendingsViewModel lendingsViewModel)
-        {
-            lendingsViewModel.PagerData.PageNumber = query.PageIndex;
-            lendingsViewModel.PagerData.PageSize = query.PageSize;
-            lendingsViewModel.PagerData.SortByField = query.SortBy;
-            lendingsViewModel.PagerData.SortOrder = query.OrderByDirection;
-        }
-
         public Lending Handle(GetLendingByPkQuery queryObject)
         {
             var uiLending = new Lending();
@@ -149,7 +117,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         {
             if (!_disposed && disposing)
             {
-                _unitOfWork.Dispose();
+                //_unitOfWork.Dispose();
                 _mapper.Dispose();
             }
 

@@ -2,6 +2,7 @@
 using KesselRun.HomeLibrary.Model;
 using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
+using KesselRun.HomeLibrary.Service.ObjectResolution;
 using Repository.Pattern.UnitOfWork;
 
 namespace KesselRun.HomeLibrary.Service.CommandHandlers
@@ -16,7 +17,8 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
             _unitOfWork = unitOfWork;
         }
 
-        public void Handle(AddPersonCommand command)
+        [TransactionAspect]
+        public virtual void Handle(AddPersonCommand command)
         {
             _unitOfWork.Repository<Person>().Insert(new Person
             {
@@ -27,7 +29,7 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
                 Sobriquet = command.Sobriquet,
             });
 
-            _unitOfWork.SaveChanges();
+            //_unitOfWork.SaveChanges();
         }
 
         public void Dispose()
@@ -40,7 +42,7 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
         {
             if (!_disposed && disposing)
             {
-                _unitOfWork.Dispose();
+                //_unitOfWork.Dispose();
             }
 
             _disposed = true;

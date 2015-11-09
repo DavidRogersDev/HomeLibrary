@@ -43,7 +43,7 @@ namespace KesselRun.HomeLibrary.Service.Validation
         {
             if (!_disposed && disposing)
             {
-                _unitOfWork.Dispose();
+                //_unitOfWork.Dispose();
             }
 
             _disposed = true;

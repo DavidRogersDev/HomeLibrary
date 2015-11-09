@@ -55,6 +55,7 @@
     <Compile Include="ViewModels\AddLendingViewModel.cs" />
     <Compile Include="ViewModels\LendingsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\PeopleViewModel.cs" />
     <Compile Include="ViewModels\SearchLendingsViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

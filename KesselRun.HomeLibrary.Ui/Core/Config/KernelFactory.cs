@@ -1,4 +1,5 @@
 ﻿using Ninject;
+using Ninject.Extensions.Interception;
 using Ninject.Modules;
 
 namespace KesselRun.HomeLibrary.Ui.Core.Config
@@ -12,7 +13,8 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             if (ReferenceEquals(null, _kernel))
             {
                 INinjectModule module = new HomeLibraryModule();
-                _kernel = new StandardKernel(module);
+
+                _kernel = new StandardKernel(new NinjectSettings() { LoadExtensions = false }, new DynamicProxyModule(), module);
             }
 
             return _kernel;

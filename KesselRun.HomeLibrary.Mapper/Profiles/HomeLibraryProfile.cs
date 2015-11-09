@@ -7,9 +7,10 @@ namespace KesselRun.HomeLibrary.Mapper.Profiles
     {
         const string HomeLibraryProfileName = "HomeLibraryProfile";
 
-        public override string ProfileName
+        public HomeLibraryProfile()
+            : base(HomeLibraryProfileName)
         {
-            get { return HomeLibraryProfileName; }
+            
         }
 
         protected override void Configure()
