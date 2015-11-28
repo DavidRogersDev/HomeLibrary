@@ -3,6 +3,7 @@ using KesselRun.HomeLibrary.Model;
 using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.ObjectResolution;
+using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
 
 namespace KesselRun.HomeLibrary.Service.CommandHandlers
@@ -20,14 +21,17 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
         [TransactionAspect]
         public virtual void Handle(AddPersonCommand command)
         {
-            _unitOfWork.Repository<Person>().Insert(new Person
+            var newPerson = new Person
             {
                 Email = command.Email,
                 FirstName = command.FirstName,
                 LastName = command.LastName,
                 IsAuthor = command.IsAuthor,
                 Sobriquet = command.Sobriquet,
-            });
+                ObjectState = ObjectState.Added
+            };
+
+            _unitOfWork.Repository<Person>().InsertGraph(newPerson);
 
             //_unitOfWork.SaveChanges();
         }

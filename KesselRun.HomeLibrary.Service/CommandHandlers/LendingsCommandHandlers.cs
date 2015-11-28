@@ -2,6 +2,8 @@
 using KesselRun.HomeLibrary.Model;
 using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
+using KesselRun.HomeLibrary.Service.ObjectResolution;
+using Repository.Pattern.Infrastructure;
 using Repository.Pattern.UnitOfWork;
 
 namespace KesselRun.HomeLibrary.Service.CommandHandlers
@@ -16,15 +18,19 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
             _unitOfWork = unitOfWork;
         }
 
+        [TransactionAspect]
         public void Handle(AddLendingCommand command)
         {
-            _unitOfWork.Repository<Model.Lending>().Insert(new Lending
+            var newLending = new Lending
             {
                 BookId = command.BookId,
                 BorrowerId = command.BorrowerId,
                 DateLent = command.DateLent,
                 DueDate = command.DateDue,
-            });
+                ObjectState = ObjectState.Added
+            };
+
+            _unitOfWork.Repository<Lending>().InsertGraph(newLending);
 
             _unitOfWork.SaveChanges();
         }

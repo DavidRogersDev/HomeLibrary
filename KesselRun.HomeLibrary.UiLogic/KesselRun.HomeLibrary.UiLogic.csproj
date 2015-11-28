@@ -57,8 +57,10 @@
     <Compile Include="Enums\FilterType.cs" />
     <Compile Include="EventArgs\AddLendingEventArgs.cs" />
     <Compile Include="EventArgs\AddPersonEventArgs.cs" />
-    <Compile Include="EventArgs\LendingsViewEventArgs.cs" />
-    <Compile Include="EventArgs\SearchLendingsEventArgs.cs" />
+    <Compile Include="EventArgs\GridSearchEventArgs.cs" />
+    <Compile Include="EventArgs\PagingViewEventArgs.cs" />
+    <Compile Include="EventArgs\SearchPagingEventArgs.cs" />
+    <Compile Include="EventArgs\SearchPeopleEventArgs.cs" />
     <Compile Include="Presenters\AddLendingsPresenter.cs" />
     <Compile Include="Presenters\AddPersonPresenter.cs" />
     <Compile Include="Presenters\LendingsPresenter.cs" />

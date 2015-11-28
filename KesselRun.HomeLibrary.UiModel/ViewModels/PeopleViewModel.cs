@@ -7,6 +7,5 @@ namespace KesselRun.HomeLibrary.UiModel.ViewModels
     {
         public BindingList<Person> People { get; set; }
         public PagerData PagerData { get; set; }
-
     }
 }

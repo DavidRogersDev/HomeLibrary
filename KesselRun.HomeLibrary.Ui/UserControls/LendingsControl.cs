@@ -131,7 +131,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
 		private void GetResultSetWithNewSearchParameters(GenericMessage<SearchLendingsViewModel> message)
 		{
-			ReloadView(this, new SearchLendingsEventArgs(
+            ReloadView(this, new SearchLendingsEventArgs(
 				message.Content.FilterMetaDataList,
 				message.Content.Operation,
 				dgvPager.PageSize,

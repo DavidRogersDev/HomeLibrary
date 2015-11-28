@@ -53,10 +53,13 @@
     <Compile Include="PagerData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AddLendingViewModel.cs" />
+    <Compile Include="FilterMetaData.cs" />
     <Compile Include="ViewModels\LendingsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PeopleViewModel.cs" />
     <Compile Include="ViewModels\SearchLendingsViewModel.cs" />
+    <Compile Include="ViewModels\SearchPeopleViewModel.cs" />
+    <Compile Include="ViewModels\SearchViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,14 +1,11 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using KesselRun.HomeLibrary.UiModel.ViewModels;
+using KesselRun.HomeLibrary.UiModel;
 
 namespace KesselRun.HomeLibrary.UiLogic.EventArgs
 {
-    public class SearchLendingsEventArgs : LendingsViewEventArgs
+    public class SearchLendingsEventArgs : GridSearchEventArgs 
     {
-        public readonly IList<FilterMetaData> FilterMetaDataList;
-        public readonly string FilterOperator;
         public readonly int SelectedLendingId;
 
         public SearchLendingsEventArgs(
@@ -19,10 +16,8 @@ namespace KesselRun.HomeLibrary.UiLogic.EventArgs
             string sortBy, 
             ListSortDirection sortDirection, 
             int selectedLendingId) 
-            : base(pageSize, pageIndex, sortBy, sortDirection)
+            : base(filterMetaDataList, filterOperator, pageSize, pageIndex, sortBy, sortDirection)
         {
-            FilterMetaDataList = filterMetaDataList;
-            FilterOperator = filterOperator;
             SelectedLendingId = selectedLendingId;
         }
     }

@@ -33,7 +33,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             View.ShowChildView(typeof(IPeopleView));
         }
 
-        //void View_SearchLendings(object sender, EventArgs.SearchLendingsEventArgs e)
+        //void View_SearchLendings(object sender, EventArgs.SearchPagingEventArgs e)
         //{
         //    var query = new GetLendingsPagedSortedQuery
         //    {

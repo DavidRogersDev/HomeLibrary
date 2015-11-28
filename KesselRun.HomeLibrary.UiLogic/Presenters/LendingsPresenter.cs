@@ -29,11 +29,11 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
         }
 
 
-        private void View_ReloadView(object sender, SearchLendingsEventArgs lendingsViewEventArgs)
+        private void View_ReloadView(object sender, SearchLendingsEventArgs pagingViewEventArgs)
         {
-            IList<Filter> filters = new List<Filter>(lendingsViewEventArgs.FilterMetaDataList.Count);
+            IList<Filter> filters = new List<Filter>(pagingViewEventArgs.FilterMetaDataList.Count);
 
-            foreach (var filterMetaData in lendingsViewEventArgs.FilterMetaDataList)
+            foreach (var filterMetaData in pagingViewEventArgs.FilterMetaDataList)
             {
                 filters.Add(new Filter
                 {
@@ -46,11 +46,11 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             var getLendingsPagedSortedQuery = new GetLendingsPagedSortedQuery
             {
                 Filters = filters,
-                OrderByDirection = lendingsViewEventArgs.SortDirection,
-                PageIndex = lendingsViewEventArgs.PageIndex,
-                PageSize = lendingsViewEventArgs.PageSize,
-                SortBy = lendingsViewEventArgs.SortBy,
-                SelectedLendingId = lendingsViewEventArgs.SelectedLendingId
+                OrderByDirection = pagingViewEventArgs.SortDirection,
+                PageIndex = pagingViewEventArgs.PageIndex,
+                PageSize = pagingViewEventArgs.PageSize,
+                SortBy = pagingViewEventArgs.SortBy,
+                SelectedLendingId = pagingViewEventArgs.SelectedLendingId
             };
 
             LoadLendings(getLendingsPagedSortedQuery);
