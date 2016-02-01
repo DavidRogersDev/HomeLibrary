@@ -32,7 +32,7 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
 
             _unitOfWork.Repository<Lending>().InsertGraph(newLending);
 
-            _unitOfWork.SaveChanges();
+            //_unitOfWork.SaveChanges();
         }
 
         public void Dispose()

@@ -1,4 +1,5 @@
-﻿using KesselRun.HomeLibrary.Mapper.Mappers;
+﻿using System.Diagnostics;
+using KesselRun.HomeLibrary.Mapper.Mappers;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiModel.Models;
@@ -24,7 +25,13 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
 
         public IList<Book> Handle(GetBooksSorted query)
         {
-            return (from book in _unitOfWork.Repository<Model.Book>().Query().Select().ToList() let uiBook = new Book() select _mapper.Map(book, uiBook)).ToList();
+            return (from book in _unitOfWork.Repository<Model.Book>()
+                        .Query()
+                        //.Include(b => b.Authors)
+                        //.Include(b => b.Lendings)
+                        .Select()
+                    let uiBook = new Book()
+                    select _mapper.Map(book, uiBook)).ToList();
         }
 
         public void Dispose()
