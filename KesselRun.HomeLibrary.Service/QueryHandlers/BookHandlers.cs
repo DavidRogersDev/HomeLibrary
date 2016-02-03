@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using KesselRun.HomeLibrary.Mapper.Mappers;
+﻿using AutoMapper;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiModel.Models;
@@ -13,10 +12,10 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
     public class BookHandlers : IQueryHandler<GetBooksSorted, IList<Book>>
     {
         private readonly IUnitOfWorkAsync _unitOfWork;
-        private readonly IUniversalMapper _mapper;
+        private readonly IMapper _mapper;
         private bool _disposed = false;
 
-        public BookHandlers(IUnitOfWorkAsync unitOfWork, IUniversalMapper mapper)
+        public BookHandlers(IUnitOfWorkAsync unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -45,7 +44,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             if (!_disposed && disposing)
             {
                 //_unitOfWork.Dispose();
-                _mapper.Dispose();
+                //_mapper.Dispose();
             }
 
             _disposed = true;

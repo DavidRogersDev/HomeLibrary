@@ -2,12 +2,11 @@
 using AutoMapper;
 using FluentValidation;
 using KesselRun.HomeLibrary.EF.Db;
-using KesselRun.HomeLibrary.Mapper.Mappers;
+using KesselRun.HomeLibrary.Mapper.Configuration;
 using KesselRun.HomeLibrary.Service.CommandHandlers.Decorators;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.QueryHandlers.Decorators;
 using Ninject;
-using Ninject.Extensions.Interception.Infrastructure.Language;
 using Ninject.Modules;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.Ef6;
@@ -22,12 +21,17 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
     public class HomeLibraryModule : INinjectModule
     {
         public IKernel Kernel { get; private set; }
-        private readonly Assembly _serviceAssembly = Assembly.Load("KesselRun.HomeLibrary.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+        private readonly Assembly _serviceAssembly = 
+            Assembly.Load(
+            "KesselRun.HomeLibrary.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+            );
 
         public HomeLibraryModule()
         {
             Name = "MainModule";
         }
+
+        public string Name { get; private set; }
 
         public void OnLoad(IKernel kernel)
         {
@@ -41,9 +45,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             AutoRegisterType(kernel, typeof(IQueryHandler<,>), WrapDecoratorsForQueryHandlers);
             AutoRegisterType(kernel, typeof(ICommandHandler<>), WrapDecoratorsForCommandHandlers);
         }
-
-        public string Name { get; private set; }
-
+        
         private void ManualRegistrations(IKernel kernel)
         {
             //Kernel.Bind<INavigator, Navigator>().;
@@ -52,13 +54,24 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             kernel.Bind<StandardKernel>().ToSelf().InSingletonScope();
             kernel.Bind<RepositoryFactories>().ToSelf().InTransientScope();
 
-            kernel.Bind<IMappingEngine>().ToConstant(AutoMapper.Mapper.Engine).InTransientScope();
+            var profiles = from t in typeof (MappingBase).Assembly.GetTypes()
+                where typeof (Profile).IsAssignableFrom(t)
+                select (Profile) Activator.CreateInstance(t);
 
-            kernel.Bind<IUniversalMapper>().To<UniversalMapper>().InTransientScope();
+            var config = new MapperConfiguration(cfg =>
+            {
+                foreach (var profile in profiles)
+                {
+                    cfg.AddProfile(profile);
+                }
+            });
+
+            kernel.Bind<MapperConfiguration>().ToConstant(config);
+            kernel.Bind<IMapper>().ToMethod(ctx => ctx.Kernel.Get<MapperConfiguration>().CreateMapper());
+
             kernel.Bind<IRepositoryProvider>().To<RepositoryProvider>().InTransientScope();
-
-            kernel.Bind<IDataContextAsync>().To<HomeLibraryContext>().InSingletonScope();
-            kernel.Bind<IUnitOfWorkAsync>().To<UnitOfWork>().InSingletonScope();
+            kernel.Bind<IDataContextAsync>().To<HomeLibraryContext>().InTransientScope();
+            kernel.Bind<IUnitOfWorkAsync>().To<UnitOfWork>().InTransientScope();
 
             kernel.Bind<TransactionAspectInterceptor>().ToSelf();
 
@@ -134,11 +147,11 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
         {
             //throw new NotImplementedException();
         }
-    }
 
-    public class Binding
-    {
-        public Type Implementation { get; set; }         
-        public Type Service { get; set; }         
+        class Binding
+        {
+            public Type Implementation { get; set; }
+            public Type Service { get; set; }
+        }
     }
 }

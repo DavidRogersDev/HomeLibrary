@@ -1,5 +1,4 @@
-﻿using Castle.Core.Internal;
-using KesselRun.HomeLibrary.Mapper.Mappers;
+﻿using AutoMapper;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiModel;
@@ -19,10 +18,10 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         IQueryHandler<GetLendingByPkQuery, Lending>
     {
         private readonly IUnitOfWorkAsync _unitOfWork;
-        private readonly IUniversalMapper _mapper;
+        private readonly IMapper _mapper;
         private bool _disposed = false;
 
-        public LendingsQueryHandlers(IUnitOfWorkAsync unitOfWork, IUniversalMapper mapper)
+        public LendingsQueryHandlers(IUnitOfWorkAsync unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -118,7 +117,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             if (!_disposed && disposing)
             {
                 //_unitOfWork.Dispose();
-                _mapper.Dispose();
+                //_mapper.Dispose();
             }
 
             _disposed = true;

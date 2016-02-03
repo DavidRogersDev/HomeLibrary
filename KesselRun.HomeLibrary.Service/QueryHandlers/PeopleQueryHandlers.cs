@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Linq.Expressions;
-using KesselRun.HomeLibrary.Mapper.Mappers;
+using AutoMapper;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.Queries;
 using KesselRun.HomeLibrary.UiModel;
@@ -18,10 +18,10 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         IQueryHandler<GetPeoplePagedSortedQuery, PeopleViewModel>
     {
         private readonly IUnitOfWorkAsync _unitOfWork;
-        private readonly IUniversalMapper _mapper;
+        private readonly IMapper _mapper;
         private bool _disposed = false;
 
-        public PeopleQueryHandlers(IUnitOfWorkAsync unitOfWork, IUniversalMapper mapper)
+        public PeopleQueryHandlers(IUnitOfWorkAsync unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -74,7 +74,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
 
             foreach (var person in _unitOfWork.Repository<Model.Person>().Query(filterFunc)
                 .Include(l => l.Books)
-                .Include(l => l.Lendings)
+                .Include(p => p.Lendings.Select(l => l.Book.Authors))
                 .OrderBy(orderByFunc)
                 .SelectPage(query.PageIndex, query.PageSize, out totalSize))
             {
@@ -107,7 +107,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             if (!_disposed && disposing)
             {
                 //_unitOfWork.Dispose();
-                _mapper.Dispose();
+                //_mapper.Dispose();
             }
 
             _disposed = true;
