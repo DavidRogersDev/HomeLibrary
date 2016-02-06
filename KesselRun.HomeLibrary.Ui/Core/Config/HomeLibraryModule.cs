@@ -3,6 +3,7 @@ using AutoMapper;
 using FluentValidation;
 using KesselRun.HomeLibrary.EF.Db;
 using KesselRun.HomeLibrary.Mapper.Configuration;
+using KesselRun.HomeLibrary.Service.CommandHandlers;
 using KesselRun.HomeLibrary.Service.CommandHandlers.Decorators;
 using KesselRun.HomeLibrary.Service.Infrastructure;
 using KesselRun.HomeLibrary.Service.QueryHandlers.Decorators;
@@ -21,10 +22,6 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
     public class HomeLibraryModule : INinjectModule
     {
         public IKernel Kernel { get; private set; }
-        private readonly Assembly _serviceAssembly = 
-            Assembly.Load(
-            "KesselRun.HomeLibrary.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
-            );
 
         public HomeLibraryModule()
         {
@@ -35,6 +32,8 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
         public void OnLoad(IKernel kernel)
         {
+            Assembly _serviceAssembly = typeof(LendingsCommandHandlers).Assembly;
+
             ManualRegistrations(kernel);
 
             //Auto-Register all the validators which are stored in the Service assembly.
@@ -42,29 +41,20 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                     result => kernel.Bind(result.InterfaceType).To(result.ValidatorType)
                 );
 
-            AutoRegisterType(kernel, typeof(IQueryHandler<,>), WrapDecoratorsForQueryHandlers);
-            AutoRegisterType(kernel, typeof(ICommandHandler<>), WrapDecoratorsForCommandHandlers);
+            AutoRegisterType(_serviceAssembly, kernel, typeof(IQueryHandler<,>), WrapDecoratorsForQueryHandlers);
+            AutoRegisterType(_serviceAssembly, kernel, typeof(ICommandHandler<>), WrapDecoratorsForCommandHandlers);
         }
-        
+
         private void ManualRegistrations(IKernel kernel)
         {
             //Kernel.Bind<INavigator, Navigator>().;
             //Kernel.Bind<ILendingsConverters>().To <LendingsConverters>();
-            
+
             kernel.Bind<StandardKernel>().ToSelf().InSingletonScope();
+
             kernel.Bind<RepositoryFactories>().ToSelf().InTransientScope();
 
-            var profiles = from t in typeof (MappingBase).Assembly.GetTypes()
-                where typeof (Profile).IsAssignableFrom(t)
-                select (Profile) Activator.CreateInstance(t);
-
-            var config = new MapperConfiguration(cfg =>
-            {
-                foreach (var profile in profiles)
-                {
-                    cfg.AddProfile(profile);
-                }
-            });
+            var config = GetMapperConfiguration();
 
             kernel.Bind<MapperConfiguration>().ToConstant(config);
             kernel.Bind<IMapper>().ToMethod(ctx => ctx.Kernel.Get<MapperConfiguration>().CreateMapper());
@@ -82,21 +72,42 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             kernel.Bind<ICommandProcessor>().To<CommandProcessor>().InSingletonScope();
         }
 
+        private static MapperConfiguration GetMapperConfiguration()
+        {
+            Assembly _mapperAssembly = typeof(MappingBase).Assembly;
+
+            var profiles = from t in _mapperAssembly.GetTypes()
+                where typeof (Profile).IsAssignableFrom(t)
+                select (Profile) Activator.CreateInstance(t);
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                foreach (var profile in profiles)
+                {
+                    cfg.AddProfile(profile);
+                }
+            });
+            return config;
+        }
+
 
         /// <summary>
         /// From http://stackoverflow.com/a/13859582/540156, as updated by me with expression-style syntax
         /// </summary>
+        /// <param name="serviceAssembly"></param>
+        /// <param name="kernel"></param>
         /// <param name="type"></param>
-        private void AutoRegisterType(IKernel kernel, Type type, Action<IKernel, IEnumerable<Binding>> wrapperAction)
+        /// <param name="wrapperAction"></param>
+        private void AutoRegisterType(Assembly serviceAssembly, IKernel kernel, Type type, Action<IKernel, IEnumerable<Binding>> wrapperAction)
         {
             // All the handlers (both query and command) live in the Services assembly.
-            var handlerRegistrations = _serviceAssembly.GetExportedTypes()
+            var handlerRegistrations = serviceAssembly.GetExportedTypes()
                 .Where(x => !x.IsAbstract)
                 .Where(x => !x.ContainsGenericParameters)
                 .SelectMany(x => x.GetInterfaces()
                     .Where(i => i.IsGenericType)
                     .Where(i => i.GetGenericTypeDefinition() == type)
-                    .Select(i => new Binding{ Service = i, Implementation = x})
+                    .Select(i => new Binding { Service = i, Implementation = x })
                 );
 
             wrapperAction(kernel, handlerRegistrations);
@@ -108,18 +119,17 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             {
                 kernel.Bind(registration.Service)
                     .To(registration.Implementation)
-                    .WhenInjectedInto(typeof (QueryHandlerValidatorDecorator<,>))
+                    .WhenInjectedInto(typeof(QueryHandlerValidatorDecorator<,>))
                     .InTransientScope();
             }
 
-
-            kernel.Bind(typeof (IQueryHandler<,>))
-                .To(typeof (QueryHandlerValidatorDecorator<,>))
-                .WhenInjectedInto(typeof (QueryHandlerProfilerDecorator<,>))
+            kernel.Bind(typeof(IQueryHandler<,>))
+                .To(typeof(QueryHandlerValidatorDecorator<,>))
+                .WhenInjectedInto(typeof(QueryHandlerProfilerDecorator<,>))
                 .InTransientScope();
 
-            kernel.Bind(typeof (IQueryHandler<,>))
-                .To(typeof (QueryHandlerProfilerDecorator<,>))
+            kernel.Bind(typeof(IQueryHandler<,>))
+                .To(typeof(QueryHandlerProfilerDecorator<,>))
                 .InTransientScope();
         }
 
@@ -135,6 +145,11 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
             kernel.Bind(typeof(ICommandHandler<>))
                 .To(typeof(CommandHandlerValidatorDecorator<>))
+                .WhenInjectedInto(typeof(CommandHandlerTransactionDecorator<>))
+                .InTransientScope();
+
+            kernel.Bind(typeof(ICommandHandler<>))
+                .To(typeof(CommandHandlerTransactionDecorator<>))
                 .InTransientScope();
         }
 

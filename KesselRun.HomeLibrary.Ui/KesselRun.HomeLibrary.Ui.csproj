@@ -104,7 +104,6 @@
     <Compile Include="Core\Config\DatabaseConfigurer.cs" />
     <Compile Include="Core\Config\HomeLibraryModule.cs" />
     <Compile Include="Core\Config\KernelFactory.cs" />
-    <Compile Include="Core\Config\MapperBootstrapper.cs" />
     <Compile Include="Core\Config\TransactionAspectAttribute.cs" />
     <Compile Include="Core\Config\TransactionAspectInterceptor.cs" />
     <Compile Include="Core\Constants.cs" />

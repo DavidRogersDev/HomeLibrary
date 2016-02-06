@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using KesselRun.HomeLibrary.Model;
 using KesselRun.HomeLibrary.Service.Commands;
 using KesselRun.HomeLibrary.Service.Infrastructure;
@@ -17,8 +18,7 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
         {
             _unitOfWork = unitOfWork;
         }
-
-        [TransactionAspect]
+        
         public void Handle(AddLendingCommand command)
         {
             var newLending = new Lending
@@ -31,6 +31,8 @@ namespace KesselRun.HomeLibrary.Service.CommandHandlers
             };
 
             _unitOfWork.Repository<Lending>().InsertGraph(newLending);
+
+            Trace.TraceInformation(_unitOfWork.GetHashCode().ToString());
 
             //_unitOfWork.SaveChanges();
         }
