@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using KesselRun.HomeLibrary.Common.Contracts;
+using KesselRun.HomeLibrary.Ui.Core.Config;
 using KesselRun.HomeLibrary.UiLogic.Views;
 
 namespace KesselRun.HomeLibrary.Ui.Core
@@ -51,6 +52,8 @@ namespace KesselRun.HomeLibrary.Ui.Core
             var destinationViewControl = (Control)destinationView;
 
             containerControl.Controls.Add(destinationViewControl);
+
+            ViewScopeManager.ManageScope();
             
             if (destinationViewControl is IHydrateOnFocus)
             {
@@ -72,6 +75,8 @@ namespace KesselRun.HomeLibrary.Ui.Core
             var destinationViewControl = (Control)destinationView;
 
             containerControl.Controls.Add(destinationViewControl);
+
+            ViewScopeManager.ManageScope();
 
             if (destinationViewControl is IHydrateOnFocus)
             {
@@ -128,6 +133,9 @@ namespace KesselRun.HomeLibrary.Ui.Core
                 if (control != null)
                 {
                     containerControl.Controls.Add(control);
+
+                    ViewScopeManager.ManageScope();
+
                     if (control is IHydrateOnFocus)
                     {
                         ((IHydrateOnFocus) control).HydrateWithDataOnFocus();

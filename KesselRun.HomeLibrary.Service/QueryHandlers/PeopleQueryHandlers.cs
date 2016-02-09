@@ -106,7 +106,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         {
             if (!_disposed && disposing)
             {
-                //_unitOfWork.Dispose();
+                _unitOfWork.Dispose();
                 //_mapper.Dispose();
             }
 

@@ -1,5 +1,6 @@
 ﻿using KesselRun.HomeLibrary.Ui.Assets.Resources;
 using KesselRun.HomeLibrary.Ui.Core;
+using KesselRun.HomeLibrary.Ui.Core.Config;
 using KesselRun.HomeLibrary.Ui.CustomControls;
 using KesselRun.HomeLibrary.Ui.CustomControls.EventArgs;
 using KesselRun.HomeLibrary.Ui.Forms;
@@ -181,7 +182,6 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 				MessageIds.GetFilterParametersResponse,
 				new Action<GenericMessage<SearchLendingsViewModel>>(GetResultSetWithNewSearchParameters)
 				);
-
 		}
 
 		private void dgvPager_PageSizeChanged(object sender, PagedEventArgs e)

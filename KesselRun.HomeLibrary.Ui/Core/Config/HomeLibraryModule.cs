@@ -16,6 +16,7 @@ using Repository.Pattern.UnitOfWork;
 using System;
 using System.Linq;
 using System.Reflection;
+using WinFormsMvp.Binder;
 
 namespace KesselRun.HomeLibrary.Ui.Core.Config
 {
@@ -51,7 +52,6 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             //Kernel.Bind<ILendingsConverters>().To <LendingsConverters>();
 
             kernel.Bind<StandardKernel>().ToSelf().InSingletonScope();
-
             kernel.Bind<RepositoryFactories>().ToSelf().InTransientScope();
 
             var config = GetMapperConfiguration();
@@ -60,7 +60,11 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             kernel.Bind<IMapper>().ToMethod(ctx => ctx.Kernel.Get<MapperConfiguration>().CreateMapper());
 
             kernel.Bind<IRepositoryProvider>().To<RepositoryProvider>().InTransientScope();
-            kernel.Bind<IDataContextAsync>().To<HomeLibraryContext>().InTransientScope();
+            //kernel.Bind<IDataContextAsync>().To<HomeLibraryContext>().InTransientScope();
+            kernel.Bind<IDataContextAsync>()
+                .To<HomeLibraryContext>()
+                .InScope(x => PresenterBinder.ApplicationState.GetItem<DatabaseContextScope>("DatabaseContextScope"));
+
             kernel.Bind<IUnitOfWorkAsync>().To<UnitOfWork>().InTransientScope();
 
             kernel.Bind<TransactionAspectInterceptor>().ToSelf();
@@ -68,8 +72,8 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
             //kernel.Bind<IQueryHandlerFactory>().ToFactory();
 
-            kernel.Bind<IQueryProcessor>().To<QueryProcessor>().InSingletonScope();
-            kernel.Bind<ICommandProcessor>().To<CommandProcessor>().InSingletonScope();
+            kernel.Bind<IQueryProcessor>().To<QueryProcessor>().InTransientScope();
+            kernel.Bind<ICommandProcessor>().To<CommandProcessor>().InTransientScope();
         }
 
         private static MapperConfiguration GetMapperConfiguration()

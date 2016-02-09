@@ -26,8 +26,8 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         {
             return (from book in _unitOfWork.Repository<Model.Book>()
                         .Query()
-                        //.Include(b => b.Authors)
-                        //.Include(b => b.Lendings)
+                        .Include(b => b.Authors)
+                        .Include(b => b.Lendings)
                         .Select()
                     let uiBook = new Book()
                     select _mapper.Map(book, uiBook)).ToList();
@@ -43,7 +43,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         {
             if (!_disposed && disposing)
             {
-                //_unitOfWork.Dispose();
+                _unitOfWork.Dispose();
                 //_mapper.Dispose();
             }
 
