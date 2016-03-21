@@ -5,7 +5,7 @@ namespace KesselRun.HomeLibrary.UiModel.ViewModels
 {
     public class LendingsViewModel
     {
-        public BindingList<Lending> Lendings { get; set; }
+        public BindingList<LendingGridItem> Lendings { get; set; }
         public PagerData PagerData { get; set; }
         public int SelectedGridLendingId { get; set; }
     }

@@ -33,23 +33,22 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
         public void OnLoad(IKernel kernel)
         {
-            Assembly _serviceAssembly = typeof(LendingsCommandHandlers).Assembly;
+            Assembly serviceAssembly = typeof(LendingsCommandHandlers).Assembly;
 
             ManualRegistrations(kernel);
 
             //Auto-Register all the validators which are stored in the Service assembly.
-            AssemblyScanner.FindValidatorsInAssembly(_serviceAssembly).ForEach(
+            AssemblyScanner.FindValidatorsInAssembly(serviceAssembly).ForEach(
                     result => kernel.Bind(result.InterfaceType).To(result.ValidatorType)
                 );
 
-            AutoRegisterType(_serviceAssembly, kernel, typeof(IQueryHandler<,>), WrapDecoratorsForQueryHandlers);
-            AutoRegisterType(_serviceAssembly, kernel, typeof(ICommandHandler<>), WrapDecoratorsForCommandHandlers);
+            AutoRegisterType(serviceAssembly, kernel, typeof(IQueryHandler<,>), WrapDecoratorsForQueryHandlers);
+            AutoRegisterType(serviceAssembly, kernel, typeof(ICommandHandler<>), WrapDecoratorsForCommandHandlers);
         }
 
         private void ManualRegistrations(IKernel kernel)
         {
             //Kernel.Bind<INavigator, Navigator>().;
-            //Kernel.Bind<ILendingsConverters>().To <LendingsConverters>();
 
             kernel.Bind<StandardKernel>().ToSelf().InSingletonScope();
             kernel.Bind<RepositoryFactories>().ToSelf().InTransientScope();
@@ -60,7 +59,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
             kernel.Bind<IMapper>().ToMethod(ctx => ctx.Kernel.Get<MapperConfiguration>().CreateMapper());
 
             kernel.Bind<IRepositoryProvider>().To<RepositoryProvider>().InTransientScope();
-            //kernel.Bind<IDataContextAsync>().To<HomeLibraryContext>().InTransientScope();
+
             kernel.Bind<IDataContextAsync>()
                 .To<HomeLibraryContext>()
                 .InScope(x => PresenterBinder.ApplicationState.GetItem<DatabaseContextScope>("DatabaseContextScope"));
@@ -69,18 +68,15 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
             kernel.Bind<TransactionAspectInterceptor>().ToSelf();
 
-
-            //kernel.Bind<IQueryHandlerFactory>().ToFactory();
-
             kernel.Bind<IQueryProcessor>().To<QueryProcessor>().InTransientScope();
             kernel.Bind<ICommandProcessor>().To<CommandProcessor>().InTransientScope();
         }
 
         private static MapperConfiguration GetMapperConfiguration()
         {
-            Assembly _mapperAssembly = typeof(MappingBase).Assembly;
+            Assembly mapperAssembly = typeof(MappingBase).Assembly;
 
-            var profiles = from t in _mapperAssembly.GetTypes()
+            var profiles = from t in mapperAssembly.GetTypes()
                 where typeof (Profile).IsAssignableFrom(t)
                 select (Profile) Activator.CreateInstance(t);
 
@@ -91,6 +87,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
                     cfg.AddProfile(profile);
                 }
             });
+
             return config;
         }
 

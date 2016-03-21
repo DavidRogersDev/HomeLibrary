@@ -18,6 +18,7 @@ namespace KesselRun.HomeLibrary.Mapper.Configuration
             new CommentInitializer(Profile).Initialize();
             new PublisherInitializer(Profile).Initialize();
             new BookInitializer(Profile).Initialize();
+            new LendingGridItemInitializer(Profile).Initialize();
             new LendingInitializer(Profile).Initialize();
             new PersonInitializer(Profile).Initialize();
         }

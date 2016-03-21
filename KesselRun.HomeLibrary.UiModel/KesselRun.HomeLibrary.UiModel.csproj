@@ -48,6 +48,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\GridLending.cs" />
     <Compile Include="Models\Lending.cs" />
+    <Compile Include="Models\LendingGridItem.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Publisher.cs" />
     <Compile Include="PagerData.cs" />

@@ -55,12 +55,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Initializers\LendingInitializer.cs" />
     <Compile Include="Profiles\HomeLibraryProfile.cs" />
     <Compile Include="Configuration\Initializers\IMappingInitializer.cs" />
     <Compile Include="Configuration\Initializers\BookCoverInitializer.cs" />
     <Compile Include="Configuration\Initializers\BookInitializer.cs" />
     <Compile Include="Configuration\Initializers\CommentInitializer.cs" />
-    <Compile Include="Configuration\Initializers\LendingInitializer.cs" />
+    <Compile Include="Configuration\Initializers\LendingGridItemInitializer.cs" />
     <Compile Include="Configuration\Initializers\PersonInitializer.cs" />
     <Compile Include="Configuration\Initializers\PublisherInitializer.cs" />
     <Compile Include="Configuration\MappingBase.cs" />

@@ -14,7 +14,6 @@ namespace KesselRun.HomeLibrary.Ui.Core
         private readonly Dictionary<Type, Type> _viewTypesCache;
         private readonly Dictionary<string, Stack<Control>> _controlStacks = new Dictionary<string, Stack<Control>>();
         public Control NavigationRootControl { get; set; }
-        
 
         private Navigator()
         {
@@ -130,6 +129,7 @@ namespace KesselRun.HomeLibrary.Ui.Core
             {
                 containerControl.Controls.Clear();
                 var control = _controlStacks[containerControl.Name].Peek() as UserControl;
+
                 if (control != null)
                 {
                     containerControl.Controls.Add(control);

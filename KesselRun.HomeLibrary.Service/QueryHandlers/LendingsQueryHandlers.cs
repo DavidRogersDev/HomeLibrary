@@ -30,7 +30,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
         public LendingsViewModel Handle(GetLendingsPagedSortedQuery query)
         {
             var lendingsViewModel = new LendingsViewModel {PagerData = new PagerData()};
-            IList<Lending> lendings = new List<Lending>();
+            IList<LendingGridItem> lendings = new List<LendingGridItem>();
             Expression<Func<Model.Lending, bool>> filterFunc = GetFilterFunc(query);
             Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> orderByFunc = GetOrderByFunc<Model.Lending>(query);
             var lendsingsRepository = _unitOfWork.Repository<Model.Lending>();
@@ -45,11 +45,11 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
                 .OrderBy(orderByFunc)
                 .SelectPage(query.PageIndex, query.PageSize, out totalSize))
             {
-                var uiLending = new Lending();
+                var uiLending = new LendingGridItem();
                 lendings.Add(_mapper.Map(lending, uiLending));
             }
 
-            lendingsViewModel.Lendings = new BindingList<Lending>(lendings);
+            lendingsViewModel.Lendings = new BindingList<LendingGridItem>(lendings);
             
             return lendingsViewModel;
         }

@@ -14,7 +14,7 @@ namespace KesselRun.HomeLibrary.Ui.EventArgs
             this.bookId = bookId;
             this.borrowerId = borrowerId;
             this.dateLent = dateLent;
-            this.dateDue = dateDue;
+            this.dateDue = dueDate;
         }
     }
 }
