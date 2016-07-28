@@ -34,6 +34,8 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 			_mainWindow = new Lazy<MainForm>(() => (MainForm) ParentForm, LazyThreadSafetyMode.None);
 
 			InitializeComponent();
+
+		    dgvLendings.AutoGenerateColumns = false;
 		}
 
 		#region ILendingsView

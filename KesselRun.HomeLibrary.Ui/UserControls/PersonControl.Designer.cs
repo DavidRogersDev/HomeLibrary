@@ -31,6 +31,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dgvPager = new KesselRun.HomeLibrary.Ui.CustomControls.DataGridViewPager();
             this.dgvPeople = new System.Windows.Forms.DataGridView();
+            this.dgvtcId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvtcEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvtcFullName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvtcSobriquet = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvtcIsAuthor = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPeople)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,11 +67,53 @@
             // 
             // dgvPeople
             // 
+            this.dgvPeople.AllowUserToAddRows = false;
             this.dgvPeople.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPeople.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvtcId,
+            this.dgvtcEmail,
+            this.dgvtcFullName,
+            this.dgvtcSobriquet,
+            this.dgvtcIsAuthor});
             this.dgvPeople.Location = new System.Drawing.Point(4, 4);
             this.dgvPeople.Name = "dgvPeople";
             this.dgvPeople.Size = new System.Drawing.Size(1040, 150);
             this.dgvPeople.TabIndex = 1;
+            this.dgvPeople.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvPeople_CellFormatting);
+            // 
+            // dgvtcId
+            // 
+            this.dgvtcId.HeaderText = "Id";
+            this.dgvtcId.Name = "dgvtcId";
+            this.dgvtcId.Visible = false;
+            // 
+            // dgvtcEmail
+            // 
+            this.dgvtcEmail.DataPropertyName = "Email";
+            this.dgvtcEmail.HeaderText = "Email";
+            this.dgvtcEmail.Name = "dgvtcEmail";
+            // 
+            // dgvtcFullName
+            // 
+            this.dgvtcFullName.DataPropertyName = "FullName";
+            this.dgvtcFullName.HeaderText = "FullName";
+            this.dgvtcFullName.Name = "dgvtcFullName";
+            // 
+            // dgvtcSobriquet
+            // 
+            this.dgvtcSobriquet.DataPropertyName = "Sobriquet";
+            this.dgvtcSobriquet.HeaderText = "Sobriquet";
+            this.dgvtcSobriquet.Name = "dgvtcSobriquet";
+            this.dgvtcSobriquet.Width = 200;
+            // 
+            // dgvtcIsAuthor
+            // 
+            this.dgvtcIsAuthor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvtcIsAuthor.DataPropertyName = "IsAuthor";
+            this.dgvtcIsAuthor.HeaderText = "IsAuthor";
+            this.dgvtcIsAuthor.Name = "dgvtcIsAuthor";
+            this.dgvtcIsAuthor.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvtcIsAuthor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // PersonControl
             // 
@@ -89,5 +136,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgvPeople;
         private CustomControls.DataGridViewPager dgvPager;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcEmail;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcFullName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvtcSobriquet;
+        private System.Windows.Forms.DataGridViewImageColumn dgvtcIsAuthor;
     }
 }

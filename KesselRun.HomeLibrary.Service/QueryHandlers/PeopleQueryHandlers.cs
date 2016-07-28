@@ -73,8 +73,8 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             PagerHelper.ProcessPagingData(query, peopleViewModel.PagerData, totalSize);
 
             foreach (var person in _unitOfWork.Repository<Model.Person>().Query(filterFunc)
-                .Include(l => l.Books)
-                .Include(p => p.Lendings.Select(l => l.Book.Authors))
+                //.Include(l => l.Books)
+                //.Include(p => p.Lendings.Select(l => l.Book.Authors))
                 .OrderBy(orderByFunc)
                 .SelectPage(query.PageIndex, query.PageSize, out totalSize))
             {

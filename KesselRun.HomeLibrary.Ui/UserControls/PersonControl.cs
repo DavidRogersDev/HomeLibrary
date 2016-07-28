@@ -10,6 +10,7 @@ using KesselRun.HomeLibrary.UiLogic.EventArgs;
 using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using System;
+using KesselRun.HomeLibrary.Ui.Assets.Resources;
 using KesselRun.HomeLibrary.UiModel;
 using KesselRun.HomeLibrary.UiModel.Models;
 using KesselRun.HomeLibrary.UiModel.ViewModels;
@@ -32,6 +33,8 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             _mainWindow = new Lazy<MainForm>(() => (MainForm)ParentForm, LazyThreadSafetyMode.None);
 
             InitializeComponent();
+
+            dgvPeople.AutoGenerateColumns = false;
         }
 
         public event EventHandler ViewClosing;
@@ -239,5 +242,30 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         }
 
         public PeopleViewModel PeopleViewModel { get; set; }
+
+        private void dgvPeople_CellFormatting(object sender, DataGridViewCellFormattingEventArgs dataGridViewCellFormattingEventArgs)
+        {
+            int rowIndex = dataGridViewCellFormattingEventArgs.RowIndex;
+            int columnIndex = dataGridViewCellFormattingEventArgs.ColumnIndex;
+
+            dgvPeople.Rows[rowIndex].Cells[columnIndex].ToolTipText = "Is Author";
+
+            switch (dgvPeople.Columns[columnIndex].Name)
+            {
+                case "dgvtcIsAuthor":
+                    bool isAuthor;
+
+                    if (bool.TryParse(dgvPeople.Rows[dataGridViewCellFormattingEventArgs.RowIndex].Cells["dgvtcIsAuthor"].Value.ToString(),
+                        out isAuthor))
+                    {
+                        dataGridViewCellFormattingEventArgs.Value = ImageResources.Tick;
+                    }
+                    else
+                    {
+                        dataGridViewCellFormattingEventArgs.Value = ImageResources.Cross;
+                    }
+                    break;
+            }
+        }
     }
 }
