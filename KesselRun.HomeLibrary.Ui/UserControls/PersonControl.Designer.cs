@@ -7,19 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Component Designer generated code
 
         /// <summary> 
@@ -62,6 +49,7 @@
             this.dgvPager.SortByColumn = "LastName";
             this.dgvPager.SortOrder = System.ComponentModel.ListSortDirection.Ascending;
             this.dgvPager.TabIndex = 3;
+            this.dgvPager.NextPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PageChanged);
             this.dgvPager.PageSizeChangeSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PageSizeChanged);
             this.dgvPager.PreviousPageSubmitted += new System.EventHandler<KesselRun.HomeLibrary.Ui.CustomControls.EventArgs.PagedEventArgs>(this.dgvPager_PageChanged);
             // 

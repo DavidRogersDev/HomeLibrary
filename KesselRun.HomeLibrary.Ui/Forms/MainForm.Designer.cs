@@ -26,9 +26,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.pnlTopArea = new System.Windows.Forms.Panel();
             this.logDisplayBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.lendingsSearchCriteriaControl1 = new KesselRun.HomeLibrary.Ui.UserControls.LendingsSearchCriteriaControl();
             this.panel1.SuspendLayout();
-            this.pnlTopArea.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logDisplayBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,7 +98,6 @@
             // 
             // pnlTopArea
             // 
-            this.pnlTopArea.Controls.Add(this.lendingsSearchCriteriaControl1);
             this.pnlTopArea.Location = new System.Drawing.Point(144, 13);
             this.pnlTopArea.Name = "pnlTopArea";
             this.pnlTopArea.Size = new System.Drawing.Size(931, 109);
@@ -109,15 +106,6 @@
             // logDisplayBindingSource
             // 
             this.logDisplayBindingSource.DataSource = typeof(KesselRun.HomeLibrary.UiModel.ViewModels.MainViewModel);
-            // 
-            // lendingsSearchCriteriaControl1
-            // 
-            this.lendingsSearchCriteriaControl1.Location = new System.Drawing.Point(419, 5);
-            this.lendingsSearchCriteriaControl1.Margin = new System.Windows.Forms.Padding(6);
-            this.lendingsSearchCriteriaControl1.Name = "lendingsSearchCriteriaControl1";
-            this.lendingsSearchCriteriaControl1.SearchLendingsViewModel = null;
-            this.lendingsSearchCriteriaControl1.Size = new System.Drawing.Size(500, 98);
-            this.lendingsSearchCriteriaControl1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -132,7 +120,6 @@
             this.Name = "MainForm";
             this.Text = "Home Library";
             this.panel1.ResumeLayout(false);
-            this.pnlTopArea.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.logDisplayBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -149,7 +136,6 @@
         private System.Windows.Forms.BindingSource logDisplayBindingSource;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Panel pnlTopArea;
-        private UserControls.LendingsSearchCriteriaControl lendingsSearchCriteriaControl1;
     }
 }
 

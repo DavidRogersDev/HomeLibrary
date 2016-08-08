@@ -11,6 +11,7 @@ using KesselRun.HomeLibrary.UiLogic.Presenters;
 using KesselRun.HomeLibrary.UiLogic.Views;
 using System;
 using KesselRun.HomeLibrary.Ui.Assets.Resources;
+using KesselRun.HomeLibrary.Ui.Messaging;
 using KesselRun.HomeLibrary.UiModel;
 using KesselRun.HomeLibrary.UiModel.Models;
 using KesselRun.HomeLibrary.UiModel.ViewModels;
@@ -40,6 +41,23 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         public event EventHandler ViewClosing;
         public event EventHandler CloseControl;
         public event EventHandler<SearchPeopleEventArgs> ReloadView;
+
+
+        protected override void OnLoad(System.EventArgs e)
+        {
+            base.OnLoad(e);
+
+            PresenterBinder.MessageBus.Register(
+                this,
+                MessageIds.SearchPeopleMessage,
+                new Action<GenericMessage<SearchPeopleViewModel>>(GetResultSetWithNewSearchParameters)
+                );
+            PresenterBinder.MessageBus.Register(
+                this,
+                MessageIds.GetFilterParametersPeopleResponse,
+                new Action<GenericMessage<SearchPeopleViewModel>>(GetResultSetWithNewSearchParameters)
+                );
+        }
 
         public void CloseView()
         {
@@ -143,37 +161,36 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
         private Person GetSelectedPerson()
         {
-            Person selectedLending = default(Person);
+            Person selectedPerson = default(Person);
             int selectedRowIndex = -1;
 
             if (!ReferenceEquals(null, dgvPeople.CurrentCell))
             {
                 selectedRowIndex = dgvPeople.CurrentCell.RowIndex;
-                selectedLending = dgvPeople.Rows[selectedRowIndex].DataBoundItem as Person;
-                // todo:
-                //if (selectedLending != null)
-                //{
-                //    if (!PresenterBinder.ApplicationState.HasItem(Constants.SelectedGridLending))
-                //        PresenterBinder.ApplicationState.AddItem(Constants.SelectedGridLending, selectedLending.Id);
-                //}
+                selectedPerson = dgvPeople.Rows[selectedRowIndex].DataBoundItem as Person;
+
+                if (selectedPerson != null)
+                {
+                    if (!PresenterBinder.ApplicationState.HasItem(Constants.SelectedGridPeople))
+                        PresenterBinder.ApplicationState.AddItem(Constants.SelectedGridPeople, selectedPerson.Id);
+                }
             }
-            return selectedLending;
+            return selectedPerson;
         }
 
-        private static SearchPeopleViewModel GetSearchParameters(int selectedGridLendingId)
+        private static SearchPeopleViewModel GetSearchParameters(int selectedGridPersonId)
         {
-            //var SearchPeopleViewModel = new SearchPeopleViewModel
-            //{
-            //    SelectedGridLendingId = selectedGridLendingId
-            //};
+            var SearchPeopleViewModel = new SearchPeopleViewModel
+            {
+                SelectedGridPersonId = selectedGridPersonId
+            };
 
-            //PresenterBinder.MessageBus.Send(
-            //    new GenericMessage<SearchPeopleViewModel>(SearchPeopleViewModel),
-            //    MessageIds.GetFilterParametersRequest
-            //    );
+            PresenterBinder.MessageBus.Send(
+                new GenericMessage<SearchPeopleViewModel>(SearchPeopleViewModel),
+                MessageIds.GetFilterParametersRequestPeople
+                );
 
-            //return SearchPeopleViewModel;
-            return null;
+            return SearchPeopleViewModel;
         }
 
         private void ReSyncGridAndPager()
@@ -266,6 +283,24 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                     }
                     break;
             }
+        }
+
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+
+            PresenterBinder.MessageBus.Unregister<GenericMessage<SearchPeopleViewModel>>(this, MessageIds.SearchPeopleMessage);
+            PresenterBinder.MessageBus.Unregister<GenericMessage<SearchPeopleViewModel>>(this, MessageIds.GetFilterParametersPeopleResponse);
+
         }
     }
 }

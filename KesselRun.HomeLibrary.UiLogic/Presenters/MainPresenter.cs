@@ -25,12 +25,12 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
 
         void View_NavigateToLendingsView(object sender, System.EventArgs e)
         {
-            View.ShowChildView(typeof(ILendingsView));
+            View.ShowChildView(typeof(ILendingsView), typeof(ISearchLendingsView));
         }
 
         void View_NavigateToPeopleView(object sender, System.EventArgs e)
         {
-            View.ShowChildView(typeof(IPeopleView));
+            View.ShowChildView(typeof(IPeopleView), typeof(ISearchPeopleView));
         }
 
         //void View_SearchLendings(object sender, EventArgs.SearchPagingEventArgs e)
@@ -69,7 +69,7 @@ namespace KesselRun.HomeLibrary.UiLogic.Presenters
             //{
             //}
             View.MainViewModel = new MainViewModel { MainViewLogItems = new BindingList<LogEvent>(new List<LogEvent> { new LogEvent { Event = "App loaded" } }) };
-            View.ShowChildView(typeof(ILendingsView));
+            View.ShowChildView(typeof(ILendingsView), typeof(ISearchLendingsView));
         }
 
         public void Dispose()

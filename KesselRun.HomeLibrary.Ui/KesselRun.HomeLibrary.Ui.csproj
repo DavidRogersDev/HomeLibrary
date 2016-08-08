@@ -152,6 +152,12 @@
     <Compile Include="UserControls\LendingsSearchCriteriaControl.Designer.cs">
       <DependentUpon>LendingsSearchCriteriaControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PeopleSearchCriteriaControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\PeopleSearchCriteriaControl.Designer.cs">
+      <DependentUpon>PeopleSearchCriteriaControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PersonControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -188,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\LendingsSearchCriteriaControl.resx">
       <DependentUpon>LendingsSearchCriteriaControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\PeopleSearchCriteriaControl.resx">
+      <DependentUpon>PeopleSearchCriteriaControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\PersonControl.resx">
       <DependentUpon>PersonControl.cs</DependentUpon>

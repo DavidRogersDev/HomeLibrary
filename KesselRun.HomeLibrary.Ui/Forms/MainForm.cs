@@ -55,12 +55,13 @@ namespace KesselRun.HomeLibrary.Ui.Forms
             MainViewModel.MainViewLogItems.Add(logEvent);
         }   
 
-        public void ShowChildView(Type view)
+        public void ShowChildView(Type view, Type filterControl)
         {
             try
             {
                 _navigator.ClearNavigationBase(MainContentPanel);
-                //_navigator.ClearContainer(MainContentPanel);
+                _navigator.ClearContainer(pnlTopArea);
+                _navigator.NavigateTo(filterControl, pnlTopArea);
                 _navigator.NavigateTo(view,  MainContentPanel);
             }
             catch (Exception exception)

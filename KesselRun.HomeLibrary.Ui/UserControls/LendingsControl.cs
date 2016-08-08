@@ -80,7 +80,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
 			PresenterBinder.MessageBus.Send(
 				new GenericMessage<SearchLendingsViewModel>(searchLendingsViewModel),
-				MessageIds.GetFilterParametersRequest
+				MessageIds.GetFilterParametersRequestLendings
 				);
 
 			return searchLendingsViewModel;
@@ -181,7 +181,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 				);
 			PresenterBinder.MessageBus.Register(
 				this,
-				MessageIds.GetFilterParametersResponse,
+				MessageIds.GetFilterParametersLendingsResponse,
 				new Action<GenericMessage<SearchLendingsViewModel>>(GetResultSetWithNewSearchParameters)
 				);
 		}
@@ -314,7 +314,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
             }
 
             PresenterBinder.MessageBus.Unregister<GenericMessage<SearchLendingsViewModel>>(this, MessageIds.SearchLendingsMessage);
-            PresenterBinder.MessageBus.Unregister<GenericMessage<SearchLendingsViewModel>>(this, MessageIds.GetFilterParametersResponse);
+            PresenterBinder.MessageBus.Unregister<GenericMessage<SearchLendingsViewModel>>(this, MessageIds.GetFilterParametersLendingsResponse);
 
             base.Dispose(disposing);
         }

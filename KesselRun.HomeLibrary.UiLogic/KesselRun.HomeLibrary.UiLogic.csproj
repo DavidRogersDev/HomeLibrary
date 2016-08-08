@@ -77,6 +77,7 @@
     <Compile Include="Views\IAddLendingsView.cs" />
     <Compile Include="Views\IPeopleView.cs" />
     <Compile Include="Views\ISearchLendingsView.cs" />
+    <Compile Include="Views\ISearchPeopleView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KesselRun.HomeLibrary.Common\KesselRun.HomeLibrary.Common.csproj">

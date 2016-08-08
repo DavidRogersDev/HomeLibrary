@@ -10,6 +10,6 @@ namespace KesselRun.HomeLibrary.UiLogic.Views
 
         MainViewModel MainViewModel { get; set; }
         LendingsViewModel LendingsViewModel { get; set; }
-        void ShowChildView(Type view);
+        void ShowChildView(Type view, Type filterControl);
     }
 }

@@ -20,7 +20,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         {
             InitializeComponent();
 
-            PresenterBinder.MessageBus.Register(this, MessageIds.GetFilterParametersRequest, new Action<GenericMessage<SearchLendingsViewModel>>(GetFilterCriteria));
+            PresenterBinder.MessageBus.Register(this, MessageIds.GetFilterParametersRequestLendings, new Action<GenericMessage<SearchLendingsViewModel>>(GetFilterCriteria));
         }
 
         #region ISearchLendingsView Members
@@ -56,7 +56,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
         {
             GetFiltersFromControls(message.Content);
 
-            PresenterBinder.MessageBus.Send(new GenericMessage<SearchLendingsViewModel>(message.Content), MessageIds.GetFilterParametersResponse);
+            PresenterBinder.MessageBus.Send(new GenericMessage<SearchLendingsViewModel>(message.Content), MessageIds.GetFilterParametersLendingsResponse);
         }
 
         private void GetFiltersFromControls(SearchLendingsViewModel viewModel)
@@ -86,7 +86,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 components.Dispose();
             }
 
-            PresenterBinder.MessageBus.Unregister<GenericMessage<SearchLendingsViewModel>>(this, MessageIds.GetFilterParametersRequest);
+            PresenterBinder.MessageBus.Unregister<GenericMessage<SearchLendingsViewModel>>(this, MessageIds.GetFilterParametersRequestLendings);
 
             base.Dispose(disposing);
         }
