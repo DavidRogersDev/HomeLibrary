@@ -30,7 +30,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 FilterValue = txtFirstName.Text.Trim()
             });
 
-            PresenterBinder.MessageBus.Send(new GenericMessage<SearchPeopleViewModel>(message.Content), MessageIds.GetFilterParametersLendingsResponse);
+            PresenterBinder.MessageBus.Send(new GenericMessage<SearchPeopleViewModel>(message.Content), MessageIds.GetFilterParametersPeopleResponse);
         }
 
         /// <summary> 
