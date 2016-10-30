@@ -84,7 +84,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 }
             }));
 
-            ReSyncGridAndPager();
+            //ReSyncGridAndPager();
 
             dgvPager.AdjustPreviousNextButtons(Constants.StartUp);
         }
@@ -100,7 +100,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
                 GetSearchParameters(selectedGridLendingId);
             }
 
-            ReSyncGridAndPager();
+            //ReSyncGridAndPager();
 
             dgvPager.AdjustPreviousNextButtons(e.EventRaised);
         }
@@ -121,7 +121,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
             var SearchPeopleViewModel = GetSearchParameters(selectedLendingId);
 
-            ReSyncGridAndPager();
+            //ReSyncGridAndPager();
 
             dgvPager.AdjustPreviousNextButtons(e.EventRaised);
         }
@@ -148,7 +148,7 @@ namespace KesselRun.HomeLibrary.Ui.UserControls
 
                         var SearchPeopleViewModel = GetSearchParameters(selectedLendingId);
 
-                        ReSyncGridAndPager();
+                        //ReSyncGridAndPager();
                     }
                 }
                 else

@@ -7,57 +7,90 @@ using System.Reflection;
 
 namespace KesselRun.HomeLibrary.Service.Infrastructure
 {
-    public static class ExpressionBuilder
+    public class ExpressionBuilder : IExpressionBuilder
     {
         private const string Dot = ".";
-        private static MethodInfo containsMethod = typeof (string).GetMethod("Contains");
+        private static MethodInfo containsMethod = typeof(string).GetMethod("Contains");
 
         private static MethodInfo startsWithMethod =
-            typeof (string).GetMethod("StartsWith", new Type[] {typeof (string)});
+            typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
 
         private static MethodInfo endsWithMethod =
-            typeof (string).GetMethod("EndsWith", new Type[] {typeof (string)});
+            typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
 
-
-        public static Expression<Func<T, bool>> GetExpression<T>(IList<Filter> filters)
+        public Expression<Func<T, TResult>> MakeSelector<T, TResult>(string path)
         {
-            if (filters.Count == 0)
-                return null;
-
-            ParameterExpression param = Expression.Parameter(typeof (T), "t");
-            Expression exp = null;
-
-            if (filters.Count == 1)
-                exp = GetExpression<T>(param, filters[0]);
-            else if (filters.Count == 2)
-                exp = GetExpression<T>(param, filters[0], filters[1]);
-            else
-            {
-                while (filters.Count > 0)
-                {
-                    var f1 = filters[0];
-                    var f2 = filters[1];
-
-                    if (exp == null)
-                        exp = GetExpression<T>(param, filters[0], filters[1]);
-                    else
-                        exp = Expression.AndAlso(exp, GetExpression<T>(param, filters[0], filters[1]));
-
-                    filters.Remove(f1);
-                    filters.Remove(f2);
-
-                    if (filters.Count == 1)
-                    {
-                        exp = Expression.AndAlso(exp, GetExpression<T>(param, filters[0]));
-                        filters.RemoveAt(0);
-                    }
-                }
-            }
-
-            return Expression.Lambda<Func<T, bool>>(exp, param);
+            var item = Expression.Parameter(typeof(T), "item");
+            var body = path.Split('.').Aggregate((Expression)item, Expression.PropertyOrField);
+            return (Expression<Func<T, TResult>>)Expression.Lambda(body, item);
         }
 
-        private static Expression GetExpression<T>(ParameterExpression param, Filter filter)
+        public Expression<Func<T, TResult>> GetExpressionSort<T, TResult>(string propertyToOrderBy)
+        {
+            var parameterExpression = Expression.Parameter(typeof(T), "t");
+            var memberExpression = GetMember(parameterExpression, propertyToOrderBy);
+
+            return (Expression<Func<T, TResult>>)Expression.Lambda(memberExpression, parameterExpression);
+        }
+
+        public Func<IQueryable<T>, IOrderedQueryable<T>> GetExpressionSortFunc<T, TResult>(
+            string propertyToOrderBy,
+            ListSortDirection listSortDirection)
+        {
+            ParameterExpression parameterExpression = Expression.Parameter(typeof(T), "t");
+            MemberExpression memberExpression = GetMember(parameterExpression, propertyToOrderBy);
+
+            var lambda = (Expression<Func<T, TResult>>)Expression.Lambda(memberExpression, parameterExpression);
+
+            switch (listSortDirection)
+            {
+                case ListSortDirection.Ascending:
+                    return l => l.OrderBy(lambda);
+                case ListSortDirection.Descending:
+                    return l => l.OrderByDescending(lambda);
+                default:
+                    throw new NotSupportedException(string.Format("{0} is not a suppoted ListSortDirection", listSortDirection));
+            }
+        }
+
+        public Expression<Func<T, bool>> MakePredicateAnd<T>(IEnumerable<Filter> filters)
+        {
+            if (filters == null)
+                return null;
+
+            filters = filters.Where(filter => filter != null);
+
+            if (!filters.Any())
+                return null;
+
+            var item = Expression.Parameter(typeof(T), "t");
+
+            var body = filters.Select(filter => MakePredicate<T>(item, filter)).Aggregate(Expression.AndAlso);
+
+            var predicate = Expression.Lambda<Func<T, bool>>(body, item);
+
+            return predicate;
+        }
+        public Expression<Func<T, bool>> MakePredicateOr<T>(IEnumerable<Filter> filters)
+        {
+            if (filters == null)
+                return null;
+
+            filters = filters.Where(filter => filter != null);
+
+            if (!filters.Any())
+                return null;
+
+            var item = Expression.Parameter(typeof(T), "t");
+
+            var body = filters.Select(filter => MakePredicate<T>(item, filter)).Aggregate(Expression.OrElse);
+
+            var predicate = Expression.Lambda<Func<T, bool>>(body, item);
+
+            return predicate;
+        }
+
+        private Expression MakePredicate<T>(ParameterExpression param, Filter filter)
         {
             MemberExpression member = GetMember(param, filter);
 
@@ -96,125 +129,29 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
             return null;
         }
 
-        public static MemberExpression GetMember(ParameterExpression parameterExpression, Filter filter)
+
+        private MemberExpression GetMember(ParameterExpression parameterExpression, Filter filter)
         {
             return GetMemberHelper(parameterExpression, filter.PropertyName);
         }
 
-        public static MemberExpression GetMember(ParameterExpression parameterExpression, string propertyName)
+        private MemberExpression GetMember(ParameterExpression parameterExpression, string propertyName)
         {
             return GetMemberHelper(parameterExpression, propertyName);
         }
 
-        private static MemberExpression GetMemberHelper(ParameterExpression parameterExpression, string propertyName)
+        private MemberExpression GetMemberHelper(ParameterExpression parameterExpression, string propertyName)
         {
             if (propertyName.Contains(Dot))
             {
                 return Expression.Property(
-                    GetMemberHelper(parameterExpression, propertyName.Substring(0, propertyName.LastIndexOf(Dot, System.StringComparison.Ordinal))), 
+                    GetMemberHelper(parameterExpression, propertyName.Substring(0, propertyName.LastIndexOf(Dot, System.StringComparison.Ordinal))),
                     propertyName.Substring(propertyName.LastIndexOf(Dot, System.StringComparison.Ordinal) + 1)
                     );
             }
 
             return Expression.Property(parameterExpression, propertyName);
         }
-
-        public static Func<IQueryable<T>, IOrderedQueryable<T>> GetExpressionSortFunc<T>(
-            ParameterExpression parameterExpression, 
-            MemberExpression memberExpression,
-            ListSortDirection listSortDirection)
-        {
-            if (memberExpression.Type.IsValueType)
-            {
-                if(memberExpression.Type == typeof(int))
-                {
-                    return IntSortFunc<T>(memberExpression, parameterExpression, listSortDirection);
-                }
-                if(memberExpression.Type == typeof(DateTime))
-                {
-                    return DateSortFunc<T>(memberExpression, parameterExpression, listSortDirection);
-                }
-            }
-
-            return ObjectSortFunc<T>(parameterExpression, memberExpression, listSortDirection);
-        }
-
-
-        private static BinaryExpression GetExpression<T>
-            (ParameterExpression param, Filter filter1, Filter filter2)
-        {
-            Expression bin1 = GetExpression<T>(param, filter1);
-            Expression bin2 = GetExpression<T>(param, filter2);
-
-            return Expression.AndAlso(bin1, bin2);
-        }
-
-        private static Func<IQueryable<T>, IOrderedQueryable<T>> DateSortFunc<T>(MemberExpression memberExpression, ParameterExpression parameterExpression, ListSortDirection listSortDirection)
-        {
-            var lambda = Expression.Lambda<Func<T, DateTime>>(memberExpression, parameterExpression);
-
-            switch (listSortDirection)
-            {
-                case ListSortDirection.Ascending:
-                    return l => l.OrderBy(lambda);
-                case ListSortDirection.Descending:
-                    return l => l.OrderByDescending(lambda);
-                default:
-                    throw new NotSupportedException(string.Format("{0} is not a suppoted ListSortDirection", listSortDirection));
-            }
-        }
-
-        private static Func<IQueryable<T>, IOrderedQueryable<T>> IntSortFunc<T>(MemberExpression memberExpression, ParameterExpression parameterExpression, ListSortDirection listSortDirection)
-        {
-            var lambda = Expression.Lambda<Func<T, int>>(memberExpression, parameterExpression);
-
-            switch (listSortDirection)
-            {
-                case ListSortDirection.Ascending:
-                    return l => l.OrderBy(lambda);
-                case ListSortDirection.Descending:
-                    return l => l.OrderByDescending(lambda);
-                default:
-                    throw new NotSupportedException(string.Format("{0} is not a suppoted ListSortDirection", listSortDirection));
-            }
-        }
-
-        private static Func<IQueryable<T>, IOrderedQueryable<T>> ObjectSortFunc<T>(
-            ParameterExpression parameterExpression,
-            MemberExpression memberExpression,
-            ListSortDirection listSortDirection)
-        {
-            var lambda = Expression.Lambda<Func<T, object>>(memberExpression, parameterExpression);
-
-            switch (listSortDirection)
-            {
-                case ListSortDirection.Ascending:
-                    return l => l.OrderBy(lambda);
-                case ListSortDirection.Descending:
-                    return l => l.OrderByDescending(lambda);
-                default:
-                    throw new NotSupportedException(string.Format("{0} is not a suppoted ListSortDirection", listSortDirection));
-            }
-        }
-    }
-
-    public enum Op
-    {
-        Equals,
-        GreaterThan,
-        LessThan,
-        GreaterThanOrEqual,
-        LessThanOrEqual,
-        Contains,
-        StartsWith,
-        EndsWith
-    }
-
-    public class Filter
-    {
-        public string PropertyName { get; set; }
-        public Op Operation { get; set; }
-        public object Value { get; set; }
     }
 
 }

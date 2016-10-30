@@ -68,6 +68,8 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
             kernel.Bind<TransactionAspectInterceptor>().ToSelf();
 
+            kernel.Bind<IExpressionBuilder>().To<ExpressionBuilder>().InTransientScope();
+
             kernel.Bind<IQueryProcessor>().To<QueryProcessor>().InTransientScope();
             kernel.Bind<ICommandProcessor>().To<CommandProcessor>().InTransientScope();
         }

@@ -48,8 +48,8 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentValidation, Version=6.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.6.1.0.0\lib\Net45\FluentValidation.dll</HintPath>
+    <Reference Include="FluentValidation, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ninject">
@@ -88,12 +88,15 @@
     <Compile Include="Infrastructure\CommandProcessor.cs" />
     <Compile Include="Infrastructure\Constants.cs" />
     <Compile Include="Infrastructure\ExpressionBuilder.cs" />
+    <Compile Include="Infrastructure\Filter.cs" />
     <Compile Include="Infrastructure\ICommandHandler.cs" />
     <Compile Include="Infrastructure\ICommandProcessor.cs" />
+    <Compile Include="Infrastructure\IExpressionBuilder.cs" />
     <Compile Include="Infrastructure\IPageCapbable.cs" />
     <Compile Include="Infrastructure\IQueryHandler.cs" />
     <Compile Include="Infrastructure\IQuery.cs" />
     <Compile Include="Infrastructure\IQueryProcessor.cs" />
+    <Compile Include="Infrastructure\Op.cs" />
     <Compile Include="Infrastructure\PagerHelper.cs" />
     <Compile Include="ObjectResolution\TransactionAspectAttribute.cs" />
     <Compile Include="ObjectResolution\TransactionAspectInterceptor.cs" />

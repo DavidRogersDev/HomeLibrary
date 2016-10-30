@@ -19,30 +19,24 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
     {
         private readonly IUnitOfWorkAsync _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IExpressionBuilder _expressionBuilder;
         private bool _disposed = false;
 
-        public PeopleQueryHandlers(IUnitOfWorkAsync unitOfWork, IMapper mapper)
+        public PeopleQueryHandlers(IUnitOfWorkAsync unitOfWork, IMapper mapper, IExpressionBuilder expressionBuilder)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _expressionBuilder = expressionBuilder;
         }
 
         private Func<IQueryable<T>, IOrderedQueryable<T>> GetOrderByFunc<T>(GetPeoplePagedSortedQuery query)
         {
-            ParameterExpression param = Expression.Parameter(typeof(T), "t");
-
-            var memberExpression = ExpressionBuilder.GetMember(param, query.SortBy);
-
-            return ExpressionBuilder.GetExpressionSortFunc<T>(param, memberExpression, query.OrderByDirection);
+            return _expressionBuilder.GetExpressionSortFunc<T, string>(query.SortBy, query.OrderByDirection);
         }
         
         private Func<IQueryable<T>, IOrderedQueryable<T>> GetOrderByFunc<T>(GetPeopleSortedQuery query)
         {
-            ParameterExpression param = Expression.Parameter(typeof(T), "t");
-
-            var memberExpression = ExpressionBuilder.GetMember(param, query.SortBy);
-
-            return ExpressionBuilder.GetExpressionSortFunc<T>(param, memberExpression, query.OrderByDirection);
+            return _expressionBuilder.GetExpressionSortFunc<T, string>(query.SortBy, query.OrderByDirection);
         }
 
         public IList<Person> Handle(GetPeopleSortedQuery query)
@@ -93,7 +87,7 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             if (!query.Filters.Any())
                 return null;
 
-            return ExpressionBuilder.GetExpression<Model.Person>(query.Filters);
+            return _expressionBuilder.MakePredicateAnd<Model.Person>(query.Filters);
         }
 
         public void Dispose()

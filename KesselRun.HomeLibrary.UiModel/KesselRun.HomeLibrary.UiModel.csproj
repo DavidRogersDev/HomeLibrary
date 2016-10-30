@@ -52,6 +52,7 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Publisher.cs" />
     <Compile Include="PagerData.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AddLendingViewModel.cs" />
     <Compile Include="FilterMetaData.cs" />

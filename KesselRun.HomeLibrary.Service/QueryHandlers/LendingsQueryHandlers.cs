@@ -19,12 +19,14 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
     {
         private readonly IUnitOfWorkAsync _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IExpressionBuilder _expressionBuilder;
         private bool _disposed = false;
 
-        public LendingsQueryHandlers(IUnitOfWorkAsync unitOfWork, IMapper mapper)
+        public LendingsQueryHandlers(IUnitOfWorkAsync unitOfWork, IMapper mapper, IExpressionBuilder expressionBuilder)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _expressionBuilder = expressionBuilder;
         }
 
         public LendingsViewModel Handle(GetLendingsPagedSortedQuery query)
@@ -59,17 +61,13 @@ namespace KesselRun.HomeLibrary.Service.QueryHandlers
             if (!query.Filters.Any())
                 return null;
             
-            return ExpressionBuilder.GetExpression<Model.Lending>(query.Filters);
+            return _expressionBuilder.MakePredicateAnd<Model.Lending>(query.Filters);
         }
 
         private Func<IQueryable<T>, IOrderedQueryable<T>> GetOrderByFunc<T>(
             GetLendingsPagedSortedQuery query)
         {
-            ParameterExpression param = Expression.Parameter(typeof(T), "t");
-
-            var memberExpression = ExpressionBuilder.GetMember(param, query.SortBy);
-
-            return ExpressionBuilder.GetExpressionSortFunc<T>(param, memberExpression, query.OrderByDirection);
+            return _expressionBuilder.GetExpressionSortFunc<T, string>(query.SortBy, query.OrderByDirection);
         }
 
         //private Func<IQueryable<Model.Lending>, IOrderedQueryable<Model.Lending>> GetOrderByFuncForStrings(
