@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
+using KesselRun.HomeLibrary.Mapper.MappingTypeContracts;
 using KesselRun.HomeLibrary.UiModel.Enums;
 
 namespace KesselRun.HomeLibrary.UiModel.Models
 {
-    public class Book
+    public class Book : IMapFrom<Model.Book>
     {
         public int Id { get; set; }
         public string Title { get; set; }

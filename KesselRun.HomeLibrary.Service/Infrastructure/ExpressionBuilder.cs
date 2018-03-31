@@ -20,7 +20,7 @@ namespace KesselRun.HomeLibrary.Service.Infrastructure
 
         public Expression<Func<T, TResult>> MakeSelector<T, TResult>(string path)
         {
-            var item = Expression.Parameter(typeof(T), "item");
+            var item = Expression.Parameter(typeof(T), "t");
             var body = path.Split('.').Aggregate((Expression)item, Expression.PropertyOrField);
             return (Expression<Func<T, TResult>>)Expression.Lambda(body, item);
         }

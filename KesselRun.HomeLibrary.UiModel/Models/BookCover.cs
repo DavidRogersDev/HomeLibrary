@@ -1,8 +1,9 @@
-﻿using KesselRun.HomeLibrary.UiModel.Enums;
+﻿using KesselRun.HomeLibrary.Mapper.MappingTypeContracts;
+using KesselRun.HomeLibrary.UiModel.Enums;
 
 namespace KesselRun.HomeLibrary.UiModel.Models
 {
-    public class BookCover
+    public class BookCover : IMapFrom<Model.BookCover>
     {
         public int Id { get; set; }
         public Book Book { get; set; }

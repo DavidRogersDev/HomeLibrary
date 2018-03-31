@@ -30,6 +30,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -40,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomMappers\LendingGridItemMapConfigurer.cs" />
+    <Compile Include="CustomMappers\PersonMapConfigurer.cs" />
+    <Compile Include="CustomMappers\Resolvers\AuthorsResolver.cs" />
     <Compile Include="Enums\BookType.cs" />
     <Compile Include="Enums\Edition.cs" />
     <Compile Include="LogEvent.cs" />
@@ -62,6 +77,28 @@
     <Compile Include="ViewModels\SearchLendingsViewModel.cs" />
     <Compile Include="ViewModels\SearchPeopleViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.Mapper\KesselRun.HomeLibrary.Mapper.csproj">
+      <Project>{608cb184-245d-48cd-b405-2d3e4ccf8c28}</Project>
+      <Name>KesselRun.HomeLibrary.Mapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KesselRun.HomeLibrary.Model\KesselRun.HomeLibrary.Model.csproj">
+      <Project>{36e2ce6f-f974-4bdf-89fa-60fbf697e7cb}</Project>
+      <Name>KesselRun.HomeLibrary.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj">
+      <Project>{f68a1d19-93fb-47c1-a22b-42bea3e4fd8c}</Project>
+      <Name>Repository.Pattern.Ef6</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository.Pattern\Repository.Pattern.csproj">
+      <Project>{6e682a14-c872-4813-b620-76e108dea683}</Project>
+      <Name>Repository.Pattern</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

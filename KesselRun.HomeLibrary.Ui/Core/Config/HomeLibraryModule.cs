@@ -2,7 +2,6 @@
 using AutoMapper;
 using FluentValidation;
 using KesselRun.HomeLibrary.EF.Db;
-using KesselRun.HomeLibrary.Mapper.Configuration;
 using KesselRun.HomeLibrary.Service.CommandHandlers;
 using KesselRun.HomeLibrary.Service.CommandHandlers.Decorators;
 using KesselRun.HomeLibrary.Service.Infrastructure;
@@ -76,7 +75,7 @@ namespace KesselRun.HomeLibrary.Ui.Core.Config
 
         private static MapperConfiguration GetMapperConfiguration()
         {
-            Assembly mapperAssembly = typeof(MappingBase).Assembly;
+            Assembly mapperAssembly = typeof(HomeLibraryProfile).Assembly;
 
             var profiles = from t in mapperAssembly.GetTypes()
                 where typeof (Profile).IsAssignableFrom(t)

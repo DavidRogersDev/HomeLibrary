@@ -1,8 +1,9 @@
 ﻿using System;
+using KesselRun.HomeLibrary.Mapper.MappingTypeContracts;
 
 namespace KesselRun.HomeLibrary.UiModel.Models
 {
-    public class Lending
+    public class Lending : IMapFrom<Model.Lending>
     {
         public int Id { get; set; }
         
